@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "ngx-table": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/ngx-table",
+      "sourceRoot": "apps/ngx-table/src",
+      "prefix": "ngx-table",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/ngx-table",
+            "index": "apps/ngx-table/src/index.html",
+            "main": "apps/ngx-table/src/main.ts",
+            "polyfills": "apps/ngx-table/src/polyfills.ts",
+            "tsConfig": "apps/ngx-table/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/ngx-table/src/favicon.ico",
+              "apps/ngx-table/src/assets"
+            ],
+            "styles": ["apps/ngx-table/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/ngx-table/src/environments/environment.ts",
+                  "with": "apps/ngx-table/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngx-table:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngx-table:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngx-table:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/ngx-table/tsconfig.app.json",
+              "apps/ngx-table/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/ngx-table/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/ngx-table/jest.config.js",
+            "tsConfig": "apps/ngx-table/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/ngx-table/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "ngx-table-e2e": {
+      "root": "apps/ngx-table-e2e",
+      "sourceRoot": "apps/ngx-table-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/ngx-table-e2e/cypress.json",
+            "tsConfig": "apps/ngx-table-e2e/tsconfig.e2e.json",
+            "devServerTarget": "ngx-table:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngx-table:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/ngx-table-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/ngx-table-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "ngx-table"
+}
