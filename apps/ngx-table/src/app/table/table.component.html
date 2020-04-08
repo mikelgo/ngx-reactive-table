@@ -1,0 +1,22 @@
+<div class="p-12">
+	<h3 class="text-lg font-bold mb-2">{{ title }}</h3>
+	<table class="table-fixed">
+		<thead>
+			<tr>
+				<th *ngFor="let header of displayColumns" [ngClass]="header.class ? header.class : ''">
+					{{ header.displayValue }}
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let row of rows">
+				<td
+					*ngFor="let rowValues of row.values"
+					[ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
+				>
+					{{ rowValues.val }}
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
