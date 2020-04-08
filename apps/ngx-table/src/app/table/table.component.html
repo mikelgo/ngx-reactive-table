@@ -1,22 +1,26 @@
-<div class="p-12">
-	<h3 class="text-lg font-bold mb-2">{{ title }}</h3>
-	<table class="table-fixed">
-		<thead>
-			<tr>
-				<th *ngFor="let header of displayColumns" [ngClass]="header.class ? header.class : ''">
-					{{ header.displayValue }}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr *ngFor="let row of rows">
-				<td
-					*ngFor="let rowValues of row.values"
-					[ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
-				>
-					{{ rowValues.val }}
-				</td>
-			</tr>
-		</tbody>
-	</table>
+<div class="container">
+  <div class="table">
+    <div class="table-header">
+      <div class="table-header-row">
+        <div
+          class="table-header-row-value"
+          *ngFor="let header of displayColumns"
+          [ngClass]="header.class ? header.class : ''"
+        >
+          {{ header.displayValue }}
+        </div>
+      </div>
+    </div>
+    <div class="table-body">
+      <div *ngFor="let row of rows" class="table-body-row">
+        <div
+          class="table-body-row-value"
+          *ngFor="let rowValues of row.values"
+          [ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
+        >
+          {{ rowValues.val }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
