@@ -5,13 +5,15 @@ import { BodyComponent } from './components/body/body.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
 import { RowComponent } from './components/row/row.component';
+import { CellComponent } from './components/cell/cell.component';
 
 const COMPONENTS = [
   TableComponent,
   BodyComponent,
   FooterComponent,
   HeaderComponent,
-  RowComponent
+  RowComponent,
+  CellComponent
 ];
 const MODULES = [CommonModule];
 

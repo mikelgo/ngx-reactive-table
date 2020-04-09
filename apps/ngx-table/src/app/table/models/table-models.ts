@@ -8,10 +8,10 @@ export interface RowDefinition {
   id?: string | number;
   index?: number;
   cssClass?: string;
-  values: RowValue[]; // the values for each colum
+  values: Cell[]; // the values for each colum
 }
 
-export interface RowValue {
+export interface Cell {
   val: any;
   cssClass?: string;
 }
