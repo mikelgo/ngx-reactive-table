@@ -1,3 +1,9 @@
-<p>
-  header works!
-</p>
+<div class="table-header-row">
+  <div
+    class="table-header-row-value"
+    *ngFor="let header of displayColumns"
+    [ngClass]="header.class ? header.class : ''"
+  >
+    {{ header.displayValue }}
+  </div>
+</div>

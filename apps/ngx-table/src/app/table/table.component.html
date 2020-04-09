@@ -1,25 +1,13 @@
-<div class="container">
-  <div class="table">
-    <div class="table-header">
-      <div class="table-header-row">
-        <div
-          class="table-header-row-value"
-          *ngFor="let header of displayColumns"
-          [ngClass]="header.class ? header.class : ''"
-        >
-          {{ header.displayValue }}
-        </div>
-      </div>
-    </div>
-    <div class="table-body">
-      <div *ngFor="let row of rows" class="table-body-row">
-        <div
-          class="table-body-row-value"
-          *ngFor="let rowValues of row.values"
-          [ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
-        >
-          {{ rowValues.val }}
-        </div>
+<div class="table">
+  <ngx-table-header [displayColumns]="displayColumns"></ngx-table-header>
+  <div class="table-body">
+    <div *ngFor="let row of rows" class="table-body-row">
+      <div
+        class="table-body-row-value"
+        *ngFor="let rowValues of row.values"
+        [ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
+      >
+        {{ rowValues.val }}
       </div>
     </div>
   </div>
