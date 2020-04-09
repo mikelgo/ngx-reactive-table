@@ -20,6 +20,7 @@ export class AppComponent {
   }
 
   initializeRows(): RowDefinition[] {
+    // return this.initializeXrows(500);
     return [
       { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
       { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
@@ -43,5 +44,21 @@ export class AppComponent {
         ]
       }
     ];
+  }
+
+  initializeXrows(count: number): RowDefinition[] {
+    const rows: RowDefinition[] = [];
+    for (let i = 1; i <= count; i++) {
+      rows.push({
+        values: [
+          { val: 1 },
+          { val: 1 },
+          { val: 1 },
+          { val: 100012 },
+          { val: 'Some string' }
+        ]
+      });
+    }
+    return rows;
   }
 }
