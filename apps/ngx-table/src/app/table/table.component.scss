@@ -3,12 +3,3 @@
   box-sizing: border-box;
   padding: 8px 16px;
 }
-
-.table-body {
-  box-sizing: border-box;
-  width: 100%;
-  // muss auch konfigurierbar sein
-  max-height: 300px;
-  overflow-y: scroll;
-  // overflow-x: scroll;
-}
