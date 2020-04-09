@@ -1,8 +1,18 @@
 import { NgModule } from '@angular/core';
 import { TableComponent } from './table.component';
 import { CommonModule } from '@angular/common';
+import { BodyComponent } from './components/body/body.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeaderComponent } from './components/header/header.component';
+import { RowComponent } from './components/row/row.component';
 
-const COMPONENTS = [TableComponent];
+const COMPONENTS = [
+  TableComponent,
+  BodyComponent,
+  FooterComponent,
+  HeaderComponent,
+  RowComponent
+];
 const MODULES = [CommonModule];
 
 @NgModule({
