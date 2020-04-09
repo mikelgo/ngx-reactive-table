@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColumnDefinition, RowDefinition } from './table/table-models';
+import { ColumnDefinition, RowDefinition } from './table/models/table-models';
 
 @Component({
   selector: 'ngx-table-root',
