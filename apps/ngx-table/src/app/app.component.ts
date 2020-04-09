@@ -24,7 +24,15 @@ export class AppComponent {
       { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
       { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
       { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
-      { values: [{ val: 'a' }, { val: 'b' }, { val: 'c' }, { val: 'd' }] }
+      {
+        values: [
+          { val: 'a' },
+          { val: 'b' },
+          { val: 'c' },
+          { val: 'd' },
+          { val: '' }
+        ]
+      }
     ];
   }
 }
