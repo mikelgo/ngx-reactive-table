@@ -1,6 +1,7 @@
 .container {
   box-sizing: border-box;
-  width: 100%;
+  // width: 100%; // then full screen or what container above gives
+  width: 400px;
   // min-width: 300px;
   margin: auto;
   padding: 8px 16px;
@@ -8,7 +9,6 @@
 
 .table {
   box-sizing: border-box;
-  width: 300px;
 }
 
 .table-header {
@@ -47,7 +47,7 @@
   box-sizing: border-box;
   border-bottom: 1px solid #ccc;
 
-  height: 20px;
+  min-height: 30px;
   display: flex;
   flex-direction: row;
   align-items: center;

@@ -32,6 +32,15 @@ export class AppComponent {
           { val: 'd' },
           { val: '' }
         ]
+      },
+      {
+        values: [
+          { val: 'Some longer string value' },
+          { val: 'b' },
+          { val: 'c' },
+          { val: 'some longer string value which is longer ' },
+          { val: '' }
+        ]
       }
     ];
   }
