@@ -1,0 +1,21 @@
+:host {
+  box-sizing: border-box;
+  border-bottom: 1px solid #ccc;
+
+  min-height: 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-body-row-value {
+  box-sizing: border-box;
+
+  height: 100%;
+  width: 100%;
+  // min-width: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}

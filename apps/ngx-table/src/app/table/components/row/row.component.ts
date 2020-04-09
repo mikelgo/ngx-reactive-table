@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { RowDefinition } from '../../models/table-models';
 
 @Component({
   selector: 'ngx-table-row',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./row.component.scss']
 })
 export class RowComponent implements OnInit {
+  @Input() row: RowDefinition = null;
   constructor() {}
 
   ngOnInit() {}

@@ -1,14 +1,4 @@
-<div class="table">
-  <ngx-table-header [displayColumns]="displayColumns"></ngx-table-header>
-  <div class="table-body">
-    <div *ngFor="let row of rows" class="table-body-row">
-      <div
-        class="table-body-row-value"
-        *ngFor="let rowValues of row.values"
-        [ngClass]="rowValues.cssClass ? rowValues.cssClass : ''"
-      >
-        {{ rowValues.val }}
-      </div>
-    </div>
-  </div>
+<ngx-table-header [displayColumns]="displayColumns"></ngx-table-header>
+<div class="table-body">
+  <ngx-table-row *ngFor="let row of rows" [row]="row"></ngx-table-row>
 </div>
