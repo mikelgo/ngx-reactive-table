@@ -8,4 +8,5 @@ export interface TableBehavior {
   // probably a selectable: Selectable?
   onRowSelect(row: RowDefinition, rowIndex: number): void;
   getSelectedRows(): Observable<RowDefinition[]>;
+  getSelectedRowsCount(): Observable<number>;
 }

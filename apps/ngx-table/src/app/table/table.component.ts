@@ -32,13 +32,9 @@ export class TableComponent implements OnInit, TableBehavior {
 
   private _tableConfig: TableConfig = null;
 
-  constructor(public stateService: TableStateService) {}
+  constructor(private stateService: TableStateService) {}
 
-  ngOnInit() {
-    this.stateService.lastSelectedRow$.subscribe(console.log);
-    this.stateService.selectedRows$.subscribe(console.log);
-    this.stateService.selectedRowsCount$.subscribe(console.log);
-  }
+  ngOnInit() {}
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
@@ -50,6 +46,10 @@ export class TableComponent implements OnInit, TableBehavior {
 
   public getSelectedRows(): Observable<RowDefinition[]> {
     return this.stateService.selectedRows$;
+  }
+
+  public getSelectedRowsCount(): Observable<number> {
+    return this.stateService.selectedRowsCount$;
   }
 
   private initalizeStyles(config: TableConfig) {
