@@ -1,6 +1,9 @@
+import { TemplateRef } from '@angular/core';
+
 export interface ColumnDefinition {
   id?: string | number;
-  displayValue: string;
+  index?: number;
+  columnTitle: string;
   class?: string;
 }
 
@@ -14,4 +17,10 @@ export interface RowDefinition {
 export interface Cell {
   val: any;
   cssClass?: string;
+  cellTemplate?: TemplateRef<any>;
 }
+
+// TODO interface TableBehavior
+// TODO interface CellRenderer
+// TODO interface Column
+// TODO interface Row

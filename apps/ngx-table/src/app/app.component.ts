@@ -11,11 +11,11 @@ export class AppComponent {
 
   initializeColumns(): ColumnDefinition[] {
     return [
-      { displayValue: 'c1' },
-      { displayValue: 'c2' },
-      { displayValue: 'c3' },
-      { displayValue: 'c4' },
-      { displayValue: 'c5' }
+      { columnTitle: 'c1' },
+      { columnTitle: 'c2' },
+      { columnTitle: 'c3' },
+      { columnTitle: 'c4' },
+      { columnTitle: 'c5' }
     ];
   }
 
