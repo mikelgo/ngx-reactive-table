@@ -39,26 +39,16 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
     }
   }
   private isSelected: boolean = false;
-  private selected$$ = new BehaviorSubject<Selectable<RowComponent>>(null);
 
   @HostListener('click') onSelect(selectable: RowComponent) {
     this.isSelected = !this.isSelected;
     this.setClickStyle(this.isSelected);
-    this.setSelected(this.isSelected);
   }
 
   constructor() {}
 
   ngOnInit() {}
-  getSelected(): Observable<Selectable<RowComponent>> {
-    if (this.isSelected) {
-      return this.selected$$.asObservable();
-    }
-  }
 
-  getHovered(): Selectable<RowComponent> {
-    throw new Error('Method not implemented.');
-  }
   private setClickStyle(selected: boolean) {
     if (selected) {
       this.borderTop = '1px solid #4a5568';
@@ -68,13 +58,6 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
       this.backgroundColor = 'white';
-    }
-  }
-  private setSelected(selected: boolean): void {
-    if (selected) {
-      this.selected$$.next(this);
-    } else {
-      this.selected$$.next(null);
     }
   }
 }
