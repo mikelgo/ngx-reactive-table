@@ -3,7 +3,8 @@ import {
   OnInit,
   Input,
   HostBinding,
-  EventEmitter
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { Column, RowDefinition, ColumnDefinition } from './models/table-models';
 import { TableConfig } from './models/table-config';
@@ -27,6 +28,7 @@ export class TableComponent implements OnInit, TableBehavior {
     this._tableConfig = arg;
     this.initalizeStyles(arg);
   }
+
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
