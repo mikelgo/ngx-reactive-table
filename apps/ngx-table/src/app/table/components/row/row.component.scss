@@ -1,21 +1,28 @@
 :host {
-  box-sizing: border-box;
-  border-bottom: 1px solid #ccc;
+  // box-sizing: border-box;
+  // border-bottom: 1px solid #ccc;
+
+  // min-height: 30px;
+  // display: flex;
+  // flex-direction: row;
+  // align-items: center;
+  // justify-content: space-between;
 
   min-height: 30px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  // grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+  grid-gap: 4px;
+  border-bottom: 1px solid #ccc;
 }
 
 .table-body-row-value {
-  box-sizing: border-box;
+  // box-sizing: border-box;
 
-  height: 100%;
-  width: 100%;
-  // min-width: 40px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  // height: 100%;
+  // width: 100%;
+  // // min-width: 40px;
+  // display: flex;
+  // justify-content: flex-start;
+  // align-items: center;
 }
