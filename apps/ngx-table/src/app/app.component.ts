@@ -8,7 +8,6 @@ import { ColumnDefinition, RowDefinition } from './table/models/table-models';
 })
 export class AppComponent implements OnInit {
   title = 'ngx-table';
-  @ViewChild('templateTest', { static: true }) templateTest: TemplateRef<any>;
   public rows: RowDefinition[];
 
   ngOnInit() {
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
       },
       {
         values: [
-          { val: 'Some longer string value', cellTemplate: this.templateTest },
+          { val: 'Some longer string value' },
           { val: 'b' },
           { val: 'c' },
           { val: 'some longer string value which is longer ' },
