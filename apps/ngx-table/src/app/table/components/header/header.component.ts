@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ColumnDefinition } from '../../models/table-models';
+import { Column } from '../../models/table-models';
 
 @Component({
   selector: 'ngx-table-header',
@@ -7,7 +7,7 @@ import { ColumnDefinition } from '../../models/table-models';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() displayColumns: ColumnDefinition[] = [];
+  @Input() displayColumns: Column[] = [];
   constructor() {}
 
   ngOnInit() {}

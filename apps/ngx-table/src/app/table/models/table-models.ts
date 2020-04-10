@@ -1,9 +1,14 @@
 import { TemplateRef } from '@angular/core';
 
 export interface ColumnDefinition {
+  columns: Column[];
+}
+
+export interface Column {
   id?: string | number;
   index?: number;
   columnTitle: string;
+  hide?: boolean;
   class?: string;
 }
 
@@ -17,7 +22,6 @@ export interface RowDefinition {
 export interface Cell {
   val: any;
   cssClass?: string;
-  cellTemplate?: TemplateRef<any>;
   cellRenderer?: CellRenderer;
 }
 
