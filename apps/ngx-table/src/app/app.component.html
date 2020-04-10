@@ -2,7 +2,13 @@
   <ngx-table-table
     [title]="'Table title'"
     [displayColumns]="initializeColumns()"
-    [rows]="initializeRows()"
+    [rows]="rows"
   >
   </ngx-table-table>
 </div>
+
+<ng-template #templateTest let-element="element">
+  <div class="custom-style">
+    {{ getVal(element) }}
+  </div>
+</ng-template>

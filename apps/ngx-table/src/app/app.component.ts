@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
 import { ColumnDefinition, RowDefinition } from './table/models/table-models';
 
 @Component({
@@ -6,9 +6,14 @@ import { ColumnDefinition, RowDefinition } from './table/models/table-models';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ngx-table';
+  @ViewChild('templateTest', { static: true }) templateTest: TemplateRef<any>;
+  public rows: RowDefinition[];
 
+  ngOnInit() {
+    this.rows = this.initializeRows();
+  }
   initializeColumns(): ColumnDefinition[] {
     return [
       { columnTitle: 'c1' },
@@ -18,7 +23,10 @@ export class AppComponent {
       { columnTitle: 'c5' }
     ];
   }
-
+  getVal(element) {
+    console.log(element);
+    return element;
+  }
   initializeRows(): RowDefinition[] {
     // return this.initializeXrows(500);
     return [
@@ -36,7 +44,7 @@ export class AppComponent {
       },
       {
         values: [
-          { val: 'Some longer string value' },
+          { val: 'Some longer string value', cellTemplate: this.templateTest },
           { val: 'b' },
           { val: 'c' },
           { val: 'some longer string value which is longer ' },
