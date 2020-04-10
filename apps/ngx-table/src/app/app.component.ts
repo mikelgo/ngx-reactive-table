@@ -1,9 +1,11 @@
 import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
 import {
-  ColumnDefinition,
+  Column,
   RowDefinition,
-  CellRenderer
+  CellRenderer,
+  ColumnDefinition
 } from './table/models/table-models';
+import { TableConfig } from './table/models/table-config';
 
 @Component({
   selector: 'ngx-table-root',
@@ -14,17 +16,24 @@ export class AppComponent implements OnInit {
   title = 'ngx-table';
   public rows: RowDefinition[];
 
+  tableConfig: TableConfig = {
+    width: '400px',
+    maxBodyHeight: '200px'
+  };
+
   ngOnInit() {
     this.rows = this.initializeRows();
   }
-  initializeColumns(): ColumnDefinition[] {
-    return [
-      { columnTitle: 'c1' },
-      { columnTitle: 'c2' },
-      { columnTitle: 'c3' },
-      { columnTitle: 'c4' },
-      { columnTitle: 'c5' }
-    ];
+  initializeColumns(): ColumnDefinition {
+    return {
+      columns: [
+        { columnTitle: 'c1' },
+        { columnTitle: 'c2' },
+        { columnTitle: 'c3' },
+        { columnTitle: 'c4' },
+        { columnTitle: 'c5' }
+      ]
+    };
   }
   getVal(element) {
     console.log(element);
@@ -53,7 +62,12 @@ export class AppComponent implements OnInit {
           { val: 'some longer string value which is longer ' },
           { val: 'asdf asdf ' }
         ]
-      }
+      },
+      { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
+      { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
+      { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
+      { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] },
+      { values: [{ val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }, { val: 1 }] }
     ];
   }
 

@@ -1,4 +1,4 @@
-<ngx-table-header [displayColumns]="displayColumns"></ngx-table-header>
-<ngx-table-body>
+<ngx-table-header [displayColumns]="displayColumns.columns"></ngx-table-header>
+<ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row *ngFor="let row of rows" [row]="row"></ngx-table-row>
 </ngx-table-body>
