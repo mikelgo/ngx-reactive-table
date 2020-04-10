@@ -13,7 +13,9 @@
   grid-template-columns: repeat(5, 1fr);
   // grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
   grid-gap: 4px;
-  border-bottom: 1px solid #ccc;
+  // border-top: 1px solid transparent;
+  // border-bottom: 1px solid #ccc;
+  transition: 200ms ease-out;
 }
 
 .table-body-row-value {
