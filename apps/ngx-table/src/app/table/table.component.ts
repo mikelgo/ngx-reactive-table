@@ -9,14 +9,17 @@ import { Column, RowDefinition, ColumnDefinition } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { RowSelectEvent } from './models/row-select-event';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { switchMap, scan, startWith } from 'rxjs/operators';
+import { TableBehavior } from './table-behavior';
+import { TableStateService } from './services/table-state.service';
 @Component({
   selector: 'ngx-table-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  providers: [TableStateService]
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, TableBehavior {
   @Input() title: string = '';
   @Input() displayColumns: ColumnDefinition = null;
   @Input() rows: RowDefinition[] = [];
@@ -28,19 +31,25 @@ export class TableComponent implements OnInit {
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
   private _tableConfig: TableConfig = null;
-  private onRowSelect$$ = new Subject<RowSelectEvent>();
 
-  constructor() {}
+  constructor(public stateService: TableStateService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.stateService.lastSelectedRow$.subscribe(console.log);
+    this.stateService.selectedRows$.subscribe(console.log);
+    this.stateService.selectedRowsCount$.subscribe(console.log);
+  }
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
   }
 
-  public onRowClick(row: RowDefinition, rowIndex: number) {
-    console.log('row %o, index %o', row, rowIndex);
-    this.onRowSelect$$.next({ rowIndex: rowIndex, row: row });
+  public onRowSelect(row: RowDefinition, rowIndex: number) {
+    this.stateService.onRowSelect(row, rowIndex);
+  }
+
+  public getSelectedRows(): Observable<RowDefinition[]> {
+    return this.stateService.selectedRows$;
   }
 
   private initalizeStyles(config: TableConfig) {

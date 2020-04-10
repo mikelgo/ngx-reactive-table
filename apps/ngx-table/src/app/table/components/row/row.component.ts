@@ -17,6 +17,7 @@ import { Subject, BehaviorSubject, Observable } from 'rxjs';
   styleUrls: ['./row.component.scss']
 })
 export class RowComponent implements OnInit, Selectable<RowComponent> {
+  private isSelected: boolean = false;
   @Input() row: RowDefinition = null;
 
   @HostBinding('style.border-top') borderTop: string = '1px solid transparent';
@@ -38,7 +39,6 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
       this.backgroundColor = 'white';
     }
   }
-  private isSelected: boolean = false;
 
   @HostListener('click') onSelect(selectable: RowComponent) {
     this.isSelected = !this.isSelected;

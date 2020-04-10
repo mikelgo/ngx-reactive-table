@@ -3,6 +3,8 @@
   <ngx-table-row
     *ngFor="let row of rows; let i = index"
     [row]="row"
-    (click)="onRowClick(row, i)"
+    (click)="onRowSelect(row, i)"
   ></ngx-table-row>
 </ngx-table-body>
+
+<hr />

@@ -1,11 +1,11 @@
 import { RowDefinition } from './models/table-models';
-import { Selectable } from './components/row/selectable';
+import { Observable } from 'rxjs';
 
 /**
  * Defines common behavior a table has
  */
 export interface TableBehavior {
   // probably a selectable: Selectable?
-  selectRow(row: Selectable<RowDefinition>): void;
-  getSelectedRows(): RowDefinition[];
+  onRowSelect(row: RowDefinition, rowIndex: number): void;
+  getSelectedRows(): Observable<RowDefinition[]>;
 }
