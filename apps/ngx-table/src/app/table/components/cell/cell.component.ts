@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Cell } from '../../models/table-models';
+import { Cell, CellRenderer } from '../../models/table-models';
 
 @Component({
   selector: 'ngx-table-cell',
@@ -11,4 +11,10 @@ export class CellComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  getCellRendererType(): CellRenderer {
+    if (this.cell.cellRenderer) {
+      return this.cell.cellRenderer;
+    }
+  }
 }

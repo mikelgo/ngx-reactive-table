@@ -18,6 +18,12 @@ export interface Cell {
   val: any;
   cssClass?: string;
   cellTemplate?: TemplateRef<any>;
+  cellRenderer?: CellRenderer;
+}
+
+export enum CellRenderer {
+  default = 'default',
+  input = 'input'
 }
 
 // TODO interface TableBehavior

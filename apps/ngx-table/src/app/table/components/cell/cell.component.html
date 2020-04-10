@@ -1,1 +1,9 @@
-{{ cell.val }}
+<ng-container *ngIf="!cell.cellRenderer">{{ cell.val }}</ng-container>
+
+<ng-container *ngIf="cell.cellRenderer" [ngSwitch]="cell.cellRenderer">
+  <ngx-table-input-cell-renderer
+    [label]="'Test label'"
+    [value]="cell.val"
+    *ngSwitchCase="'input'"
+  ></ngx-table-input-cell-renderer>
+</ng-container>

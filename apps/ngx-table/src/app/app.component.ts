@@ -1,5 +1,9 @@
 import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
-import { ColumnDefinition, RowDefinition } from './table/models/table-models';
+import {
+  ColumnDefinition,
+  RowDefinition,
+  CellRenderer
+} from './table/models/table-models';
 
 @Component({
   selector: 'ngx-table-root',
@@ -43,11 +47,11 @@ export class AppComponent implements OnInit {
       },
       {
         values: [
-          { val: 'Some longer string value' },
+          { val: 'Some longer string value', cellRenderer: CellRenderer.input },
           { val: 'b' },
           { val: 'c' },
           { val: 'some longer string value which is longer ' },
-          { val: '' }
+          { val: 'asdf asdf ' }
         ]
       }
     ];
