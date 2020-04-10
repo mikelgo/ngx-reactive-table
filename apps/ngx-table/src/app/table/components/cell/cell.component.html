@@ -1,1 +1,11 @@
-{{ cell.val }}
+<ng-container *ngIf="cell.cellTemplate">
+  <ng-template
+    [ngTemplateOutletContext]="{ element: element }"
+    [ngTemplateOutlet]="cell.cellTemplate"
+  >
+  </ng-template>
+</ng-container>
+
+<ng-container class="cell" *ngIf="!cell.cellTemplate">
+  {{ cell.val }}
+</ng-container>
