@@ -29,9 +29,6 @@ import { HeaderComponent } from './components/header/header.component';
   providers: [TableStateService]
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
-  // TODO will be removed
-  @Input() rows: RowDefinition[] = [];
-
   @Input() title: string = '';
 
   @Input() set tableConfig(arg: TableConfig) {
@@ -45,7 +42,6 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     }
   }
 
-  // TODO  map internally to RowDefinition[]
   @Input() set dataColumnDefinition(arg: ColumnDefinition) {
     if (arg) {
       this.stateService.setDataColumnDefinition(arg);
