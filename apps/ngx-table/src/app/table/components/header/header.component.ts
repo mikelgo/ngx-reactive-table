@@ -22,9 +22,6 @@ export class HeaderComponent implements OnInit {
   @Input() columnCount: number = 0;
   gridCols = 4;
   gap = 4;
-  // @HostBinding('style.grid-template-columns')
-  // colum = `repeat(${this.gridCols}, 1fr)`;
-  // @HostBinding('style.grid-gap.px') gap = '10';
 
   get displayColumns() {
     return this._displayColumns;

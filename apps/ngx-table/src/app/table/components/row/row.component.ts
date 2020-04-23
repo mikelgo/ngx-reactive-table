@@ -19,6 +19,7 @@ import { Subject, BehaviorSubject, Observable } from 'rxjs';
 export class RowComponent implements OnInit, Selectable<RowComponent> {
   private isSelected: boolean = false;
   private _row: DataRow = null;
+
   @Input() set row(row: DataRow) {
     if (row) {
       // console.log(row)
@@ -26,7 +27,8 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
     }
   }
 
-  @HostBinding('style.border-top') borderTop: string = '1px solid transparent';
+  @HostBinding('style.border-top')
+  borderTop: string = '1px solid transparent';
   @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
   @HostBinding('style.background-color') backgroundColor: string = 'white';
 

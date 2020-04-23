@@ -1,4 +1,10 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostBinding,
+  OnDestroy
+} from '@angular/core';
 import {
   RowDefinition,
   DataRow,
@@ -9,7 +15,7 @@ import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { RowSelectEvent } from './models/row-select-event';
 import { Subject, Observable } from 'rxjs';
-import { switchMap, scan, startWith } from 'rxjs/operators';
+import { switchMap, scan, startWith, takeUntil } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
@@ -20,7 +26,7 @@ import { Datasource } from '../datasource/datasource';
   styleUrls: ['./table.component.scss'],
   providers: [TableStateService]
 })
-export class TableComponent<T> implements OnInit, TableBehavior {
+export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   @Input() title: string = '';
 
   @Input() set tableConfig(arg: TableConfig) {
@@ -49,18 +55,31 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
+  private destroy$ = new Subject();
   private _tableConfig: TableConfig = null;
 
   public renderHeaders$: Observable<TitleColumn[]>;
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
-
+  gap = 4;
+  private _renderColumnCount: number = 0;
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
+
+    this.renderColumnCount$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(c => (this._renderColumnCount = c));
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+  getTemplateColumns(): string {
+    return `repeat(${this._renderColumnCount}, 1fr)`;
   }
 
   get tableConfig(): TableConfig {

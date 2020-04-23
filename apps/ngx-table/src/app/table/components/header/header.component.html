@@ -3,10 +3,6 @@
   [style.grid-gap.px]="gap"
   [style.grid-template-columns]="getTemplateColumns()"
 >
-  <!-- <ng-container *ngFor="let header of displayColumns">
-    <ngx-table-header-element [header]="header"></ngx-table-header-element>
-  </ng-container> -->
-
   <div
     *ngFor="let header of displayColumns"
     class="table-header-row-value"
