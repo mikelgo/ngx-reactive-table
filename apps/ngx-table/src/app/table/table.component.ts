@@ -28,6 +28,7 @@ import { HeaderComponent } from './components/header/header.component';
   providers: [TableStateService]
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
+  private _dataColumnDefinition: ColumnDefinition = null;
   @Input() title: string = '';
 
   @Input() rows: RowDefinition[] = [];
@@ -37,8 +38,14 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   }
 
   @Input() headerDefinition: HeaderColumns = null;
+
   // TODO  map internally to RowDefinition[]
-  @Input() dataColumnDefinition: ColumnDefinition = null;
+  @Input() set dataColumnDefinition(arg: ColumnDefinition) {
+    if (arg) {
+      console.log(arg);
+      this._dataColumnDefinition = arg;
+    }
+  }
 
   // TODO implement datasource
   @Input() datasource: Datasource<T>;
@@ -78,5 +85,14 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     } else {
       return DEFAULT_TABLE_CONFIG.width;
     }
+  }
+
+  // TODO implement
+  // TODO move to service
+  private mapColumnDefinitionToRowDefinition(
+    columnDefinition: ColumnDefinition,
+    datasource: Datasource<T>
+  ): RowDefinition[] {
+    return null;
   }
 }

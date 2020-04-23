@@ -11,10 +11,10 @@ export interface ColumnDefinition {
 export interface Column {
   id?: string | number;
   index?: number;
-  columnTitle: string;
   hide?: boolean;
   class?: string;
   template?: TemplateRef<any>;
+  cellRenderer?: CellRenderer;
 }
 
 export interface TitleColumn extends Column {
@@ -22,7 +22,7 @@ export interface TitleColumn extends Column {
 }
 
 export interface DataColumn extends Column {
-  value: any;
+  displayProperty: string;
 }
 
 export interface RowDefinition {

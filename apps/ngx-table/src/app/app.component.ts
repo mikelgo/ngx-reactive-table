@@ -7,6 +7,8 @@ import {
   HeaderColumns
 } from './table/models/table-models';
 import { TableConfig } from './table/models/table-config';
+import { ExampleData, getTestdata } from './_example/example.model';
+import { Datasource, TableDatasource } from './datasource/datasource';
 
 @Component({
   selector: 'ngx-table-root',
@@ -26,6 +28,21 @@ export class AppComponent implements OnInit {
       { columnTitle: 'c5' }
     ]
   };
+
+  public dataColumnDefinition: ColumnDefinition = {
+    columns: [
+      { displayProperty: 'id' },
+      { displayProperty: 'p1' },
+      { displayProperty: 'p2' },
+      { displayProperty: 'p3' },
+      { displayProperty: 'p4', cellRenderer: CellRenderer.input }
+    ]
+  };
+
+  public testdata: ExampleData[] = getTestdata();
+  public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(
+    this.testdata
+  );
 
   tableConfig: TableConfig = {
     width: '400px',
