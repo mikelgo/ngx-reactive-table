@@ -48,7 +48,6 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     }
   }
 
-  // TODO implement datasource
   @Input() set datasource(datasource: Datasource<T>) {
     if (datasource) {
       this.stateService.setDatasource(datasource);
