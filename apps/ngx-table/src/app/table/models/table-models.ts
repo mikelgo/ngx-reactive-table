@@ -1,5 +1,9 @@
 import { TemplateRef } from '@angular/core';
 
+export interface HeaderColumns {
+  headerDefinition: Column[];
+}
+
 export interface ColumnDefinition {
   columns: Column[];
 }
@@ -10,6 +14,7 @@ export interface Column {
   columnTitle: string;
   hide?: boolean;
   class?: string;
+  template?: TemplateRef<any>;
 }
 
 export interface RowDefinition {

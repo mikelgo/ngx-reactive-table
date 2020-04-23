@@ -6,7 +6,12 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
-import { Column, RowDefinition, ColumnDefinition } from './models/table-models';
+import {
+  Column,
+  RowDefinition,
+  ColumnDefinition,
+  HeaderColumns
+} from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { RowSelectEvent } from './models/row-select-event';
@@ -32,7 +37,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   }
 
   // TODO impl
-  @Input() headerDefinition: HeaderComponent = null;
+  @Input() headerDefinition: HeaderColumns = null;
   // TODO  map internally to RowDefinition[]
   @Input() dataColumnDefinition: ColumnDefinition = null;
 
