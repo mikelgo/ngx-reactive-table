@@ -28,17 +28,25 @@ import { HeaderComponent } from './components/header/header.component';
   providers: [TableStateService]
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
+  private _headerDefinition: HeaderColumns = null;
   private _dataColumnDefinition: ColumnDefinition = null;
   private _datasource: Datasource<T> = null;
+
+  // TODO will be removed
+  @Input() rows: RowDefinition[] = [];
+
   @Input() title: string = '';
 
-  @Input() rows: RowDefinition[] = [];
   @Input() set tableConfig(arg: TableConfig) {
     this._tableConfig = arg;
     this.initalizeStyles(arg);
   }
 
-  @Input() headerDefinition: HeaderColumns = null;
+  @Input() set headerDefinition(headerDefinition: HeaderColumns) {
+    if (headerDefinition) {
+      this._headerDefinition = headerDefinition;
+    }
+  }
 
   // TODO  map internally to RowDefinition[]
   @Input() set dataColumnDefinition(arg: ColumnDefinition) {
@@ -67,6 +75,10 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
+  }
+
+  get headerDefinition(): HeaderColumns {
+    return this._headerDefinition;
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number) {
