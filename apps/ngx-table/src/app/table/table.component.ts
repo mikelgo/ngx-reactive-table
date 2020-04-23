@@ -50,17 +50,18 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
   private _tableConfig: TableConfig = null;
-  public renderHeaderDefinitions$: Observable<TitleColumn[]>;
-  public renderDataColumnDefinitions$: Observable<DataColumn[]>;
-  public rows$: Observable<DataRow[]>;
+
+  public renderHeaders$: Observable<TitleColumn[]>;
+  public renderRows$: Observable<DataRow[]>;
 
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
-    this.renderHeaderDefinitions$ = this.stateService.renderHeaderDefinitions$;
-    this.rows$ = this.stateService.rows$;
-    this.renderHeaderDefinitions$.subscribe(console.log);
-    this.rows$.subscribe(console.log);
+    this.renderHeaders$ = this.stateService.renderHeaders$;
+    this.renderRows$ = this.stateService.renderRows$;
+
+    this.renderHeaders$.subscribe(console.log);
+    this.renderRows$.subscribe(console.log);
   }
 
   get tableConfig(): TableConfig {

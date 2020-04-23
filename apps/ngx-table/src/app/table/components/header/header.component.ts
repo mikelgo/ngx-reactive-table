@@ -9,7 +9,6 @@ import { TitleColumn } from '../../models/table-models';
 export class HeaderComponent implements OnInit {
   private _displayColumns: TitleColumn[] = [];
   @Input() set displayColumns(displayColumns: TitleColumn[]) {
-    console.log(displayColumns);
     this._displayColumns = displayColumns;
   }
 

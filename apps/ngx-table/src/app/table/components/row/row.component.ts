@@ -18,7 +18,13 @@ import { Subject, BehaviorSubject, Observable } from 'rxjs';
 })
 export class RowComponent implements OnInit, Selectable<RowComponent> {
   private isSelected: boolean = false;
-  @Input() row: DataRow = null;
+  private _row: DataRow = null;
+  @Input() set row(row: DataRow) {
+    if (row) {
+      // console.log(row)
+      this._row = row;
+    }
+  }
 
   @HostBinding('style.border-top') borderTop: string = '1px solid transparent';
   @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
@@ -43,6 +49,10 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
   @HostListener('click') onSelect(selectable: RowComponent) {
     this.isSelected = !this.isSelected;
     this.setClickStyle(this.isSelected);
+  }
+
+  get row(): DataRow {
+    return this._row;
   }
 
   constructor() {}
