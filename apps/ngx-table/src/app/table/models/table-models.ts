@@ -9,6 +9,8 @@ import { TemplateRef } from '@angular/core';
  */
 export interface DataColumn extends Column {
   displayProperty: string;
+  id?: string | number;
+  hide?: boolean;
 }
 
 /**

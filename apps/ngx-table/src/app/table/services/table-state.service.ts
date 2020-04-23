@@ -21,7 +21,8 @@ import {
   tap,
   takeUntil,
   concatAll,
-  toArray
+  toArray,
+  distinctUntilChanged
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
@@ -36,15 +37,21 @@ export class TableStateService<T> implements OnDestroy {
 
   private headerDefinition$: Observable<
     TitleColumn[]
-  > = this.headerDefinition.asObservable();
+  > = this.headerDefinition.asObservable().pipe(distinctUntilChanged());
 
   private dataColumnDefinition$: Observable<
     DataColumn[]
-  > = this.dataColumnDefinition.asObservable().pipe(filter(v => v !== null));
+  > = this.dataColumnDefinition.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
 
   private datasource$: Observable<
     Datasource<T>
-  > = this.datasource.asObservable().pipe(filter(v => v !== null));
+  > = this.datasource.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
 
   private selectedRows: RowDefinition[] = [];
   private selectedRowsCache$$ = new BehaviorSubject<RowDefinition[]>(null);
@@ -58,27 +65,47 @@ export class TableStateService<T> implements OnDestroy {
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
   public rows$: Observable<DataRow[]> = combineLatest([
+    this.headerDefinition$,
     this.dataColumnDefinition$,
     this.datasource$
   ]).pipe(
-    map(([columnDefinition, datasource]) =>
-      this.mapColumnDefinitionToRowDefinition(columnDefinition, datasource)
+    map(([headerDefinition, columnDefinition, datasource]) =>
+      this.mapColumnDefinitionToRowDefinition(
+        headerDefinition,
+        columnDefinition,
+        datasource
+      )
     )
   );
-  // TODO when hide then do not publish
-  // TODO when hide then also adapt row data
+
   // TODO onCOlumnHideChangeClick$$ = hier rein mergen und dann column definition anpassen
   public renderHeaderDefinitions$: Observable<
     TitleColumn[]
   > = this.headerDefinition
     .asObservable()
     .pipe(map(titleColumns => titleColumns.filter(c => !c.hide)));
+
+  private updateDataColumnDefinitionOnHeaderDefinitionChange$: Observable<any>;
   // public renderDataColumnDefinitions$: Observable<
   //   ColumnDefinition
   // > = this.dataColumnDefinition.asObservable();
 
   constructor() {
     this.rows$.pipe(takeUntil(this.destroy$)).subscribe();
+    // up
+    this.updateDataColumnDefinitionOnHeaderDefinitionChange$ = combineLatest([
+      this.headerDefinition$,
+      this.dataColumnDefinition$
+    ]).pipe(
+      takeUntil(this.destroy$),
+      map(([headerDefinition, dataColumnDefinition]) => headerDefinition),
+      filter(v => v !== null),
+      map(headerDefinition => this.updateDataColumns(headerDefinition))
+    );
+
+    this.updateDataColumnDefinitionOnHeaderDefinitionChange$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
   }
 
   ngOnDestroy() {
@@ -138,20 +165,26 @@ export class TableStateService<T> implements OnDestroy {
   public getDatasource(): Datasource<T> {
     return this.datasource.getValue();
   }
-
+  // TODO when hide then also adapt row data
   private mapColumnDefinitionToRowDefinition(
+    headerDefinition: TitleColumn[],
     columnDefinition: DataColumn[],
     datasource: Datasource<T>
   ): DataRow[] {
     const rows: DataRow[] = [];
     if (columnDefinition && datasource) {
-      // console.log('INCOMING ARGS: %o %o', columnDefinition, datasource);
       // console.log('VALID ARGS');
-      const valueKeys: string[] = columnDefinition.map(c => c.displayProperty);
+      // console.log(
+      //   'INCOMING ARGS: %o %o %o',
+      //   headerDefinition,
+      //   columnDefinition,
+      //   datasource
+      // );
+
       datasource.getData().forEach((row, index) => {
         rows.push({
           index: index,
-          values: this.getRowValues(row, columnDefinition)
+          values: this.getRowValues(row, headerDefinition, columnDefinition)
         });
       });
     }
@@ -159,7 +192,18 @@ export class TableStateService<T> implements OnDestroy {
     return rows;
   }
 
-  private getRowValues(row: T, columnDefinition: DataColumn[]): Cell[] {
+  private getRowValues(
+    row: T,
+    headerDefinition: TitleColumn[],
+    columnDefinition: DataColumn[]
+  ): Cell[] {
+    // console.log('VALID ARGS');
+    // console.log(
+    //   'INCOMING ARGS: %o %o %o',
+    //   headerDefinition,
+    //   columnDefinition,
+    //   row
+    // );
     const values: Cell[] = [];
 
     columnDefinition.forEach(column => {
@@ -175,5 +219,21 @@ export class TableStateService<T> implements OnDestroy {
 
   private getID(): string {
     return uuidv4();
+  }
+
+  private updateDataColumns(headerDefinition: TitleColumn[]) {
+    const dataColumns: DataColumn[] = this.getDataColumnDefinition();
+
+    // console.log(headerDefinition);
+    // console.log(this.dataColumnDefinition.getValue());
+    headerDefinition.forEach((h, index) => {
+      dataColumns[h.index] = {
+        ...dataColumns[index],
+        id: h.id ? h.id : null,
+        hide: h.hide ? h.hide : false
+      };
+    });
+
+    this.setDataColumnDefinition(dataColumns);
   }
 }
