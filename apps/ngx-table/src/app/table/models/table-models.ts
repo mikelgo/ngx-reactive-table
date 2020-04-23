@@ -32,6 +32,13 @@ export interface RowDefinition {
   values: Cell[]; // the values for each colum
 }
 
+export interface DataRow {
+  id?: string | number;
+  index?: number;
+  cssClass?: string;
+  values: any[];
+}
+
 export interface Cell {
   val: any;
   cssClass?: string;

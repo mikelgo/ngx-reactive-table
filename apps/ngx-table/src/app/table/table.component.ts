@@ -47,7 +47,6 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   // TODO  map internally to RowDefinition[]
   @Input() set dataColumnDefinition(arg: ColumnDefinition) {
     if (arg) {
-      console.log(arg);
       this.stateService.setDataColumnDefinition(arg);
     }
   }
@@ -55,7 +54,6 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   // TODO implement datasource
   @Input() set datasource(datasource: Datasource<T>) {
     if (datasource) {
-      console.log(datasource);
       this.stateService.setDatasource(datasource);
     }
   }
