@@ -1,5 +1,2 @@
-<ng-container *ngFor="let cellValue of row.values">
-  <ng-container *ngIf="!cellValue.hide">
-    <ngx-table-cell [cell]="cellValue"> </ngx-table-cell>
-  </ng-container>
-</ng-container>
+<ngx-table-cell *ngFor="let cellValue of row.values" [cell]="cellValue">
+</ngx-table-cell>

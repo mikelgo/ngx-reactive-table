@@ -1,12 +1,9 @@
 <div class="table-header-row">
-  <ng-container *ngFor="let header of displayColumns">
-    <ng-container *ngIf="!header.hide">
-      <div
-        class="table-header-row-value"
-        [ngClass]="header.class ? header.class : ''"
-      >
-        {{ header.columnTitle }}
-      </div>
-    </ng-container>
-  </ng-container>
+  <div
+    *ngFor="let header of displayColumns"
+    class="table-header-row-value"
+    [ngClass]="header.class ? header.class : ''"
+  >
+    {{ header.columnTitle }}
+  </div>
 </div>
