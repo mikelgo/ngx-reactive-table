@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Column } from '../../models/table-models';
+import { TitleColumn } from '../../models/table-models';
 
 @Component({
   selector: 'ngx-table-header',
@@ -7,7 +7,15 @@ import { Column } from '../../models/table-models';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() displayColumns: Column[] = [];
+  private _displayColumns: TitleColumn[] = [];
+  @Input() set displayColumns(displayColumns: TitleColumn[]) {
+    console.log(displayColumns);
+    this._displayColumns = displayColumns;
+  }
+
+  get displayColumns() {
+    return this._displayColumns;
+  }
   constructor() {}
 
   ngOnInit() {}

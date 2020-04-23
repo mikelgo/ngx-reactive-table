@@ -1,13 +1,5 @@
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  Input,
-  HostBinding,
-  EventEmitter,
-  Output
-} from '@angular/core';
-import {
-  Column,
   RowDefinition,
   DataRow,
   TitleColumn,
@@ -21,7 +13,7 @@ import { switchMap, scan, startWith } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
-import { HeaderComponent } from './components/header/header.component';
+
 @Component({
   selector: 'ngx-table-table',
   templateUrl: './table.component.html',
@@ -67,6 +59,8 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   ngOnInit() {
     this.renderHeaderDefinitions$ = this.stateService.renderHeaderDefinitions$;
     this.rows$ = this.stateService.rows$;
+    this.renderHeaderDefinitions$.subscribe(console.log);
+    this.rows$.subscribe(console.log);
   }
 
   get tableConfig(): TableConfig {

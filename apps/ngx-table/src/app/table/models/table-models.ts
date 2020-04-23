@@ -54,6 +54,7 @@ export interface DataRow {
 
 export interface Cell {
   val: any;
+  hide?: boolean;
   cssClass?: string;
   template?: TemplateRef<any>;
 

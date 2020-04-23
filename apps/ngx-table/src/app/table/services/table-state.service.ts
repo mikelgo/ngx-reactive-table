@@ -37,6 +37,11 @@ export class TableStateService<T> implements OnDestroy {
 
   // TODO render headerDefinitions and datacolumns must be adapted du to hide --> should not be no visible in dom
   // currently data is not shown but still a column is rendered
+  /**
+   * To Achive this I will introduce a new internal Column Model
+   * RenderColumns -> conbines header and data rows otherwise not possible to hide/show
+   * columns
+   */
   private headerDefinition$: Observable<
     TitleColumn[]
   > = this.headerDefinition.asObservable().pipe(distinctUntilChanged());
@@ -209,12 +214,14 @@ export class TableStateService<T> implements OnDestroy {
     const values: Cell[] = [];
 
     columnDefinition.forEach((column, index) => {
-      values.push({
-        val: !column.hide ? row[column.displayProperty] : null,
-        cellRenderer: column.cellRenderer ? column.cellRenderer : null,
-        template: column.template ? column.template : null,
-        cssClass: column.class ? column.class : null
-      });
+      if (!column.hide) {
+        values.push({
+          val: row[column.displayProperty],
+          cellRenderer: column.cellRenderer ? column.cellRenderer : null,
+          template: column.template ? column.template : null,
+          cssClass: column.class ? column.class : null
+        });
+      }
     });
     return values;
   }
