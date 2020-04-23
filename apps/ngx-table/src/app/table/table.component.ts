@@ -62,6 +62,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
   // TODO those properties should be assigned to the row component
+  // TODO after that provide from service: hiddenColumns$ and possibility to show hidden columnns
+  // TODO possibility to hide columns dynamically
   gap = 4;
   private _renderColumnCount: number = 0;
   constructor(public stateService: TableStateService<T>) {}
