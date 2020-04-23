@@ -14,7 +14,6 @@ import { Datasource } from '../../datasource/datasource';
   providedIn: 'root'
 })
 export class TableStateService<T> {
-  // TODO hier gehts weiter
   private headerDefinition = new BehaviorSubject<HeaderColumns>(null);
   private dataColumnDefinition = new BehaviorSubject<ColumnDefinition>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
@@ -128,13 +127,3 @@ export class TableStateService<T> {
     return values;
   }
 }
-/**
- * TODO:
- * Cache for data which comes from datasource
- * provides data
- * updates data
- *
- * provides cache for selected rows
- *
- * Initializes columns/row indices?
- */
