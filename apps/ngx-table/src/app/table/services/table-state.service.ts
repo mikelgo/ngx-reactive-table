@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { RowDefinition } from '../models/table-models';
+import {
+  RowDefinition,
+  HeaderColumns,
+  ColumnDefinition
+} from '../models/table-models';
 import { map, startWith, filter } from 'rxjs/operators';
+import { Datasource } from '../../datasource/datasource';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TableStateService {
+export class TableStateService<T> {
+  // TODO hier gehts weiter
+  private headerDefinition = new BehaviorSubject<HeaderColumns>(null);
+  private dataColumnDefinition = new BehaviorSubject<ColumnDefinition>(null);
+  private datasource = new BehaviorSubject<Datasource<T>>(null);
+
   private selectedRows: RowDefinition[] = [];
   private selectedRowsCache$$ = new BehaviorSubject<RowDefinition[]>(null);
   public selectedRows$ = this.selectedRowsCache$$.asObservable();
@@ -17,6 +27,8 @@ export class TableStateService {
 
   private lastSelectedRowCache$$ = new BehaviorSubject<RowDefinition>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
+
+  constructor() {}
 
   public onRowSelect(row: RowDefinition, rowIndex: number): void {
     if (!this.selectedRows.includes(row)) {
@@ -30,7 +42,38 @@ export class TableStateService {
 
     this.lastSelectedRowCache$$.next(row);
   }
-  constructor() {}
+
+  public setHeaderDefinition(headerDefinition: HeaderColumns): void {
+    this.headerDefinition.next(headerDefinition);
+  }
+
+  public getHeaderDefinition(): HeaderColumns {
+    return this.headerDefinition.getValue();
+  }
+
+  public setDataColumnDefinition(dataColumnDefinition: ColumnDefinition): void {
+    this.dataColumnDefinition.next(dataColumnDefinition);
+  }
+
+  public getDataColumnDefinition(): ColumnDefinition {
+    return this.dataColumnDefinition.getValue();
+  }
+
+  public setDatasource(datasource: Datasource<T>): void {
+    this.datasource.next(datasource);
+  }
+
+  public getDatasource(): Datasource<T> {
+    return this.datasource.getValue();
+  }
+
+  // TODO implement
+  private mapColumnDefinitionToRowDefinition(
+    columnDefinition: ColumnDefinition,
+    datasource: Datasource<T>
+  ): RowDefinition[] {
+    return null;
+  }
 }
 /**
  * TODO:

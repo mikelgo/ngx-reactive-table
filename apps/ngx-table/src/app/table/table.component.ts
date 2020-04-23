@@ -28,10 +28,6 @@ import { HeaderComponent } from './components/header/header.component';
   providers: [TableStateService]
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
-  private _headerDefinition: HeaderColumns = null;
-  private _dataColumnDefinition: ColumnDefinition = null;
-  private _datasource: Datasource<T> = null;
-
   // TODO will be removed
   @Input() rows: RowDefinition[] = [];
 
@@ -44,7 +40,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   @Input() set headerDefinition(headerDefinition: HeaderColumns) {
     if (headerDefinition) {
-      this._headerDefinition = headerDefinition;
+      this.stateService.setHeaderDefinition(headerDefinition);
     }
   }
 
@@ -52,7 +48,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   @Input() set dataColumnDefinition(arg: ColumnDefinition) {
     if (arg) {
       console.log(arg);
-      this._dataColumnDefinition = arg;
+      this.stateService.setDataColumnDefinition(arg);
     }
   }
 
@@ -60,7 +56,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   @Input() set datasource(datasource: Datasource<T>) {
     if (datasource) {
       console.log(datasource);
-      this._datasource = datasource;
+      this.stateService.setDatasource(datasource);
     }
   }
 
@@ -69,7 +65,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   private _tableConfig: TableConfig = null;
 
-  constructor(public stateService: TableStateService) {}
+  constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {}
 
@@ -78,7 +74,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   }
 
   get headerDefinition(): HeaderColumns {
-    return this._headerDefinition;
+    return this.stateService.getHeaderDefinition();
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number) {
@@ -103,14 +99,5 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     } else {
       return DEFAULT_TABLE_CONFIG.width;
     }
-  }
-
-  // TODO implement
-  // TODO move to service
-  private mapColumnDefinitionToRowDefinition(
-    columnDefinition: ColumnDefinition,
-    datasource: Datasource<T>
-  ): RowDefinition[] {
-    return null;
   }
 }
