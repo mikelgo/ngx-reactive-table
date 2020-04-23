@@ -29,14 +29,13 @@ import { HeaderComponent } from './components/header/header.component';
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
   @Input() title: string = '';
-  @Input() displayColumns: ColumnDefinition = null;
+
   @Input() rows: RowDefinition[] = [];
   @Input() set tableConfig(arg: TableConfig) {
     this._tableConfig = arg;
     this.initalizeStyles(arg);
   }
 
-  // TODO impl
   @Input() headerDefinition: HeaderColumns = null;
   // TODO  map internally to RowDefinition[]
   @Input() dataColumnDefinition: ColumnDefinition = null;

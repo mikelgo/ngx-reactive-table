@@ -3,7 +3,8 @@ import {
   Column,
   RowDefinition,
   CellRenderer,
-  ColumnDefinition
+  ColumnDefinition,
+  HeaderColumns
 } from './table/models/table-models';
 import { TableConfig } from './table/models/table-config';
 
@@ -16,6 +17,16 @@ export class AppComponent implements OnInit {
   title = 'ngx-table';
   public rows: RowDefinition[];
 
+  public headerDefinition: HeaderColumns = {
+    headers: [
+      { columnTitle: 'c1' },
+      { columnTitle: 'c2' },
+      { columnTitle: 'c3' },
+      { columnTitle: 'c4' },
+      { columnTitle: 'c5' }
+    ]
+  };
+
   tableConfig: TableConfig = {
     width: '400px',
     maxBodyHeight: '200px'
@@ -24,17 +35,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.rows = this.initializeRows();
   }
-  initializeColumns(): ColumnDefinition {
-    return {
-      columns: [
-        { columnTitle: 'c1' },
-        { columnTitle: 'c2' },
-        { columnTitle: 'c3' },
-        { columnTitle: 'c4' },
-        { columnTitle: 'c5' }
-      ]
-    };
-  }
+
   getVal(element) {
     console.log(element);
     return element;

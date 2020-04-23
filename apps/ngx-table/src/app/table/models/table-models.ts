@@ -1,7 +1,7 @@
 import { TemplateRef } from '@angular/core';
 
 export interface HeaderColumns {
-  headerDefinition: Column[];
+  headers: Column[];
 }
 
 export interface ColumnDefinition {

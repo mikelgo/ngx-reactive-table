@@ -1,7 +1,7 @@
 <div class="container">
   <ngx-table-table
     [title]="'Table title'"
-    [displayColumns]="initializeColumns()"
+    [headerDefinition]="headerDefinition"
     [rows]="rows"
     [tableConfig]="tableConfig"
   >
@@ -11,7 +11,7 @@
 <div class="container-2">
   <ngx-table-table
     [title]="'Table title'"
-    [displayColumns]="initializeColumns()"
+    [headerDefinition]="headerDefinition"
     [rows]="rows"
   >
   </ngx-table-table>

@@ -1,4 +1,6 @@
-<ngx-table-header [displayColumns]="displayColumns.columns"></ngx-table-header>
+<ngx-table-header
+  [displayColumns]="headerDefinition.headers"
+></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
     *ngFor="let row of rows; let i = index"
