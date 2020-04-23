@@ -3,8 +3,8 @@ import {
   Column,
   RowDefinition,
   CellRenderer,
-  ColumnDefinition,
-  TitleColumn
+  TitleColumn,
+  DataColumn
 } from './table/models/table-models';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
@@ -27,15 +27,13 @@ export class AppComponent implements OnInit {
   ];
 
   // TODO check with custom template
-  public dataColumnDefinition: ColumnDefinition = {
-    columns: [
-      { displayProperty: 'id' },
-      { displayProperty: 'p1' },
-      { displayProperty: 'p2' },
-      { displayProperty: 'p3' },
-      { displayProperty: 'p4' }
-    ]
-  };
+  public dataColumnDefinition: DataColumn[] = [
+    { displayProperty: 'id' },
+    { displayProperty: 'p1' },
+    { displayProperty: 'p2' },
+    { displayProperty: 'p3' },
+    { displayProperty: 'p4' }
+  ];
 
   public testdata: ExampleData[] = getTestdata();
   public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(

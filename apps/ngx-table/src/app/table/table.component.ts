@@ -9,9 +9,9 @@ import {
 import {
   Column,
   RowDefinition,
-  ColumnDefinition,
   DataRow,
-  TitleColumn
+  TitleColumn,
+  DataColumn
 } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
@@ -42,7 +42,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     }
   }
 
-  @Input() set dataColumnDefinition(arg: ColumnDefinition) {
+  @Input() set dataColumnDefinition(arg: DataColumn[]) {
     if (arg) {
       this.stateService.setDataColumnDefinition(arg);
     }
@@ -59,7 +59,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   private _tableConfig: TableConfig = null;
   public renderHeaderDefinitions$: Observable<TitleColumn[]>;
-  public renderDataColumnDefinitions$: Observable<ColumnDefinition>;
+  public renderDataColumnDefinitions$: Observable<DataColumn[]>;
   public rows$: Observable<DataRow[]>;
 
   constructor(public stateService: TableStateService<T>) {}

@@ -10,9 +10,7 @@ import { TemplateRef } from '@angular/core';
 export interface DataColumn extends Column {
   displayProperty: string;
 }
-export interface ColumnDefinition {
-  columns: DataColumn[];
-}
+
 /**
  * Defines a Column
  */

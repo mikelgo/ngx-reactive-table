@@ -8,10 +8,10 @@ import {
 } from 'rxjs';
 import {
   RowDefinition,
-  ColumnDefinition,
   DataRow,
   Cell,
-  TitleColumn
+  TitleColumn,
+  DataColumn
 } from '../models/table-models';
 import {
   map,
@@ -31,7 +31,7 @@ import { v4 as uuidv4 } from 'uuid';
 export class TableStateService<T> implements OnDestroy {
   private destroy$ = new Subject();
   private headerDefinition = new BehaviorSubject<TitleColumn[]>(null);
-  private dataColumnDefinition = new BehaviorSubject<ColumnDefinition>(null);
+  private dataColumnDefinition = new BehaviorSubject<DataColumn[]>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
   private headerDefinition$: Observable<
@@ -39,7 +39,7 @@ export class TableStateService<T> implements OnDestroy {
   > = this.headerDefinition.asObservable();
 
   private dataColumnDefinition$: Observable<
-    ColumnDefinition
+    DataColumn[]
   > = this.dataColumnDefinition.asObservable().pipe(filter(v => v !== null));
 
   private datasource$: Observable<
@@ -123,12 +123,11 @@ export class TableStateService<T> implements OnDestroy {
     return this.headerDefinition.getValue();
   }
 
-  public setDataColumnDefinition(dataColumnDefinition: ColumnDefinition): void {
-    console.log(dataColumnDefinition);
+  public setDataColumnDefinition(dataColumnDefinition: DataColumn[]): void {
     this.dataColumnDefinition.next(dataColumnDefinition);
   }
 
-  public getDataColumnDefinition(): ColumnDefinition {
+  public getDataColumnDefinition(): DataColumn[] {
     return this.dataColumnDefinition.getValue();
   }
 
@@ -141,16 +140,14 @@ export class TableStateService<T> implements OnDestroy {
   }
 
   private mapColumnDefinitionToRowDefinition(
-    columnDefinition: ColumnDefinition,
+    columnDefinition: DataColumn[],
     datasource: Datasource<T>
   ): DataRow[] {
     const rows: DataRow[] = [];
     if (columnDefinition && datasource) {
       // console.log('INCOMING ARGS: %o %o', columnDefinition, datasource);
       // console.log('VALID ARGS');
-      const valueKeys: string[] = columnDefinition.columns.map(
-        c => c.displayProperty
-      );
+      const valueKeys: string[] = columnDefinition.map(c => c.displayProperty);
       datasource.getData().forEach((row, index) => {
         rows.push({
           index: index,
@@ -162,10 +159,10 @@ export class TableStateService<T> implements OnDestroy {
     return rows;
   }
 
-  private getRowValues(row: T, columnDefinition: ColumnDefinition): Cell[] {
+  private getRowValues(row: T, columnDefinition: DataColumn[]): Cell[] {
     const values: Cell[] = [];
 
-    columnDefinition.columns.forEach(column => {
+    columnDefinition.forEach(column => {
       values.push({
         val: row[column.displayProperty],
         cellRenderer: column.cellRenderer ? column.cellRenderer : null,
