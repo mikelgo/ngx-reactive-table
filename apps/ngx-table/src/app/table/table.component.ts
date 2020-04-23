@@ -14,13 +14,15 @@ import { Subject, Observable } from 'rxjs';
 import { switchMap, scan, startWith } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
+import { Datasource } from '../datasource/datasource';
+import { HeaderComponent } from './components/header/header.component';
 @Component({
   selector: 'ngx-table-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   providers: [TableStateService]
 })
-export class TableComponent implements OnInit, TableBehavior {
+export class TableComponent<T> implements OnInit, TableBehavior {
   @Input() title: string = '';
   @Input() displayColumns: ColumnDefinition = null;
   @Input() rows: RowDefinition[] = [];
@@ -29,12 +31,20 @@ export class TableComponent implements OnInit, TableBehavior {
     this.initalizeStyles(arg);
   }
 
+  // TODO impl
+  @Input() headerDefinition: HeaderComponent = null;
+  // TODO  map internally to RowDefinition[]
+  @Input() dataColumnDefinition: ColumnDefinition = null;
+
+  // TODO implement datasource
+  @Input() datasource: Datasource<T>;
+
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
   private _tableConfig: TableConfig = null;
 
-  constructor(private stateService: TableStateService) {}
+  constructor(public stateService: TableStateService) {}
 
   ngOnInit() {}
 
