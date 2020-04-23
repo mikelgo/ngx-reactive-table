@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     { columnTitle: 'ID' },
     { columnTitle: 'Firstname' },
     { columnTitle: 'Lastname' },
-    { columnTitle: 'Job' },
+    { columnTitle: 'Job', hide: true },
     { columnTitle: 'App', hide: true }
   ];
 
@@ -31,8 +31,8 @@ export class AppComponent implements OnInit {
     { displayProperty: 'id' },
     { displayProperty: 'p1' },
     { displayProperty: 'p2' },
-    { displayProperty: 'p3' },
-    { displayProperty: 'p4' }
+    { displayProperty: 'p3', hide: true },
+    { displayProperty: 'p4', hide: true }
   ];
 
   public testdata: ExampleData[] = getTestdata();

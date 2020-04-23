@@ -60,8 +60,8 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
 
-    this.renderHeaders$.subscribe(console.log);
-    this.renderRows$.subscribe(console.log);
+    // this.renderHeaders$.subscribe(console.log);
+    // this.renderRows$.subscribe(console.log);
   }
 
   get tableConfig(): TableConfig {

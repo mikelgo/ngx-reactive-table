@@ -44,7 +44,10 @@ export class TableStateService<T> implements OnDestroy {
    */
   private headerDefinition$: Observable<
     TitleColumn[]
-  > = this.headerDefinition.asObservable().pipe(distinctUntilChanged());
+  > = this.headerDefinition.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
 
   private dataColumnDefinition$: Observable<
     DataColumn[]
@@ -53,7 +56,7 @@ export class TableStateService<T> implements OnDestroy {
     distinctUntilChanged()
   );
 
-  private dataColumns$: Observable<DataColumn[]>;
+  private renderDataColumns$: Observable<DataColumn[]>;
 
   private datasource$: Observable<
     Datasource<T>
@@ -103,7 +106,8 @@ export class TableStateService<T> implements OnDestroy {
   public renderRows$: Observable<DataRow[]>;
 
   constructor() {
-    this.dataColumns$ = combineLatest([
+    this.headerDefinition$.subscribe(console.log);
+    this.renderDataColumns$ = combineLatest([
       this.dataColumnDefinition$,
       this.headerDefinition$
     ]).pipe(
@@ -113,12 +117,12 @@ export class TableStateService<T> implements OnDestroy {
       distinctUntilChanged()
     );
 
-    this.dataColumns$.subscribe();
+    this.renderDataColumns$.subscribe();
 
     this.initialization$ = combineLatest([
       this.datasource$,
       this.headerDefinition$,
-      this.dataColumns$
+      this.renderDataColumns$
     ]);
 
     this.renderHeaders$ = this.initialization$.pipe(
@@ -191,7 +195,8 @@ export class TableStateService<T> implements OnDestroy {
   }
 
   public setDatasource(datasource: Datasource<T>): void {
-    console.log(datasource);
+    // console.log(datasource);
+
     this.datasource.next(datasource);
   }
 
@@ -213,7 +218,6 @@ export class TableStateService<T> implements OnDestroy {
         });
       });
     }
-
     return rows;
   }
 
