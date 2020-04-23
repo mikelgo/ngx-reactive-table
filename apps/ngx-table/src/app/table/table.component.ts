@@ -29,6 +29,7 @@ import { HeaderComponent } from './components/header/header.component';
 })
 export class TableComponent<T> implements OnInit, TableBehavior {
   private _dataColumnDefinition: ColumnDefinition = null;
+  private _datasource: Datasource<T> = null;
   @Input() title: string = '';
 
   @Input() rows: RowDefinition[] = [];
@@ -48,7 +49,12 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   }
 
   // TODO implement datasource
-  @Input() datasource: Datasource<T>;
+  @Input() set datasource(datasource: Datasource<T>) {
+    if (datasource) {
+      console.log(datasource);
+      this._datasource = datasource;
+    }
+  }
 
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
