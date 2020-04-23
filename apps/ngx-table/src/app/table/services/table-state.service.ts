@@ -106,7 +106,7 @@ export class TableStateService<T> {
       datasource.getData().forEach((row, index) => {
         rows.push({
           index: index,
-          values: this.getRowValues(row, valueKeys)
+          values: this.getRowValues(row, columnDefinition)
         });
       });
     }
@@ -114,13 +114,17 @@ export class TableStateService<T> {
     return rows;
   }
 
-  private getRowValues(row: T, valueKeys: string[]): Cell[] {
+  private getRowValues(row: T, columnDefinition: ColumnDefinition): Cell[] {
     const values: Cell[] = [];
-    valueKeys.forEach(key =>
+
+    columnDefinition.columns.forEach(column => {
       values.push({
-        val: row[key]
-      })
-    );
+        val: row[column.displayProperty],
+        cellRenderer: column.cellRenderer ? column.cellRenderer : null,
+        template: column.template ? column.template : null,
+        cssClass: column.class ? column.class : null
+      });
+    });
     return values;
   }
 }

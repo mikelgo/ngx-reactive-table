@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
       { displayProperty: 'p1' },
       { displayProperty: 'p2' },
       { displayProperty: 'p3' },
-      { displayProperty: 'p4', cellRenderer: CellRenderer.input }
+      { displayProperty: 'p4' }
     ]
   };
 

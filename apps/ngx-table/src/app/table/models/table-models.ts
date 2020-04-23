@@ -42,6 +42,8 @@ export interface DataRow {
 export interface Cell {
   val: any;
   cssClass?: string;
+  template?: TemplateRef<any>;
+
   cellRenderer?: CellRenderer;
 }
 
