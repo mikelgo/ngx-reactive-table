@@ -1,25 +1,41 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, defer } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  defer,
+  Subject
+} from 'rxjs';
 import {
   RowDefinition,
-  HeaderColumns,
   ColumnDefinition,
   DataRow,
-  Cell
+  Cell,
+  TitleColumn
 } from '../models/table-models';
-import { map, startWith, filter, skip, tap } from 'rxjs/operators';
+import {
+  map,
+  startWith,
+  filter,
+  skip,
+  tap,
+  takeUntil,
+  concatAll,
+  toArray
+} from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
-
+import { v4 as uuidv4 } from 'uuid';
 @Injectable({
   providedIn: 'root'
 })
-export class TableStateService<T> {
-  private headerDefinition = new BehaviorSubject<HeaderColumns>(null);
+export class TableStateService<T> implements OnDestroy {
+  private destroy$ = new Subject();
+  private headerDefinition = new BehaviorSubject<TitleColumn[]>(null);
   private dataColumnDefinition = new BehaviorSubject<ColumnDefinition>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
   private headerDefinition$: Observable<
-    HeaderColumns
+    TitleColumn[]
   > = this.headerDefinition.asObservable();
 
   private dataColumnDefinition$: Observable<
@@ -49,9 +65,33 @@ export class TableStateService<T> {
       this.mapColumnDefinitionToRowDefinition(columnDefinition, datasource)
     )
   );
+  // TODO when hide then do not publish
+  // TODO when hide then also adapt row data
+  // TODO onCOlumnHideChangeClick$$ = hier rein mergen und dann column definition anpassen
+  public renderHeaderDefinitions$: Observable<
+    TitleColumn[]
+  > = this.headerDefinition
+    .asObservable()
+    .pipe(map(titleColumns => titleColumns.filter(c => !c.hide)));
+  // public renderDataColumnDefinitions$: Observable<
+  //   ColumnDefinition
+  // > = this.dataColumnDefinition.asObservable();
 
   constructor() {
-    this.rows$.subscribe(console.log);
+    this.rows$.pipe(takeUntil(this.destroy$)).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    this.headerDefinition.complete();
+    this.dataColumnDefinition.complete();
+    this.datasource.complete();
+
+    this.selectedRows = [];
+    this.selectedRowsCache$$.complete();
+    this.lastSelectedRowCache$$.complete();
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number): void {
@@ -67,15 +107,24 @@ export class TableStateService<T> {
     this.lastSelectedRowCache$$.next(row);
   }
 
-  public setHeaderDefinition(headerDefinition: HeaderColumns): void {
-    this.headerDefinition.next(headerDefinition);
+  public setHeaderDefinition(headerDefinition: TitleColumn[]): void {
+    const headers: TitleColumn[] = [...headerDefinition];
+    headers.forEach((header, index) => {
+      header.id = header.id ? header.id : this.getID();
+      header.index = index;
+      header.hide = header.hide ? header.hide : false;
+    });
+
+    // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
+    this.headerDefinition.next(headers);
   }
 
-  public getHeaderDefinition(): HeaderColumns {
+  public getHeaderDefinition(): TitleColumn[] {
     return this.headerDefinition.getValue();
   }
 
   public setDataColumnDefinition(dataColumnDefinition: ColumnDefinition): void {
+    console.log(dataColumnDefinition);
     this.dataColumnDefinition.next(dataColumnDefinition);
   }
 
@@ -97,8 +146,8 @@ export class TableStateService<T> {
   ): DataRow[] {
     const rows: DataRow[] = [];
     if (columnDefinition && datasource) {
-      console.log('INCOMING ARGS: %o %o', columnDefinition, datasource);
-      console.log('VALID ARGS');
+      // console.log('INCOMING ARGS: %o %o', columnDefinition, datasource);
+      // console.log('VALID ARGS');
       const valueKeys: string[] = columnDefinition.columns.map(
         c => c.displayProperty
       );
@@ -125,5 +174,9 @@ export class TableStateService<T> {
       });
     });
     return values;
+  }
+
+  private getID(): string {
+    return uuidv4();
   }
 }

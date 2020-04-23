@@ -10,8 +10,8 @@ import {
   Column,
   RowDefinition,
   ColumnDefinition,
-  HeaderColumns,
-  DataRow
+  DataRow,
+  TitleColumn
 } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
@@ -36,7 +36,7 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     this.initalizeStyles(arg);
   }
 
-  @Input() set headerDefinition(headerDefinition: HeaderColumns) {
+  @Input() set headerDefinition(headerDefinition: TitleColumn[]) {
     if (headerDefinition) {
       this.stateService.setHeaderDefinition(headerDefinition);
     }
@@ -58,20 +58,19 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
   private _tableConfig: TableConfig = null;
+  public renderHeaderDefinitions$: Observable<TitleColumn[]>;
+  public renderDataColumnDefinitions$: Observable<ColumnDefinition>;
   public rows$: Observable<DataRow[]>;
 
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
+    this.renderHeaderDefinitions$ = this.stateService.renderHeaderDefinitions$;
     this.rows$ = this.stateService.rows$;
   }
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
-  }
-
-  get headerDefinition(): HeaderColumns {
-    return this.stateService.getHeaderDefinition();
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number) {

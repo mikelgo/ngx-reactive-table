@@ -1,5 +1,5 @@
 <ngx-table-header
-  [displayColumns]="headerDefinition.headers"
+  [displayColumns]="renderHeaderDefinitions$ | async"
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
