@@ -1,11 +1,11 @@
 import { TemplateRef } from '@angular/core';
 
 export interface HeaderColumns {
-  headers: Column[];
+  headers: TitleColumn[];
 }
 
 export interface ColumnDefinition {
-  columns: Column[];
+  columns: DataColumn[];
 }
 
 export interface Column {
@@ -15,6 +15,14 @@ export interface Column {
   hide?: boolean;
   class?: string;
   template?: TemplateRef<any>;
+}
+
+export interface TitleColumn extends Column {
+  columnTitle: string;
+}
+
+export interface DataColumn extends Column {
+  value: any;
 }
 
 export interface RowDefinition {
