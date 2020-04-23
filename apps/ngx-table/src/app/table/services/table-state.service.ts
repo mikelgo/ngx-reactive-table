@@ -1,11 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  combineLatest,
-  defer,
-  Subject
-} from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
 import {
   RowDefinition,
   DataRow,
@@ -15,13 +9,9 @@ import {
 } from '../models/table-models';
 import {
   map,
-  startWith,
   filter,
-  skip,
   tap,
   takeUntil,
-  concatAll,
-  toArray,
   distinctUntilChanged
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
@@ -35,13 +25,7 @@ export class TableStateService<T> implements OnDestroy {
   private dataColumnDefinition = new BehaviorSubject<DataColumn[]>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
-  // TODO render headerDefinitions and datacolumns must be adapted du to hide --> should not be no visible in dom
-  // currently data is not shown but still a column is rendered
-  /**
-   * To Achive this I will introduce a new internal Column Model
-   * RenderColumns -> conbines header and data rows otherwise not possible to hide/show
-   * columns
-   */
+  // TODO the grid template columns must be adapted
   private headerDefinition$: Observable<
     TitleColumn[]
   > = this.headerDefinition.asObservable().pipe(
@@ -106,7 +90,6 @@ export class TableStateService<T> implements OnDestroy {
   public renderRows$: Observable<DataRow[]>;
 
   constructor() {
-    this.headerDefinition$.subscribe(console.log);
     this.renderDataColumns$ = combineLatest([
       this.dataColumnDefinition$,
       this.headerDefinition$
@@ -117,12 +100,10 @@ export class TableStateService<T> implements OnDestroy {
       distinctUntilChanged()
     );
 
-    this.renderDataColumns$.subscribe();
-
     this.initialization$ = combineLatest([
       this.datasource$,
       this.headerDefinition$,
-      this.renderDataColumns$
+      this.dataColumnDefinition$
     ]);
 
     this.renderHeaders$ = this.initialization$.pipe(
@@ -195,8 +176,6 @@ export class TableStateService<T> implements OnDestroy {
   }
 
   public setDatasource(datasource: Datasource<T>): void {
-    // console.log(datasource);
-
     this.datasource.next(datasource);
   }
 
@@ -259,7 +238,7 @@ export class TableStateService<T> implements OnDestroy {
         hide: h.hide ? h.hide : false
       };
     });
-    // console.log(dataColumns);
+
     return dataColumns;
   }
 }
