@@ -35,6 +35,8 @@ export class TableStateService<T> implements OnDestroy {
   private dataColumnDefinition = new BehaviorSubject<DataColumn[]>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
+  // TODO render headerDefinitions and datacolumns must be adapted du to hide --> should not be no visible in dom
+  // currently data is not shown but still a column is rendered
   private headerDefinition$: Observable<
     TitleColumn[]
   > = this.headerDefinition.asObservable().pipe(distinctUntilChanged());
@@ -165,14 +167,14 @@ export class TableStateService<T> implements OnDestroy {
   public getDatasource(): Datasource<T> {
     return this.datasource.getValue();
   }
-  // TODO when hide then also adapt row data
+
   private mapColumnDefinitionToRowDefinition(
     headerDefinition: TitleColumn[],
     columnDefinition: DataColumn[],
     datasource: Datasource<T>
   ): DataRow[] {
     const rows: DataRow[] = [];
-    if (columnDefinition && datasource) {
+    if (columnDefinition && datasource && headerDefinition) {
       // console.log('VALID ARGS');
       // console.log(
       //   'INCOMING ARGS: %o %o %o',
@@ -206,9 +208,9 @@ export class TableStateService<T> implements OnDestroy {
     // );
     const values: Cell[] = [];
 
-    columnDefinition.forEach(column => {
+    columnDefinition.forEach((column, index) => {
       values.push({
-        val: row[column.displayProperty],
+        val: !column.hide ? row[column.displayProperty] : null,
         cellRenderer: column.cellRenderer ? column.cellRenderer : null,
         template: column.template ? column.template : null,
         cssClass: column.class ? column.class : null
@@ -223,7 +225,6 @@ export class TableStateService<T> implements OnDestroy {
 
   private updateDataColumns(headerDefinition: TitleColumn[]) {
     const dataColumns: DataColumn[] = this.getDataColumnDefinition();
-
     // console.log(headerDefinition);
     // console.log(this.dataColumnDefinition.getValue());
     headerDefinition.forEach((h, index) => {
