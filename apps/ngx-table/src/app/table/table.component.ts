@@ -53,12 +53,14 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   public renderHeaders$: Observable<TitleColumn[]>;
   public renderRows$: Observable<DataRow[]>;
+  public renderColumnCount$: Observable<number>;
 
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
+    this.renderColumnCount$ = this.stateService.renderColumnCount$;
   }
 
   get tableConfig(): TableConfig {

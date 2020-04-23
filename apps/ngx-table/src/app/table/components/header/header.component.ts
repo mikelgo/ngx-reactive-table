@@ -1,5 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostBinding,
+  Renderer2,
+  ElementRef
+} from '@angular/core';
 import { TitleColumn } from '../../models/table-models';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'ngx-table-header',
@@ -11,11 +19,25 @@ export class HeaderComponent implements OnInit {
   @Input() set displayColumns(displayColumns: TitleColumn[]) {
     this._displayColumns = displayColumns;
   }
+  @Input() columnCount: number = 0;
+  gridCols = 4;
+  gap = 4;
+  // @HostBinding('style.grid-template-columns')
+  // colum = `repeat(${this.gridCols}, 1fr)`;
+  // @HostBinding('style.grid-gap.px') gap = '10';
 
   get displayColumns() {
     return this._displayColumns;
   }
-  constructor() {}
+
+  getTemplateColumns(): string {
+    return `repeat(${this.columnCount}, 1fr)`;
+  }
+  constructor(
+    private sanitizer: DomSanitizer,
+    private renderer: Renderer2,
+    private elRef: ElementRef
+  ) {}
 
   ngOnInit() {}
 }

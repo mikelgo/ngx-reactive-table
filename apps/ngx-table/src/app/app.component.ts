@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
     { columnTitle: 'ID' },
     { columnTitle: 'Firstname' },
     { columnTitle: 'Lastname' },
-    { columnTitle: 'Job', hide: true },
+    { columnTitle: 'Job', hide: false },
     { columnTitle: 'App', hide: true }
   ];
 

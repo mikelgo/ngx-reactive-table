@@ -1,4 +1,7 @@
-<ngx-table-header [displayColumns]="renderHeaders$ | async"></ngx-table-header>
+<ngx-table-header
+  [displayColumns]="renderHeaders$ | async"
+  [columnCount]="renderColumnCount$ | async"
+></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
     *ngFor="let row of renderRows$ | async"

@@ -40,8 +40,6 @@ export class TableStateService<T> implements OnDestroy {
     distinctUntilChanged()
   );
 
-  private renderDataColumns$: Observable<DataColumn[]>;
-
   private datasource$: Observable<
     Datasource<T>
   > = this.datasource.asObservable().pipe(
@@ -76,11 +74,6 @@ export class TableStateService<T> implements OnDestroy {
   );
 
   // TODO onCOlumnHideChangeClick$$ = hier rein mergen und dann column definition anpassen
-  public renderHeaderDefinitions$: Observable<
-    TitleColumn[]
-  > = this.headerDefinition
-    .asObservable()
-    .pipe(map(titleColumns => titleColumns.filter(c => !c.hide)));
 
   private initialization$: Observable<
     [Datasource<T>, TitleColumn[], DataColumn[]]
@@ -88,18 +81,9 @@ export class TableStateService<T> implements OnDestroy {
   // THOSE WILL BE USED IN TABLE
   public renderHeaders$: Observable<TitleColumn[]>;
   public renderRows$: Observable<DataRow[]>;
+  public renderColumnCount$: Observable<number>;
 
   constructor() {
-    this.renderDataColumns$ = combineLatest([
-      this.dataColumnDefinition$,
-      this.headerDefinition$
-    ]).pipe(
-      map(([dataColumnDefinition, headerDefinition]) =>
-        this.updateDataColumns(dataColumnDefinition, headerDefinition)
-      ),
-      distinctUntilChanged()
-    );
-
     this.initialization$ = combineLatest([
       this.datasource$,
       this.headerDefinition$,
@@ -123,6 +107,9 @@ export class TableStateService<T> implements OnDestroy {
         )
       )
     );
+
+    // TODO Check again if really correct like this
+    this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
   }
 
   ngOnDestroy() {
