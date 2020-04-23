@@ -29,6 +29,8 @@ export class AppComponent implements OnInit {
     ]
   };
 
+  // TODO check with CellRenderer
+  // TODO check with custom template
   public dataColumnDefinition: ColumnDefinition = {
     columns: [
       { displayProperty: 'id' },
