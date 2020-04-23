@@ -7,7 +7,7 @@ import {
   ElementRef,
   Renderer2
 } from '@angular/core';
-import { RowDefinition } from '../../models/table-models';
+import { RowDefinition, DataRow } from '../../models/table-models';
 import { Selectable } from './selectable';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 
@@ -18,7 +18,7 @@ import { Subject, BehaviorSubject, Observable } from 'rxjs';
 })
 export class RowComponent implements OnInit, Selectable<RowComponent> {
   private isSelected: boolean = false;
-  @Input() row: RowDefinition = null;
+  @Input() row: DataRow = null;
 
   @HostBinding('style.border-top') borderTop: string = '1px solid transparent';
   @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';

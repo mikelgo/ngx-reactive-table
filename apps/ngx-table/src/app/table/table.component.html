@@ -3,9 +3,9 @@
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
-    *ngFor="let row of rows; let i = index"
+    *ngFor="let row of rows$ | async"
     [row]="row"
-    (click)="onRowSelect(row, i)"
+    (click)="onRowSelect(row, row.index)"
   ></ngx-table-row>
 </ngx-table-body>
 

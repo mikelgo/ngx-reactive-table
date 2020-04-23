@@ -36,7 +36,7 @@ export interface DataRow {
   id?: string | number;
   index?: number;
   cssClass?: string;
-  values: any[];
+  values: Cell[];
 }
 
 export interface Cell {

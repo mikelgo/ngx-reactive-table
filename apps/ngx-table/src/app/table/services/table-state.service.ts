@@ -4,7 +4,8 @@ import {
   RowDefinition,
   HeaderColumns,
   ColumnDefinition,
-  DataRow
+  DataRow,
+  Cell
 } from '../models/table-models';
 import { map, startWith, filter, skip, tap } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
@@ -113,9 +114,13 @@ export class TableStateService<T> {
     return rows;
   }
 
-  private getRowValues(row: T, valueKeys: string[]): any[] {
-    const values: any[] = [];
-    valueKeys.forEach(key => values.push(row[key]));
+  private getRowValues(row: T, valueKeys: string[]): Cell[] {
+    const values: Cell[] = [];
+    valueKeys.forEach(key =>
+      values.push({
+        val: row[key]
+      })
+    );
     return values;
   }
 }

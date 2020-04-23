@@ -10,7 +10,8 @@ import {
   Column,
   RowDefinition,
   ColumnDefinition,
-  HeaderColumns
+  HeaderColumns,
+  DataRow
 } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
@@ -62,10 +63,13 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
   private _tableConfig: TableConfig = null;
+  public rows$: Observable<DataRow[]>;
 
   constructor(public stateService: TableStateService<T>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.rows$ = this.stateService.rows$;
+  }
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
