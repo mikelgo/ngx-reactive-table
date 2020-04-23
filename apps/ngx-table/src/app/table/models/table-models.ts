@@ -1,15 +1,28 @@
 import { TemplateRef } from '@angular/core';
 
+export interface HeaderColumns {
+  headers: TitleColumn[];
+}
+
 export interface ColumnDefinition {
-  columns: Column[];
+  columns: DataColumn[];
 }
 
 export interface Column {
   id?: string | number;
   index?: number;
-  columnTitle: string;
   hide?: boolean;
   class?: string;
+  template?: TemplateRef<any>;
+  cellRenderer?: CellRenderer;
+}
+
+export interface TitleColumn extends Column {
+  columnTitle: string;
+}
+
+export interface DataColumn extends Column {
+  displayProperty: string;
 }
 
 export interface RowDefinition {
@@ -19,9 +32,18 @@ export interface RowDefinition {
   values: Cell[]; // the values for each colum
 }
 
+export interface DataRow {
+  id?: string | number;
+  index?: number;
+  cssClass?: string;
+  values: Cell[];
+}
+
 export interface Cell {
   val: any;
   cssClass?: string;
+  template?: TemplateRef<any>;
+
   cellRenderer?: CellRenderer;
 }
 
