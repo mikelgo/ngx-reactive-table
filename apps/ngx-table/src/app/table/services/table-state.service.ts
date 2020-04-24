@@ -124,7 +124,6 @@ export class TableStateService<T> implements OnDestroy {
       )
     );
 
-    // TODO Check again if really correct like this
     this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
 
     this.hiddenColumns$ = this.initialization$.pipe(
@@ -134,6 +133,7 @@ export class TableStateService<T> implements OnDestroy {
       ),
       map(titleColumns => titleColumns.filter(c => c.hide))
     );
+
     this.hiddenColumnsCount$ = this.hiddenColumns$.pipe(
       filter(v => v !== null),
       map(v => v.length)
