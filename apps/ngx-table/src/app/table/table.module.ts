@@ -7,6 +7,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { RowComponent } from './components/row/row.component';
 import { CellComponent } from './components/cell/cell.component';
 import { InputCellRendererComponent } from './components/cell/cell-renderer/input-cell-renderer/input-cell-renderer.component';
+import { HeaderElementComponent } from './components/header/header-element/header-element.component';
+import { TopInfobarComponent } from './components/infobar/top-infobar/top-infobar.component';
+import { SharedModule } from '../shared/shared.module';
 
 const COMPONENTS = [
   TableComponent,
@@ -15,9 +18,11 @@ const COMPONENTS = [
   HeaderComponent,
   RowComponent,
   CellComponent,
-  InputCellRendererComponent
+  InputCellRendererComponent,
+  HeaderElementComponent,
+  TopInfobarComponent
 ];
-const MODULES = [CommonModule];
+const MODULES = [CommonModule, SharedModule];
 
 @NgModule({
   declarations: [...COMPONENTS],

@@ -1,34 +1,64 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, defer } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  Subject,
+  merge
+} from 'rxjs';
 import {
   RowDefinition,
-  HeaderColumns,
-  ColumnDefinition,
   DataRow,
-  Cell
+  Cell,
+  TitleColumn,
+  DataColumn
 } from '../models/table-models';
-import { map, startWith, filter, skip, tap } from 'rxjs/operators';
+import {
+  map,
+  filter,
+  tap,
+  takeUntil,
+  distinctUntilChanged,
+  scan,
+  share,
+  shareReplay
+} from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
-
+import { v4 as uuidv4 } from 'uuid';
+import { allValuesInArrayAreEqual } from '@mikelgo/ts-utils/lib/array-utils';
 @Injectable({
   providedIn: 'root'
 })
-export class TableStateService<T> {
-  private headerDefinition = new BehaviorSubject<HeaderColumns>(null);
-  private dataColumnDefinition = new BehaviorSubject<ColumnDefinition>(null);
+export class TableStateService<T> implements OnDestroy {
+  private destroy$ = new Subject();
+  private headerDefinition = new BehaviorSubject<TitleColumn[]>(null);
+  private dataColumnDefinition = new BehaviorSubject<DataColumn[]>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
   private headerDefinition$: Observable<
-    HeaderColumns
-  > = this.headerDefinition.asObservable();
+    TitleColumn[]
+  > = this.headerDefinition.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
 
-  private dataColumnDefinition$: Observable<
-    ColumnDefinition
-  > = this.dataColumnDefinition.asObservable().pipe(filter(v => v !== null));
+  private visibleHeaderDefinitions$: Observable<TitleColumn[]>;
+
+  private visibleDataColumnDefinitions$: Observable<
+    DataColumn[]
+  > = this.dataColumnDefinition.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
+
+  // private visibleDataColumnDefinitions$: Observable<DataColumn[]>;
 
   private datasource$: Observable<
     Datasource<T>
-  > = this.datasource.asObservable().pipe(filter(v => v !== null));
+  > = this.datasource.asObservable().pipe(
+    filter(v => v !== null),
+    distinctUntilChanged()
+  );
 
   private selectedRows: RowDefinition[] = [];
   private selectedRowsCache$$ = new BehaviorSubject<RowDefinition[]>(null);
@@ -41,17 +71,87 @@ export class TableStateService<T> {
   private lastSelectedRowCache$$ = new BehaviorSubject<RowDefinition>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
-  public rows$: Observable<DataRow[]> = combineLatest([
-    this.dataColumnDefinition$,
-    this.datasource$
-  ]).pipe(
-    map(([columnDefinition, datasource]) =>
-      this.mapColumnDefinitionToRowDefinition(columnDefinition, datasource)
-    )
+  private initialization$: Observable<
+    [Datasource<T>, TitleColumn[], DataColumn[]]
+  >;
+  private showColumnAction$ = new Subject<TitleColumn>();
+  private hideColumnAction$ = new Subject<TitleColumn>();
+
+  private columnVisibilityActions$ = merge(
+    this.showColumnAction$,
+    this.hideColumnAction$
   );
+  // THOSE WILL BE USED IN TABLE
+  public renderHeaders$: Observable<TitleColumn[]>;
+  public renderRows$: Observable<DataRow[]>;
+  public renderColumnCount$: Observable<number>;
+
+  public hiddenColumns$: Observable<TitleColumn[]>;
+  public hiddenColumnsCount$: Observable<number>;
 
   constructor() {
-    this.rows$.subscribe(console.log);
+    this.visibleHeaderDefinitions$ = merge(
+      this.headerDefinition$,
+      this.columnVisibilityActions$
+    ).pipe(
+      scan((state: TitleColumn[], action: TitleColumn) => {
+        const newState = [...state];
+        newState.find(e => e.id === action.id).hide = action.hide;
+        return [...newState];
+      })
+    );
+
+    this.initialization$ = combineLatest([
+      this.datasource$,
+      this.visibleHeaderDefinitions$,
+      this.visibleDataColumnDefinitions$
+    ]);
+
+    this.renderHeaders$ = this.initialization$.pipe(
+      map(
+        ([datasource, headerDefinition, dataColumnDefinition]) =>
+          headerDefinition
+      ),
+      map(titleColumns => titleColumns.filter(c => !c.hide))
+    );
+
+    this.renderRows$ = this.initialization$.pipe(
+      map(([datasource, headerDefinition, dataColumnDefinition]) =>
+        this.mapColumnDefinitionToRowDefinition(
+          headerDefinition,
+          dataColumnDefinition,
+          datasource
+        )
+      )
+    );
+
+    this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
+
+    this.hiddenColumns$ = this.initialization$.pipe(
+      map(
+        ([datasource, headerDefinition, dataColumnDefinition]) =>
+          headerDefinition
+      ),
+      map(titleColumns => titleColumns.filter(c => c.hide))
+    );
+
+    this.hiddenColumnsCount$ = this.hiddenColumns$.pipe(
+      filter(v => v !== null),
+      map(v => v.length)
+    );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+
+    this.headerDefinition.complete();
+    this.dataColumnDefinition.complete();
+    this.datasource.complete();
+
+    this.selectedRows = [];
+    this.selectedRowsCache$$.complete();
+    this.lastSelectedRowCache$$.complete();
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number): void {
@@ -67,19 +167,34 @@ export class TableStateService<T> {
     this.lastSelectedRowCache$$.next(row);
   }
 
-  public setHeaderDefinition(headerDefinition: HeaderColumns): void {
-    this.headerDefinition.next(headerDefinition);
+  public setHeaderDefinition(headerDefinition: TitleColumn[]): void {
+    const headers: TitleColumn[] = [...headerDefinition];
+    headers.forEach((header, index) => {
+      header.id = header.id ? header.id : this.getID();
+      header.index = index;
+      header.hide = header.hide ? header.hide : false;
+    });
+    // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
+    const ids = new Set(headers.map(h => h.id));
+
+    if (ids.size !== headers.map(h => h.index).length) {
+      throw new Error(
+        'Duplicate column-ID found. Please do assign unique ids '
+      );
+    } else {
+      this.headerDefinition.next(headers);
+    }
   }
 
-  public getHeaderDefinition(): HeaderColumns {
+  public getHeaderDefinition(): TitleColumn[] {
     return this.headerDefinition.getValue();
   }
 
-  public setDataColumnDefinition(dataColumnDefinition: ColumnDefinition): void {
+  public setDataColumnDefinition(dataColumnDefinition: DataColumn[]): void {
     this.dataColumnDefinition.next(dataColumnDefinition);
   }
 
-  public getDataColumnDefinition(): ColumnDefinition {
+  public getDataColumnDefinition(): DataColumn[] {
     return this.dataColumnDefinition.getValue();
   }
 
@@ -91,39 +206,48 @@ export class TableStateService<T> {
     return this.datasource.getValue();
   }
 
+  public showHiddenColumn(column: TitleColumn): void {
+    this.showColumnAction$.next(column);
+  }
+
   private mapColumnDefinitionToRowDefinition(
-    columnDefinition: ColumnDefinition,
+    headerDefinition: TitleColumn[],
+    columnDefinition: DataColumn[],
     datasource: Datasource<T>
   ): DataRow[] {
     const rows: DataRow[] = [];
-    if (columnDefinition && datasource) {
-      console.log('INCOMING ARGS: %o %o', columnDefinition, datasource);
-      console.log('VALID ARGS');
-      const valueKeys: string[] = columnDefinition.columns.map(
-        c => c.displayProperty
-      );
+    if (columnDefinition && datasource && headerDefinition) {
       datasource.getData().forEach((row, index) => {
         rows.push({
           index: index,
-          values: this.getRowValues(row, columnDefinition)
+          values: this.getRowValues(row, headerDefinition, columnDefinition)
         });
       });
     }
-
     return rows;
   }
 
-  private getRowValues(row: T, columnDefinition: ColumnDefinition): Cell[] {
+  private getRowValues(
+    row: T,
+    headerDefinition: TitleColumn[],
+    columnDefinition: DataColumn[]
+  ): Cell[] {
     const values: Cell[] = [];
-
-    columnDefinition.columns.forEach(column => {
-      values.push({
-        val: row[column.displayProperty],
-        cellRenderer: column.cellRenderer ? column.cellRenderer : null,
-        template: column.template ? column.template : null,
-        cssClass: column.class ? column.class : null
-      });
+    columnDefinition.forEach((column, index) => {
+      if (!headerDefinition[index].hide) {
+        // if (!column.hide) {
+        values.push({
+          val: row[column.displayProperty],
+          cellRenderer: column.cellRenderer ? column.cellRenderer : null,
+          template: column.template ? column.template : null,
+          cssClass: column.class ? column.class : null
+        });
+      }
     });
     return values;
+  }
+
+  private getID(): string {
+    return uuidv4();
   }
 }

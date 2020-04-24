@@ -1,5 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Column } from '../../models/table-models';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostBinding,
+  Renderer2,
+  ElementRef
+} from '@angular/core';
+import { TitleColumn } from '../../models/table-models';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'ngx-table-header',
@@ -7,7 +15,21 @@ import { Column } from '../../models/table-models';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  @Input() displayColumns: Column[] = [];
+  private _displayColumns: TitleColumn[] = [];
+  @Input() set displayColumns(displayColumns: TitleColumn[]) {
+    this._displayColumns = displayColumns;
+  }
+  @Input() columnCount: number = 0;
+
+  gap = 4;
+
+  get displayColumns() {
+    return this._displayColumns;
+  }
+
+  getTemplateColumns(): string {
+    return `repeat(${this.columnCount}, 1fr)`;
+  }
   constructor() {}
 
   ngOnInit() {}

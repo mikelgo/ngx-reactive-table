@@ -1,7 +1,11 @@
-<div class="table-header-row">
+<div
+  class="table-header-row"
+  [style.grid-gap.px]="gap"
+  [style.grid-template-columns]="getTemplateColumns()"
+>
   <div
-    class="table-header-row-value"
     *ngFor="let header of displayColumns"
+    class="table-header-row-value"
     [ngClass]="header.class ? header.class : ''"
   >
     {{ header.columnTitle }}

@@ -3,8 +3,8 @@ import {
   Column,
   RowDefinition,
   CellRenderer,
-  ColumnDefinition,
-  HeaderColumns
+  TitleColumn,
+  DataColumn
 } from './table/models/table-models';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
@@ -18,27 +18,22 @@ import { Datasource, TableDatasource } from './datasource/datasource';
 export class AppComponent implements OnInit {
   title = 'ngx-table';
 
-  public headerDefinition: HeaderColumns = {
-    headers: [
-      { columnTitle: 'c1' },
-      { columnTitle: 'c2' },
-      { columnTitle: 'c3' },
-      { columnTitle: 'c4' },
-      { columnTitle: 'c5' }
-    ]
-  };
+  public headerDefinition: TitleColumn[] = [
+    { columnTitle: 'ID' },
+    { columnTitle: 'Firstname' },
+    { columnTitle: 'Lastname' },
+    { columnTitle: 'Job', hide: false },
+    { columnTitle: 'App', hide: true }
+  ];
 
-  // TODO check with CellRenderer
   // TODO check with custom template
-  public dataColumnDefinition: ColumnDefinition = {
-    columns: [
-      { displayProperty: 'id' },
-      { displayProperty: 'p1' },
-      { displayProperty: 'p2' },
-      { displayProperty: 'p3' },
-      { displayProperty: 'p4' }
-    ]
-  };
+  public dataColumnDefinition: DataColumn[] = [
+    { displayProperty: 'id' },
+    { displayProperty: 'p1' },
+    { displayProperty: 'p2' },
+    { displayProperty: 'p3', hide: true },
+    { displayProperty: 'p4', hide: true }
+  ];
 
   public testdata: ExampleData[] = getTestdata();
   public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(
@@ -46,7 +41,7 @@ export class AppComponent implements OnInit {
   );
 
   tableConfig: TableConfig = {
-    width: '400px',
+    width: '500px',
     maxBodyHeight: '200px'
   };
 

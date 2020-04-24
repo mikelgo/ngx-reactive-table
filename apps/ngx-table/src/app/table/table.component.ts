@@ -3,32 +3,30 @@ import {
   OnInit,
   Input,
   HostBinding,
-  EventEmitter,
-  Output
+  OnDestroy
 } from '@angular/core';
 import {
-  Column,
   RowDefinition,
-  ColumnDefinition,
-  HeaderColumns,
-  DataRow
+  DataRow,
+  TitleColumn,
+  DataColumn
 } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { RowSelectEvent } from './models/row-select-event';
 import { Subject, Observable } from 'rxjs';
-import { switchMap, scan, startWith } from 'rxjs/operators';
+import { switchMap, scan, startWith, takeUntil } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
-import { HeaderComponent } from './components/header/header.component';
+
 @Component({
   selector: 'ngx-table-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   providers: [TableStateService]
 })
-export class TableComponent<T> implements OnInit, TableBehavior {
+export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   @Input() title: string = '';
 
   @Input() set tableConfig(arg: TableConfig) {
@@ -36,19 +34,18 @@ export class TableComponent<T> implements OnInit, TableBehavior {
     this.initalizeStyles(arg);
   }
 
-  @Input() set headerDefinition(headerDefinition: HeaderColumns) {
+  @Input() set headerDefinition(headerDefinition: TitleColumn[]) {
     if (headerDefinition) {
       this.stateService.setHeaderDefinition(headerDefinition);
     }
   }
 
-  @Input() set dataColumnDefinition(arg: ColumnDefinition) {
+  @Input() set dataColumnDefinition(arg: DataColumn[]) {
     if (arg) {
       this.stateService.setDataColumnDefinition(arg);
     }
   }
 
-  // TODO implement datasource
   @Input() set datasource(datasource: Datasource<T>) {
     if (datasource) {
       this.stateService.setDatasource(datasource);
@@ -58,21 +55,32 @@ export class TableComponent<T> implements OnInit, TableBehavior {
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
+  private destroy$ = new Subject();
   private _tableConfig: TableConfig = null;
-  public rows$: Observable<DataRow[]>;
+
+  public renderHeaders$: Observable<TitleColumn[]>;
+  public renderRows$: Observable<DataRow[]>;
+  public renderColumnCount$: Observable<number>;
+
+  public hiddenColumns$: Observable<TitleColumn[]>;
+  public hiddenColumnsCount$: Observable<number>;
 
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
-    this.rows$ = this.stateService.rows$;
+    this.renderHeaders$ = this.stateService.renderHeaders$;
+    this.renderRows$ = this.stateService.renderRows$;
+    this.renderColumnCount$ = this.stateService.renderColumnCount$;
+    this.hiddenColumns$ = this.stateService.hiddenColumns$;
+    this.hiddenColumnsCount$ = this.stateService.hiddenColumnsCount$;
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   get tableConfig(): TableConfig {
     return this._tableConfig;
-  }
-
-  get headerDefinition(): HeaderColumns {
-    return this.stateService.getHeaderDefinition();
   }
 
   public onRowSelect(row: RowDefinition, rowIndex: number) {
@@ -85,6 +93,10 @@ export class TableComponent<T> implements OnInit, TableBehavior {
 
   public getSelectedRowsCount(): Observable<number> {
     return this.stateService.selectedRowsCount$;
+  }
+
+  public onColumnShow(column: TitleColumn): void {
+    this.stateService.showHiddenColumn(column);
   }
 
   private initalizeStyles(config: TableConfig) {
