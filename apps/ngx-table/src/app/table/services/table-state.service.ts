@@ -25,6 +25,7 @@ import {
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
+import { allValuesInArrayAreEqual } from '@mikelgo/ts-utils/lib/array-utils';
 @Injectable({
   providedIn: 'root'
 })
@@ -174,7 +175,15 @@ export class TableStateService<T> implements OnDestroy {
       header.hide = header.hide ? header.hide : false;
     });
     // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
-    this.headerDefinition.next(headers);
+    const ids = new Set(headers.map(h => h.id));
+
+    if (ids.size !== headers.map(h => h.index).length) {
+      throw new Error(
+        'Duplicate column-ID found. Please do assign unique ids '
+      );
+    } else {
+      this.headerDefinition.next(headers);
+    }
   }
 
   public getHeaderDefinition(): TitleColumn[] {
