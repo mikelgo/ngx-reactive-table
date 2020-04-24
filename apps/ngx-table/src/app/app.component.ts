@@ -58,4 +58,7 @@ export class AppComponent implements OnInit {
     console.log(element);
     return element;
   }
+  s(e) {
+    console.log(e);
+  }
 }

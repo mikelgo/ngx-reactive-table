@@ -23,6 +23,7 @@ import { Cell } from '../models/cell.model';
 import { DataRow } from '../models/data-row.model';
 import { TitleColumn } from '../models/title-column.model';
 import { DataColumn } from '../models/data-column.model';
+import { HiddenColumns } from '../models/hidden-column.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -56,6 +57,8 @@ export class TableStateService<T> implements OnDestroy {
     filter(v => v !== null),
     distinctUntilChanged()
   );
+
+  public hiddenColumnsInfo$: Observable<HiddenColumns>;
 
   private selectedRows: DataRow[] = [];
   private selectedRowsCache$$ = new BehaviorSubject<DataRow[]>(null);
@@ -135,6 +138,19 @@ export class TableStateService<T> implements OnDestroy {
     this.hiddenColumnsCount$ = this.hiddenColumns$.pipe(
       filter(v => v !== null),
       map(v => v.length)
+    );
+
+    this.hiddenColumnsInfo$ = combineLatest([
+      this.hiddenColumns$,
+      this.hiddenColumnsCount$
+    ]).pipe(
+      map(([hiddenTitleColumns, data, count]) => {
+        return {
+          titleColumns: hiddenTitleColumns,
+          dataColumns: null,
+          count: count
+        } as HiddenColumns;
+      })
     );
   }
 

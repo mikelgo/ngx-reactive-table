@@ -17,6 +17,7 @@ import { DataRow } from './models/data-row.model';
 import { TitleColumn } from './models/title-column.model';
 import { DataColumn } from './models/data-column.model';
 import { takeUntil, tap, map } from 'rxjs/operators';
+import { HiddenColumns } from './models/hidden-column.model';
 
 @Component({
   selector: 'ngx-table-table',
@@ -56,6 +57,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     }
   }
 
+  @Output() hiddenColumns = new EventEmitter<HiddenColumns>();
+
   @HostBinding('style.width')
   tableWidth: string = DEFAULT_TABLE_CONFIG.width;
 
@@ -71,6 +74,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   public hiddenColumns$: Observable<TitleColumn[]>;
   public hiddenColumnsCount$: Observable<number>;
 
+  public hiddenColumnsInfo$: Observable<HiddenColumns>;
+
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
@@ -84,6 +89,14 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         map(column => this.stateService.showHiddenColumn(column))
+      )
+      .subscribe();
+
+    this.hiddenColumnsInfo$ = this.stateService.hiddenColumnsInfo$;
+    this.hiddenColumnsInfo$
+      .pipe(
+        takeUntil(this.destroy$),
+        map(i => this.hiddenColumns.emit(i))
       )
       .subscribe();
   }
