@@ -5,7 +5,6 @@ import {
   HostBinding,
   OnDestroy
 } from '@angular/core';
-import { TitleColumn, DataColumn } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { Subject, Observable } from 'rxjs';
@@ -13,6 +12,8 @@ import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
 import { DataRow } from './models/data-row.model';
+import { TitleColumn } from './models/title-column.model';
+import { DataColumn } from './models/data-column.model';
 
 @Component({
   selector: 'ngx-table-table',

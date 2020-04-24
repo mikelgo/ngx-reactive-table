@@ -1,8 +1,9 @@
-import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
-import { TitleColumn, DataColumn } from './table/models/table-models';
+import { Component, OnInit } from '@angular/core';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
+import { TitleColumn } from './table/models/title-column.model';
+import { DataColumn } from './table/models/data-column.model';
 
 @Component({
   selector: 'ngx-table-root',

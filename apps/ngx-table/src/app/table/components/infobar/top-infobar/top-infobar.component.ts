@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TitleColumn } from '../../../models/table-models';
+
 import { ReplaySubject, Observable } from 'rxjs';
+import { TitleColumn } from '../../../models/title-column.model';
 
 @Component({
   selector: 'ngx-table-top-infobar',

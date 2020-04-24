@@ -8,8 +8,7 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
-import { TitleColumn } from '../../models/table-models';
-import { DomSanitizer } from '@angular/platform-browser';
+import { TitleColumn } from '../../models/title-column.model';
 
 @Component({
   selector: 'ngx-table-header',

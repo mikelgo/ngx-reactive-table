@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { TitleColumn } from '../../../table/models/table-models';
+import { TitleColumn } from '../../../table/models/title-column.model';
 
 @Component({
   selector: 'ngx-table-checkbox',
