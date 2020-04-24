@@ -6,13 +6,7 @@ import {
   Subject,
   merge
 } from 'rxjs';
-import {
-  RowDefinition,
-  DataRow,
-  Cell,
-  TitleColumn,
-  DataColumn
-} from '../models/table-models';
+import { TitleColumn, DataColumn } from '../models/table-models';
 import {
   map,
   filter,
@@ -26,6 +20,8 @@ import {
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
 import { allValuesInArrayAreEqual } from '@mikelgo/ts-utils/lib/array-utils';
+import { Cell } from '../models/cell.model';
+import { DataRow } from '../models/data-row.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,15 +56,15 @@ export class TableStateService<T> implements OnDestroy {
     distinctUntilChanged()
   );
 
-  private selectedRows: RowDefinition[] = [];
-  private selectedRowsCache$$ = new BehaviorSubject<RowDefinition[]>(null);
+  private selectedRows: DataRow[] = [];
+  private selectedRowsCache$$ = new BehaviorSubject<DataRow[]>(null);
   public selectedRows$ = this.selectedRowsCache$$.asObservable();
   public selectedRowsCount$: Observable<number> = this.selectedRows$.pipe(
     filter(values => values !== null),
     map(values => values.length)
   );
 
-  private lastSelectedRowCache$$ = new BehaviorSubject<RowDefinition>(null);
+  private lastSelectedRowCache$$ = new BehaviorSubject<DataRow>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
   private initialization$: Observable<
@@ -154,7 +150,7 @@ export class TableStateService<T> implements OnDestroy {
     this.lastSelectedRowCache$$.complete();
   }
 
-  public onRowSelect(row: RowDefinition, rowIndex: number): void {
+  public onRowSelect(row: DataRow, rowIndex: number): void {
     if (!this.selectedRows.includes(row)) {
       this.selectedRows.push(row);
       this.selectedRowsCache$$.next(this.selectedRows);

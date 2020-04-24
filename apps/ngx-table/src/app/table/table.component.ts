@@ -5,19 +5,14 @@ import {
   HostBinding,
   OnDestroy
 } from '@angular/core';
-import {
-  RowDefinition,
-  DataRow,
-  TitleColumn,
-  DataColumn
-} from './models/table-models';
+import { TitleColumn, DataColumn } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
 import { Subject, Observable } from 'rxjs';
-import { switchMap, scan, startWith, takeUntil } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
+import { DataRow } from './models/data-row.model';
 
 @Component({
   selector: 'ngx-table-table',
@@ -82,11 +77,11 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     return this._tableConfig;
   }
 
-  public onRowSelect(row: RowDefinition, rowIndex: number) {
+  public onRowSelect(row: DataRow, rowIndex: number) {
     this.stateService.onRowSelect(row, rowIndex);
   }
 
-  public getSelectedRows(): Observable<RowDefinition[]> {
+  public getSelectedRows(): Observable<DataRow[]> {
     return this.stateService.selectedRows$;
   }
 

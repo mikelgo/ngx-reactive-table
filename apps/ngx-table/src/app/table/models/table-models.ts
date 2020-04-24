@@ -1,4 +1,6 @@
 import { TemplateRef } from '@angular/core';
+import { CellRenderer } from './cell-renderer-types';
+import { Cell } from './cell.model';
 
 /**
  * Defines the header columns a table should have
@@ -37,36 +39,3 @@ export interface TitleColumn extends Column {
   // defines if the column is visible or not
   hide?: boolean;
 }
-
-export interface RowDefinition {
-  id?: string | number;
-  index?: number;
-  cssClass?: string;
-  values: Cell[]; // the values for each colum
-}
-
-export interface DataRow {
-  id?: string | number;
-  index?: number;
-  cssClass?: string;
-  values: Cell[];
-}
-
-export interface Cell {
-  val: any;
-  hide?: boolean;
-  cssClass?: string;
-  template?: TemplateRef<any>;
-
-  cellRenderer?: CellRenderer;
-}
-
-export enum CellRenderer {
-  default = 'default',
-  input = 'input'
-}
-
-// TODO interface TableBehavior
-// TODO interface CellRenderer
-// TODO interface Column
-// TODO interface Row

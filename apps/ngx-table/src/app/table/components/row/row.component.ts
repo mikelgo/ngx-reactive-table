@@ -8,10 +8,11 @@ import {
   Renderer2,
   OnDestroy
 } from '@angular/core';
-import { RowDefinition, DataRow } from '../../models/table-models';
+
 import { Selectable } from './selectable';
 import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { DataRow } from '../../models/data-row.model';
 
 @Component({
   selector: 'ngx-table-row',

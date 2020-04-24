@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Cell, CellRenderer } from '../../models/table-models';
+
+import { CellRenderer } from '../../models/cell-renderer-types';
+import { Cell } from '../../models/cell.model';
 
 @Component({
   selector: 'ngx-table-cell',

@@ -1,11 +1,5 @@
 import { Component, ViewChild, TemplateRef, OnInit } from '@angular/core';
-import {
-  Column,
-  RowDefinition,
-  CellRenderer,
-  TitleColumn,
-  DataColumn
-} from './table/models/table-models';
+import { TitleColumn, DataColumn } from './table/models/table-models';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
