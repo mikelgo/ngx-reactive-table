@@ -57,21 +57,6 @@ export class TableStateService<T> implements OnDestroy {
   private lastSelectedRowCache$$ = new BehaviorSubject<RowDefinition>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
-  public rows$: Observable<DataRow[]> = combineLatest([
-    this.headerDefinition$,
-    this.dataColumnDefinition$,
-    this.datasource$
-  ]).pipe(
-    map(([headerDefinition, columnDefinition, datasource]) =>
-      this.mapColumnDefinitionToRowDefinition(
-        headerDefinition,
-        columnDefinition,
-        datasource
-      )
-    ),
-    distinctUntilChanged()
-  );
-
   // TODO onCOlumnHideChangeClick$$ = hier rein mergen und dann column definition anpassen
 
   private initialization$: Observable<
