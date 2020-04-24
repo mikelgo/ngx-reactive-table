@@ -4,10 +4,9 @@
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
-    [style.grid-gap.px]="gap"
-    [style.grid-template-columns]="getTemplateColumns()"
     *ngFor="let row of renderRows$ | async"
     [row]="row"
+    [renderColumnCount]="renderColumnCount$ | async"
     (click)="onRowSelect(row, row.index)"
   ></ngx-table-row>
 </ngx-table-body>

@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
     this._displayColumns = displayColumns;
   }
   @Input() columnCount: number = 0;
-  gridCols = 4;
+
   gap = 4;
 
   get displayColumns() {
@@ -30,11 +30,7 @@ export class HeaderComponent implements OnInit {
   getTemplateColumns(): string {
     return `repeat(${this.columnCount}, 1fr)`;
   }
-  constructor(
-    private sanitizer: DomSanitizer,
-    private renderer: Renderer2,
-    private elRef: ElementRef
-  ) {}
+  constructor() {}
 
   ngOnInit() {}
 }

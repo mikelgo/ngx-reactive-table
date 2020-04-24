@@ -5,25 +5,34 @@ import {
   HostBinding,
   HostListener,
   ElementRef,
-  Renderer2
+  Renderer2,
+  OnDestroy
 } from '@angular/core';
 import { RowDefinition, DataRow } from '../../models/table-models';
 import { Selectable } from './selectable';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-table-row',
   templateUrl: './row.component.html',
   styleUrls: ['./row.component.scss']
 })
-export class RowComponent implements OnInit, Selectable<RowComponent> {
+export class RowComponent
+  implements OnInit, OnDestroy, Selectable<RowComponent> {
   private isSelected: boolean = false;
   private _row: DataRow = null;
-
+  private _renderColumnCount = new BehaviorSubject<number>(0);
+  private columnsRenderer$: Observable<string>;
+  private destroy$ = new Subject();
   @Input() set row(row: DataRow) {
     if (row) {
-      // console.log(row)
       this._row = row;
+    }
+  }
+  @Input() set renderColumnCount(count: number) {
+    if (count) {
+      this._renderColumnCount.next(count);
     }
   }
 
@@ -31,8 +40,12 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
   borderTop: string = '1px solid transparent';
   @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
   @HostBinding('style.background-color') backgroundColor: string = 'white';
+  @HostBinding('style.grid-gap.px') gap = 4;
+  @HostBinding('style.grid-template-columns')
+  columns = '';
 
-  @HostListener('mouseenter') onHover(selectable: RowComponent) {
+  @HostListener('mouseenter')
+  onHover(selectable: RowComponent) {
     if (!this.isSelected) {
       this.borderTop = '1px solid #4a5568';
       this.borderBottom = '1px solid #4a5568';
@@ -59,7 +72,18 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.columnsRenderer$ = this._renderColumnCount.asObservable().pipe(
+      takeUntil(this.destroy$),
+      map(count => this.getTemplateColumns(count))
+    );
+
+    this.columnsRenderer$.subscribe(v => (this.columns = v));
+  }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   private setClickStyle(selected: boolean) {
     if (selected) {
@@ -71,5 +95,8 @@ export class RowComponent implements OnInit, Selectable<RowComponent> {
       this.borderBottom = '1px solid #ccc';
       this.backgroundColor = 'white';
     }
+  }
+  getTemplateColumns(count: number): string {
+    return `repeat(${count}, 1fr)`;
   }
 }

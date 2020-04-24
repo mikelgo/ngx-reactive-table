@@ -25,7 +25,6 @@ export class TableStateService<T> implements OnDestroy {
   private dataColumnDefinition = new BehaviorSubject<DataColumn[]>(null);
   private datasource = new BehaviorSubject<Datasource<T>>(null);
 
-  // TODO the grid template columns must be adapted
   private headerDefinition$: Observable<
     TitleColumn[]
   > = this.headerDefinition.asObservable().pipe(
