@@ -1,3 +1,8 @@
+<ngx-table-top-infobar
+  [hiddenColumns]="hiddenColumns$ | async"
+  [hiddenColumnsCount]="hiddenColumnsCount$ | async"
+></ngx-table-top-infobar>
+
 <ngx-table-header
   [displayColumns]="renderHeaders$ | async"
   [columnCount]="renderColumnCount$ | async"

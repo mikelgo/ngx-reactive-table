@@ -1,3 +1,11 @@
-<p>
-  top-infobar works!
-</p>
+<div class="info-container">
+  Hidden column count: {{ hiddenColumnsCount$ | async }}
+</div>
+<div class="hidden-columns-container">
+  <ngx-table-checkbox
+    *ngFor="let column of hiddenColumns$ | async"
+    [label]="column.columnTitle"
+    [value]="column"
+    (check)="onColumnShow($event)"
+  ></ngx-table-checkbox>
+</div>

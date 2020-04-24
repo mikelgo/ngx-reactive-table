@@ -62,12 +62,17 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
 
+  public hiddenColumns$: Observable<TitleColumn[]>;
+  public hiddenColumnsCount$: Observable<number>;
+
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
+    this.hiddenColumns$ = this.stateService.hiddenColumns$;
+    this.hiddenColumnsCount$ = this.stateService.hiddenColumnsCount$;
   }
   ngOnDestroy() {
     this.destroy$.next();

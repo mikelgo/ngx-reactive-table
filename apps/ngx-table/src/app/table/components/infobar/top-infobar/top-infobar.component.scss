@@ -1,0 +1,11 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+}
+
+.hidden-columns-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
