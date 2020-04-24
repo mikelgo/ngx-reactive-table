@@ -67,6 +67,9 @@ export class TableStateService<T> implements OnDestroy {
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
 
+  public hiddenColumns$: Observable<TitleColumn[]>;
+  public hiddenColumnsCount$: Observable<number>;
+
   constructor() {
     this.initialization$ = combineLatest([
       this.datasource$,
@@ -94,6 +97,18 @@ export class TableStateService<T> implements OnDestroy {
 
     // TODO Check again if really correct like this
     this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
+
+    this.hiddenColumns$ = this.initialization$.pipe(
+      map(
+        ([datasource, headerDefinition, dataColumnDefinition]) =>
+          headerDefinition
+      ),
+      map(titleColumns => titleColumns.filter(c => c.hide))
+    );
+    this.hiddenColumnsCount$ = this.hiddenColumns$.pipe(
+      filter(v => v !== null),
+      map(v => v.length)
+    );
   }
 
   ngOnDestroy() {
