@@ -41,7 +41,7 @@ export class AppComponent implements OnInit {
   );
 
   tableConfig: TableConfig = {
-    width: '400px',
+    width: '500px',
     maxBodyHeight: '200px'
   };
 
