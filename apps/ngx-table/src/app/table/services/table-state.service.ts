@@ -43,14 +43,14 @@ export class TableStateService<T> implements OnDestroy {
 
   private visibleHeaderDefinitions$: Observable<TitleColumn[]>;
 
-  private dataColumnDefinition$: Observable<
+  private visibleDataColumnDefinitions$: Observable<
     DataColumn[]
   > = this.dataColumnDefinition.asObservable().pipe(
     filter(v => v !== null),
     distinctUntilChanged()
   );
 
-  private visibleDataColumnDefinitions$: Observable<DataColumn[]>;
+  // private visibleDataColumnDefinitions$: Observable<DataColumn[]>;
 
   private datasource$: Observable<
     Datasource<T>
@@ -70,19 +70,9 @@ export class TableStateService<T> implements OnDestroy {
   private lastSelectedRowCache$$ = new BehaviorSubject<RowDefinition>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
-  // TODO onCOlumnHideChangeClick$$ = hier rein mergen und dann column definition anpassen
-
   private initialization$: Observable<
     [Datasource<T>, TitleColumn[], DataColumn[]]
   >;
-  // THOSE WILL BE USED IN TABLE
-  public renderHeaders$: Observable<TitleColumn[]>;
-  public renderRows$: Observable<DataRow[]>;
-  public renderColumnCount$: Observable<number>;
-
-  public hiddenColumns$: Observable<TitleColumn[]>;
-  public hiddenColumnsCount$: Observable<number>;
-
   private showColumnAction$ = new Subject<TitleColumn>();
   private hideColumnAction$ = new Subject<TitleColumn>();
 
@@ -90,6 +80,13 @@ export class TableStateService<T> implements OnDestroy {
     this.showColumnAction$,
     this.hideColumnAction$
   );
+  // THOSE WILL BE USED IN TABLE
+  public renderHeaders$: Observable<TitleColumn[]>;
+  public renderRows$: Observable<DataRow[]>;
+  public renderColumnCount$: Observable<number>;
+
+  public hiddenColumns$: Observable<TitleColumn[]>;
+  public hiddenColumnsCount$: Observable<number>;
 
   constructor() {
     this.visibleHeaderDefinitions$ = merge(
@@ -103,35 +100,11 @@ export class TableStateService<T> implements OnDestroy {
       })
     );
 
-    this.visibleDataColumnDefinitions$ = merge(
-      this.dataColumnDefinition$,
-      this.columnVisibilityActions$
-    ).pipe(
-      scan((state: DataColumn[], action: TitleColumn) => {
-        const newState = [...state];
-        newState.find(e => e.id === action.id).hide = action.hide;
-        return [...newState];
-      })
-    );
-
-    // this.visibleDataColumnDefinitions$.subscribe(console.log);
-    // TODO DataColumns must have the ID's as the titlecolumns have
     this.initialization$ = combineLatest([
       this.datasource$,
       this.visibleHeaderDefinitions$,
-      this.dataColumnDefinition$
+      this.visibleDataColumnDefinitions$
     ]);
-
-    // const d$: Observable<any> = combineLatest([
-    //   this.dataColumnDefinition.asObservable(),
-    //   this.headerDefinition$
-    // ]).pipe(
-    //   map(([dataColumns, titleColumns]) =>
-    //     this.assignTitleColumnIdsTODataColumns(titleColumns, dataColumns)
-    //   ),
-    //   distinctUntilChanged()
-    // );
-    // d$.subscribe(console.log);
 
     this.renderHeaders$ = this.initialization$.pipe(
       map(
@@ -200,7 +173,6 @@ export class TableStateService<T> implements OnDestroy {
       header.index = index;
       header.hide = header.hide ? header.hide : false;
     });
-    console.log('INITIAL HEADER COLUMNS %o', headerDefinition);
     // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
     this.headerDefinition.next(headers);
   }
@@ -210,7 +182,6 @@ export class TableStateService<T> implements OnDestroy {
   }
 
   public setDataColumnDefinition(dataColumnDefinition: DataColumn[]): void {
-    console.log('INITIAL DATA COLUMNS %o', dataColumnDefinition);
     this.dataColumnDefinition.next(dataColumnDefinition);
   }
 
@@ -253,7 +224,6 @@ export class TableStateService<T> implements OnDestroy {
     columnDefinition: DataColumn[]
   ): Cell[] {
     const values: Cell[] = [];
-    // TODO here the hide must be applied
     columnDefinition.forEach((column, index) => {
       if (!headerDefinition[index].hide) {
         // if (!column.hide) {
@@ -271,18 +241,4 @@ export class TableStateService<T> implements OnDestroy {
   private getID(): string {
     return uuidv4();
   }
-
-  // private assignTitleColumnIdsTODataColumns(
-  //   titleColumns: TitleColumn[],
-  //   dataColumns: DataColumn[]
-  // ): DataColumn[] {
-  //   // console.log('title columns %o, datacolumns %o', titleColumns, dataColumns);
-  //   const updated: DataColumn[] = [];
-  //   if (titleColumns && dataColumns) {
-  //     dataColumns.forEach((c, i) => {
-  //       c.id = titleColumns[i].id;
-  //     });
-  //   }
-  //   return updated;
-  // }
 }
