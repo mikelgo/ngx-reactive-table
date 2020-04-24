@@ -4,6 +4,7 @@ import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
 import { TitleColumn } from './table/models/title-column.model';
 import { DataColumn } from './table/models/data-column.model';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'ngx-table-root',
@@ -39,11 +40,25 @@ export class AppComponent implements OnInit {
     width: '500px',
     maxBodyHeight: '200px'
   };
-
-  ngOnInit() {}
+  public show = new Subject<TitleColumn>();
+  public show$: Observable<TitleColumn> = this.show.asObservable();
+  ngOnInit() {
+    /**
+     * Example for using the toggle/show column API
+     */
+    // setTimeout(() => {
+    //   const col = this.headerDefinition[4];
+    //   col.hide = false;
+    //   this.show.next(col);
+    // }, 1000);
+    // this.show$.subscribe();
+  }
 
   getVal(element) {
     console.log(element);
     return element;
+  }
+  s(e) {
+    console.log(e);
   }
 }
