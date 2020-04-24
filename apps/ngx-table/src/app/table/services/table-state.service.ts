@@ -1,5 +1,11 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  combineLatest,
+  Subject,
+  merge
+} from 'rxjs';
 import {
   RowDefinition,
   DataRow,
@@ -12,7 +18,8 @@ import {
   filter,
   tap,
   takeUntil,
-  distinctUntilChanged
+  distinctUntilChanged,
+  scan
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,12 +39,16 @@ export class TableStateService<T> implements OnDestroy {
     distinctUntilChanged()
   );
 
+  private visibleHeaderDefinitions$: Observable<TitleColumn[]>;
+
   private dataColumnDefinition$: Observable<
     DataColumn[]
   > = this.dataColumnDefinition.asObservable().pipe(
     filter(v => v !== null),
     distinctUntilChanged()
   );
+
+  private visibleDataColumnDefinitions$: Observable<DataColumn[]>;
 
   private datasource$: Observable<
     Datasource<T>
@@ -70,12 +81,57 @@ export class TableStateService<T> implements OnDestroy {
   public hiddenColumns$: Observable<TitleColumn[]>;
   public hiddenColumnsCount$: Observable<number>;
 
+  private showColumnAction$ = new Subject<TitleColumn>();
+  private hideColumnAction$ = new Subject<TitleColumn>();
+
+  private columnVisibilityActions$ = merge(
+    this.showColumnAction$,
+    this.hideColumnAction$
+  );
+
   constructor() {
+    this.visibleHeaderDefinitions$ = merge(
+      this.headerDefinition$,
+      this.columnVisibilityActions$
+    ).pipe(
+      scan((state: TitleColumn[], action: TitleColumn) => {
+        const newState = [...state];
+        newState.find(e => e.id === action.id).hide = action.hide;
+        return [...newState];
+      })
+    );
+
+    this.visibleDataColumnDefinitions$ = merge(
+      this.dataColumnDefinition$,
+      this.columnVisibilityActions$
+    ).pipe(
+      scan((state: DataColumn[], action: TitleColumn) => {
+        const newState = [...state];
+        newState.find(e => e.id === action.id).hide = action.hide;
+        return [...newState];
+      })
+    );
+
+    this.visibleDataColumnDefinitions$.subscribe(console.log);
+    // TODO DataColumns must have the ID's as the titlecolumns have
     this.initialization$ = combineLatest([
       this.datasource$,
-      this.headerDefinition$,
+      this.visibleHeaderDefinitions$,
       this.dataColumnDefinition$
     ]);
+
+    // const h$ = merge(
+    //   this.headerDefinition$,
+    //   this.columnVisibilityActions$
+    // ).pipe(
+    //   scan((state: TitleColumn[], action: TitleColumn) => {
+    //     const newState = [...state];
+    //     newState.find(e => e.id === action.id).hide = action.hide;
+    //     return [...newState];
+    //   })
+    // );
+
+    // h$.subscribe(console.log);
 
     this.renderHeaders$ = this.initialization$.pipe(
       map(
@@ -169,6 +225,10 @@ export class TableStateService<T> implements OnDestroy {
     return this.datasource.getValue();
   }
 
+  public showHiddenColumn(column: TitleColumn): void {
+    this.showColumnAction$.next(column);
+  }
+
   private mapColumnDefinitionToRowDefinition(
     headerDefinition: TitleColumn[],
     columnDefinition: DataColumn[],
@@ -211,20 +271,12 @@ export class TableStateService<T> implements OnDestroy {
     return uuidv4();
   }
 
-  private updateDataColumns(
-    dataColumnDefinition: DataColumn[],
-    headerDefinition: TitleColumn[]
-  ) {
-    const dataColumns: DataColumn[] = [...dataColumnDefinition];
+  private assignTitleColumnIdsTODataColumns(
+    titleColumns: TitleColumn[],
+    dataColumns: DataColumn[]
+  ): DataColumn[] {
+    const updated: DataColumn[] = [];
 
-    headerDefinition.forEach((h, index) => {
-      dataColumns[h.index] = {
-        ...dataColumns[index],
-        id: h.id ? h.id : null,
-        hide: h.hide ? h.hide : false
-      };
-    });
-
-    return dataColumns;
+    return updated;
   }
 }

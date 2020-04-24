@@ -34,6 +34,7 @@ export class TopInfobarComponent implements OnInit {
   ngOnInit() {}
 
   onColumnShow(column: TitleColumn) {
-    this.showHiddenColumn.emit(column);
+    let col = { ...column, hide: false };
+    this.showHiddenColumn.emit(col);
   }
 }

@@ -95,6 +95,10 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     return this.stateService.selectedRowsCount$;
   }
 
+  public onColumnShow(column: TitleColumn): void {
+    this.stateService.showHiddenColumn(column);
+  }
+
   private initalizeStyles(config: TableConfig) {
     this.tableWidth = this.getTableWidth(config);
   }
