@@ -13,7 +13,6 @@ import {
 } from './models/table-models';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
-import { RowSelectEvent } from './models/row-select-event';
 import { Subject, Observable } from 'rxjs';
 import { switchMap, scan, startWith, takeUntil } from 'rxjs/operators';
 import { TableBehavior } from './table-behavior';
