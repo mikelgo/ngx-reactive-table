@@ -210,6 +210,10 @@ export class TableStateService<T> implements OnDestroy {
     this.showColumnAction$.next(column);
   }
 
+  public hideColumn(column: TitleColumn): void {
+    this.hideColumnAction$.next(column);
+  }
+
   private mapColumnDefinitionToRowDefinition(
     headerDefinition: TitleColumn[],
     columnDefinition: DataColumn[],

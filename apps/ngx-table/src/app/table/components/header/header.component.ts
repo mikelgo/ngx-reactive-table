@@ -4,7 +4,9 @@ import {
   Input,
   HostBinding,
   Renderer2,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import { TitleColumn } from '../../models/table-models';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -21,6 +23,8 @@ export class HeaderComponent implements OnInit {
   }
   @Input() columnCount: number = 0;
 
+  @Output() hideColumn = new EventEmitter<TitleColumn>();
+
   gap = 4;
 
   get displayColumns() {
@@ -33,4 +37,9 @@ export class HeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  onColumnHide(column: TitleColumn) {
+    let col = { ...column, hide: true };
+    this.hideColumn.emit(col);
+  }
 }

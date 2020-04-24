@@ -99,6 +99,10 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     this.stateService.showHiddenColumn(column);
   }
 
+  public onColumnHide(column: TitleColumn): void {
+    this.stateService.hideColumn(column);
+  }
+
   private initalizeStyles(config: TableConfig) {
     this.tableWidth = this.getTableWidth(config);
   }
