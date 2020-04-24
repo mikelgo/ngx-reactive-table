@@ -19,7 +19,9 @@ import {
   tap,
   takeUntil,
   distinctUntilChanged,
-  scan
+  scan,
+  share,
+  shareReplay
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
@@ -112,7 +114,7 @@ export class TableStateService<T> implements OnDestroy {
       })
     );
 
-    this.visibleDataColumnDefinitions$.subscribe(console.log);
+    // this.visibleDataColumnDefinitions$.subscribe(console.log);
     // TODO DataColumns must have the ID's as the titlecolumns have
     this.initialization$ = combineLatest([
       this.datasource$,
@@ -120,18 +122,16 @@ export class TableStateService<T> implements OnDestroy {
       this.dataColumnDefinition$
     ]);
 
-    // const h$ = merge(
-    //   this.headerDefinition$,
-    //   this.columnVisibilityActions$
-    // ).pipe(
-    //   scan((state: TitleColumn[], action: TitleColumn) => {
-    //     const newState = [...state];
-    //     newState.find(e => e.id === action.id).hide = action.hide;
-    //     return [...newState];
-    //   })
+    // const d$: Observable<any> = combineLatest([
+    //   this.dataColumnDefinition.asObservable(),
+    //   this.headerDefinition$
+    // ]).pipe(
+    //   map(([dataColumns, titleColumns]) =>
+    //     this.assignTitleColumnIdsTODataColumns(titleColumns, dataColumns)
+    //   ),
+    //   distinctUntilChanged()
     // );
-
-    // h$.subscribe(console.log);
+    // d$.subscribe(console.log);
 
     this.renderHeaders$ = this.initialization$.pipe(
       map(
@@ -200,7 +200,7 @@ export class TableStateService<T> implements OnDestroy {
       header.index = index;
       header.hide = header.hide ? header.hide : false;
     });
-
+    console.log('INITIAL HEADER COLUMNS %o', headerDefinition);
     // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
     this.headerDefinition.next(headers);
   }
@@ -210,6 +210,7 @@ export class TableStateService<T> implements OnDestroy {
   }
 
   public setDataColumnDefinition(dataColumnDefinition: DataColumn[]): void {
+    console.log('INITIAL DATA COLUMNS %o', dataColumnDefinition);
     this.dataColumnDefinition.next(dataColumnDefinition);
   }
 
@@ -271,12 +272,17 @@ export class TableStateService<T> implements OnDestroy {
     return uuidv4();
   }
 
-  private assignTitleColumnIdsTODataColumns(
-    titleColumns: TitleColumn[],
-    dataColumns: DataColumn[]
-  ): DataColumn[] {
-    const updated: DataColumn[] = [];
-
-    return updated;
-  }
+  // private assignTitleColumnIdsTODataColumns(
+  //   titleColumns: TitleColumn[],
+  //   dataColumns: DataColumn[]
+  // ): DataColumn[] {
+  //   // console.log('title columns %o, datacolumns %o', titleColumns, dataColumns);
+  //   const updated: DataColumn[] = [];
+  //   if (titleColumns && dataColumns) {
+  //     dataColumns.forEach((c, i) => {
+  //       c.id = titleColumns[i].id;
+  //     });
+  //   }
+  //   return updated;
+  // }
 }
