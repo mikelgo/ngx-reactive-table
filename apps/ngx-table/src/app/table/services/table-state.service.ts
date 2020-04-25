@@ -144,10 +144,10 @@ export class TableStateService<T> implements OnDestroy {
       this.hiddenColumns$,
       this.hiddenColumnsCount$
     ]).pipe(
-      map(([hiddenTitleColumns, data, count]) => {
+      map(([hiddenTitleColumns, count]) => {
         return {
           titleColumns: hiddenTitleColumns,
-          dataColumns: null,
+          dataColumns: null, // TODO map data columns
           count: count
         } as HiddenColumns;
       })
