@@ -1,3 +1,5 @@
+import { TitlePositions } from './title-positions';
+
 export interface TableConfig {
   bodyHeight?: number | string;
   minBodyHeight?: number | string;
@@ -13,8 +15,16 @@ export interface TableConfig {
    * Max. width of the table
    */
   maxWidth?: number | string;
-}
-
-export interface TableInit {
-  getStyles(tableConfig: TableConfig): Map<null, null>;
+  /**
+   * Height of the title row
+   */
+  titleRowHeight?: string;
+  /**
+   * Defines if the table rows should have a higher height or lower
+   */
+  denseRows?: boolean;
+  /**
+   * Defines the position of the title columns (header).
+   */
+  titlePositioning?: TitlePositions;
 }
