@@ -4,8 +4,6 @@ import {
   Input,
   HostBinding,
   HostListener,
-  ElementRef,
-  Renderer2,
   OnDestroy
 } from '@angular/core';
 
@@ -13,6 +11,9 @@ import { Selectable } from './selectable';
 import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { DataRow } from '../../models/data-row.model';
+import { RowConfig } from '../../models/row-config';
+import { getRowStyle } from '../../config/row-style-maps';
+import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 
 @Component({
   selector: 'ngx-table-row',
@@ -21,6 +22,7 @@ import { DataRow } from '../../models/data-row.model';
 })
 export class RowComponent
   implements OnInit, OnDestroy, Selectable<RowComponent> {
+  private _config: RowConfig = DEFAULT_ROW_CONFIG;
   private isSelected: boolean = false;
   private _row: DataRow = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
@@ -37,6 +39,13 @@ export class RowComponent
     }
   }
 
+  @Input() set config(config: RowConfig) {
+    if (config) {
+      this._config = config;
+      this.initalizeStyles(config);
+    }
+  }
+
   @HostBinding('style.border-top')
   borderTop: string = '1px solid transparent';
   @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
@@ -44,6 +53,9 @@ export class RowComponent
   @HostBinding('style.grid-gap.px') gap = 4;
   @HostBinding('style.grid-template-columns')
   columns = '';
+  @HostBinding('style.min-height') height: string = this.initRowHeight(
+    this._config
+  );
 
   @HostListener('mouseenter')
   onHover(selectable: RowComponent) {
@@ -99,5 +111,21 @@ export class RowComponent
   }
   getTemplateColumns(count: number): string {
     return `repeat(${count}, 1fr)`;
+  }
+
+  private initalizeStyles(config: RowConfig) {
+    this.height = this.initRowHeight(config);
+  }
+
+  private initRowHeight(config: RowConfig): string {
+    if (config && config.height) {
+      return config.height;
+    }
+
+    if (config && config.style) {
+      return getRowStyle(config.style);
+    } else {
+      return getRowStyle('wide');
+    }
   }
 }

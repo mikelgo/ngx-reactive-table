@@ -43,6 +43,9 @@ export class AppComponent implements OnInit {
     headerConfig: {
       titleRowHeight: '60px',
       titlePositioning: TitlePositions.LEFT_CENTER
+    },
+    rowConfig: {
+      style: 'dense'
     }
   };
 
