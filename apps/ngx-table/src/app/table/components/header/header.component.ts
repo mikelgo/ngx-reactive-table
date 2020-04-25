@@ -11,10 +11,8 @@ import {
 import { TitleColumn } from '../../models/title-column.model';
 import { HeaderConfig } from '../../models/header-config';
 import { DEFAULT_HEADER_CONFIG } from '../../config/table-config';
-import {
-  TitlePositionMaps,
-  TitlePositions
-} from '../../models/title-positions';
+import { TitlePositions } from '../../models/title-positions';
+import { TitlePositionMaps } from '../../config/title-position-maps';
 
 @Component({
   selector: 'ngx-table-header',
