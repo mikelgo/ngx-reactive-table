@@ -38,7 +38,10 @@ export class AppComponent implements OnInit {
 
   tableConfig: TableConfig = {
     width: '500px',
-    maxBodyHeight: '200px'
+    maxBodyHeight: '200px',
+    headerConfig: {
+      titleRowHeight: '60px'
+    }
   };
 
   ngOnInit() {}

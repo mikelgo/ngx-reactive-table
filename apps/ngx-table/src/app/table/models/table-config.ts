@@ -1,8 +1,22 @@
-import { TitlePositions } from './title-positions';
-
+import { HeaderConfig } from './header-config';
+/**
+ * Provides possibility to define some default configuration when initializing the table.
+ *
+ * All configurations which aim to table dimensions like the width/height of the table
+ * or e.g. the height of the header row do support configuration with all native
+ * css properties. so it is possible to specifiy e.g. the titleRowHeight in {@link HeaderConfig}
+ * by passing either '60px' | 'auto' | '8rem' | '8em'.
+ *
+ * If no configuration is provided the {@link DEFAULT_TABLE_CONFIG} will be taken into account
+ */
 export interface TableConfig {
-  bodyHeight?: number | string;
-  minBodyHeight?: number | string;
+  /**
+   * Configuration for the table header
+   */
+  headerConfig?: HeaderConfig;
+
+  bodyHeight?: string;
+  minBodyHeight?: string;
   /**
    * Max. height of the table body
    */
@@ -14,17 +28,5 @@ export interface TableConfig {
   /**
    * Max. width of the table
    */
-  maxWidth?: number | string;
-  /**
-   * Height of the title row
-   */
-  titleRowHeight?: string;
-  /**
-   * Defines if the table rows should have a higher height or lower
-   */
-  denseRows?: boolean;
-  /**
-   * Defines the position of the title columns (header).
-   */
-  titlePositioning?: TitlePositions;
+  maxWidth?: string;
 }
