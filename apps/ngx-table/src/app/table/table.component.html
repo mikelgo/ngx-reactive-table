@@ -7,7 +7,7 @@
 <ngx-table-header
   [displayColumns]="renderHeaders$ | async"
   [columnCount]="renderColumnCount$ | async"
-  [config]="tableConfig.headerConfig"
+  [config]="tableConfig?.headerConfig"
   (hideColumn)="onColumnHide($event)"
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">

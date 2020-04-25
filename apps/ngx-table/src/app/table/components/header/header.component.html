@@ -6,14 +6,15 @@
   <div
     *ngFor="let header of displayColumns"
     class="table-header-row-value"
+    [style.justify-self]="horizontalElementAlignment"
+    [style.align-self]="verticalElementAlignment"
     [ngClass]="header.class ? header.class : ''"
   >
     {{ header.columnTitle }}
     <div class="edit-icon" (click)="onColumnHide(header)">
       <span class="material-icons">
-remove_red_eye
-</span>
+        remove_red_eye
+      </span>
     </div>
-    
   </div>
 </div>
