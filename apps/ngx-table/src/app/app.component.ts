@@ -5,6 +5,7 @@ import { Datasource, TableDatasource } from './datasource/datasource';
 import { TitleColumn } from './table/models/title-column.model';
 import { DataColumn } from './table/models/data-column.model';
 import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { TitlePositions } from './table/models/title-positions';
 
 @Component({
   selector: 'ngx-table-root',
@@ -38,7 +39,11 @@ export class AppComponent implements OnInit {
 
   tableConfig: TableConfig = {
     width: '500px',
-    maxBodyHeight: '200px'
+    maxBodyHeight: '200px',
+    headerConfig: {
+      titleRowHeight: '60px',
+      titlePositioning: TitlePositions.LEFT_CENTER
+    }
   };
 
   ngOnInit() {}

@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  HostBinding,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { TitleColumn } from '../../../models/title-column.model';
 
 @Component({
   selector: 'ngx-table-header-element',
@@ -7,12 +15,13 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
 })
 export class HeaderElementComponent implements OnInit {
   @Input() header = null;
-
-  gridCols = 3;
-  @HostBinding('style.grid-template-columns')
-  colum = `repeat(${this.gridCols}, 1fr)`;
-  @HostBinding('style.grid-gap.px') gap = '10';
+  @Output() hideColumn = new EventEmitter<TitleColumn>();
   constructor() {}
 
   ngOnInit() {}
+
+  onColumnHide(column: TitleColumn) {
+    const col = { ...column, hide: true };
+    this.hideColumn.emit(col);
+  }
 }
