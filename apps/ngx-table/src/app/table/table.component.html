@@ -14,6 +14,7 @@
   <ngx-table-row
     *ngFor="let row of renderRows$ | async"
     [row]="row"
+    [config]="tableConfig?.rowConfig"
     [renderColumnCount]="renderColumnCount$ | async"
     (click)="onRowSelect(row, row.index)"
   ></ngx-table-row>

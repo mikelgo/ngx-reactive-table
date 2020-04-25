@@ -1,4 +1,5 @@
 import { HeaderConfig } from './header-config';
+import { RowConfig } from './row-config';
 /**
  * Provides possibility to define some default configuration when initializing the table.
  *
@@ -14,6 +15,7 @@ export interface TableConfig {
    * Configuration for the table header
    */
   headerConfig?: HeaderConfig;
+  rowConfig?: RowConfig;
 
   bodyHeight?: string;
   minBodyHeight?: string;
