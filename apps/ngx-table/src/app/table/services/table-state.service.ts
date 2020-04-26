@@ -18,7 +18,6 @@ import {
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
-import { allValuesInArrayAreEqual } from '@mikelgo/ts-utils/lib/array-utils';
 import { Cell } from '../models/cell.model';
 import { DataRow } from '../models/data-row.model';
 import { TitleColumn } from '../models/title-column.model';
