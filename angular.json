@@ -123,6 +123,38 @@
           }
         }
       }
+    },
+    "ngx-reactive-table": {
+      "projectType": "library",
+      "root": "libs/ngx-reactive-table",
+      "sourceRoot": "libs/ngx-reactive-table/src",
+      "prefix": "ngx-table",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ngx-reactive-table/tsconfig.lib.json",
+              "libs/ngx-reactive-table/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ngx-reactive-table/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ngx-reactive-table/jest.config.js",
+            "tsConfig": "libs/ngx-reactive-table/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/ngx-reactive-table/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "cli": {

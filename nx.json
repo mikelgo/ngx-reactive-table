@@ -25,6 +25,9 @@
     "ngx-table-e2e": {
       "tags": [],
       "implicitDependencies": ["ngx-table"]
+    },
+    "ngx-reactive-table": {
+      "tags": []
     }
   }
 }
