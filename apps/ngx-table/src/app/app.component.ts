@@ -15,7 +15,9 @@ import { CellRenderer } from './table/models/cell-renderer-types';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   @ViewChild('templateTest', { static: true }) templateTest: TemplateRef<any>;
+
   title = 'ngx-table';
 
   public headerDefinition: TitleColumn[] = [];
@@ -83,14 +85,14 @@ export class AppComponent implements OnInit {
     this.datasource = new TableDatasource<ExampleData>();
     /**
      * Simulating HTTP call
-     * (1) -> works but table looks weird
+     * (1) -> works but table looks weird - fixed
      * (2) -> works and table is fine
      */
     // (1)
-    // const d$ = this.getExampleData();
-    // this.datasource.connect(d$);
+    const d$ = this.getExampleData();
+    this.datasource.connect(d$);
     // (2)
-    this.getExampleData().subscribe(d => this.datasource.connect(d));
+    // this.getExampleData().subscribe(d => this.datasource.connect(d));
 
     /**
      * Working but then in HTML: [datasource]="ds | async"
