@@ -76,11 +76,11 @@ export class RowComponent
     if (!this.isSelected && !this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
+      this.backgroundColor = 'white';
     }
     if (!this.isSelected && this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = '#eee';
     }
   }
 
@@ -143,16 +143,25 @@ export class RowComponent
   }
 
   private initBorderTopStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.topBorderStyle;
+    }
     return '1px solid transparent';
   }
 
   private initBorderBottomStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.bottomBorderStyle;
+    }
     return '1px solid #ccc';
   }
 
   private initBackgroundStyle(config: RowConfig, isOdd: boolean): string {
     if (isOdd) {
       return '#eee';
+    }
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.backgroundColor;
     }
 
     return 'white';
