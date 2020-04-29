@@ -1,3 +1,5 @@
+import { StripedStyleConfig } from './striped-style-config';
+
 export interface RowConfig {
   /**
    * Default row style.
@@ -16,4 +18,10 @@ export interface RowConfig {
    * Default is false.
    */
   striped?: boolean;
+  /**
+   * Custom configuration for striped rows.
+   * Styles are only applied if config is provided and
+   * 'striped' is set to true.
+   */
+  stripedStyleConfig?: StripedStyleConfig;
 }
