@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
@@ -14,6 +14,7 @@ import { delay } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('test') testTemplate: TemplateRef<any>;
   title = 'ngx-table';
 
   public headerDefinition: TitleColumn[] = [
@@ -71,14 +72,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     /**
      * Simulating HTTP call
-     * (1) -> works but table looks weird
+     * (1) -> works but table looks weird - fixed
      * (2) -> works and table is fine
      */
     // (1)
-    // const d$ = this.getExampleData();
-    // this.datasource.connect(d$);
+    const d$ = this.getExampleData();
+    this.datasource.connect(d$);
     // (2)
-    this.getExampleData().subscribe(d => this.datasource.connect(d));
+    // this.getExampleData().subscribe(d => this.datasource.connect(d));
 
     /**
      * Working but then in HTML: [datasource]="ds | async"

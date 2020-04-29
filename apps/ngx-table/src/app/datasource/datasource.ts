@@ -30,7 +30,11 @@ export class TableDatasource<T> implements Datasource<T> {
   connect(data: Observable<T[]>): void;
   connect(data: any): void {
     if (isObservable(data)) {
-      this.data$ = data as Observable<T[]>;
+      /**
+       * no need to handle subscription as it does not come from external source.
+       * Will be cleaned up by JS-GC
+       */
+      (data as Observable<T[]>).subscribe(data => this.data$$.next(data));
     }
     if (Array.isArray(data)) {
       this.data$$.next(data);
