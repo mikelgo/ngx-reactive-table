@@ -4,8 +4,9 @@ import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
 import { TitleColumn } from './table/models/title-column.model';
 import { DataColumn } from './table/models/data-column.model';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
 import { TitlePositions } from './table/models/title-positions';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-table-root',
@@ -68,7 +69,17 @@ export class AppComponent implements OnInit {
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
-    this.datasource.connect(this.data$);
+    /**
+     * Simulating HTTP call
+     * (1) -> works but table looks weird
+     * (2) -> works and table is fine
+     */
+    // (1)
+    // const d$ = this.getExampleData();
+    // this.datasource.connect(d$);
+    // (2)
+    this.getExampleData().subscribe(d => this.datasource.connect(d));
+
     /**
      * Working but then in HTML: [datasource]="ds | async"
      */
@@ -98,5 +109,9 @@ export class AppComponent implements OnInit {
     //     rowConfig: { style: 'wide' }
     //   });
     // }, 3000);
+  }
+
+  getExampleData(): Observable<ExampleData[]> {
+    return of(this.testdata).pipe(delay(1500));
   }
 }
