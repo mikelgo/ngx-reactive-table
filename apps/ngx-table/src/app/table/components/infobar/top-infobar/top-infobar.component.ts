@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { ReplaySubject, Observable } from 'rxjs';
 import { TitleColumn } from '../../../models/title-column.model';
@@ -6,7 +13,8 @@ import { TitleColumn } from '../../../models/title-column.model';
 @Component({
   selector: 'ngx-table-top-infobar',
   templateUrl: './top-infobar.component.html',
-  styleUrls: ['./top-infobar.component.scss']
+  styleUrls: ['./top-infobar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TopInfobarComponent implements OnInit {
   private hiddenColumns$$ = new ReplaySubject<TitleColumn[]>(1);

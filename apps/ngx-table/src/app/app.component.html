@@ -4,7 +4,7 @@
     [headerDefinition]="headerDefinition"
     [dataColumnDefinition]="dataColumnDefinition"
     [datasource]="datasource"
-    [tableConfig]="tableConfig"
+    [tableConfig]="config$ | async"
   >
   </ngx-table-table>
 </div>

@@ -48,6 +48,42 @@ export class AppComponent implements OnInit {
       style: 'dense'
     }
   };
+  d$$ = new BehaviorSubject(this.testdata);
+  d$ = this.d$$.asObservable();
 
-  ngOnInit() {}
+  ds$$ = new BehaviorSubject(new TableDatasource<ExampleData>(this.testdata));
+  ds$ = this.ds$$.asObservable();
+
+  config$$ = new BehaviorSubject(this.tableConfig);
+  config$ = this.config$$.asObservable();
+  ngOnInit() {
+    /**
+     * Working but then in HTML: [datasource]="ds | async"
+     */
+    // setTimeout(() => {
+    //   const ne = [...this.testdata];
+    //   ne[0].p1 = 'abc';
+    //   const d = this.ds$$.getValue();
+    //   d.setData(ne);
+    //   this.ds$$.next(d);
+    // }, 1500);
+    /**
+     * Working with HTML [datasource]="datasource"
+     * Would also be possible to next the datasource
+     */
+    setTimeout(() => {
+      const ne = [...this.testdata];
+      ne[0].p1 = 'abc';
+      this.datasource.connect(ne);
+    }, 1500);
+    // setTimeout(() => {
+    //   this.config$$.next({
+    //     ...this.tableConfig,
+    //     width: 'auto',
+    //     maxBodyHeight: '400px',
+    //     headerConfig: { titleRowHeight: '80px' },
+    //     rowConfig: { style: 'wide' }
+    //   });
+    // }, 3000);
+  }
 }

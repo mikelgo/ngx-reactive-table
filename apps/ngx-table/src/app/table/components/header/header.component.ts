@@ -6,7 +6,8 @@ import {
   Renderer2,
   ElementRef,
   EventEmitter,
-  Output
+  Output,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TitleColumn } from '../../models/title-column.model';
 import { HeaderConfig } from '../../models/header-config';
@@ -17,7 +18,8 @@ import { TitlePositionMaps } from '../../config/title-position-maps';
 @Component({
   selector: 'ngx-table-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
   private _config: HeaderConfig;
