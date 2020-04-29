@@ -1,9 +1,25 @@
-<ng-container *ngIf="!cell.cellRenderer">{{ cell.val }}</ng-container>
+<!-- default: neither cellRenderer nor templateRef provided-->
+<ng-container *ngIf="!cell.cellRenderer && !cell.template">{{
+  cell.val
+}}</ng-container>
 
-<ng-container *ngIf="cell.cellRenderer" [ngSwitch]="cell.cellRenderer">
+<!-- cell renderer given -->
+<ng-container
+  *ngIf="cell.cellRenderer && !cell.template"
+  [ngSwitch]="cell.cellRenderer"
+>
   <ngx-table-input-cell-renderer
     [label]="'Test label'"
     [value]="cell.val"
     *ngSwitchCase="'input'"
   ></ngx-table-input-cell-renderer>
+</ng-container>
+
+<!-- cell template provided -->
+<ng-container *ngIf="!cell.cellRenderer && cell.template">
+  <ng-template
+    [ngTemplateOutletContext]="{ element: cell.val }"
+    [ngTemplateOutlet]="cell.template"
+  >
+  </ng-template>
 </ng-container>

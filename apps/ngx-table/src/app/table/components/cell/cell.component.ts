@@ -9,7 +9,17 @@ import { Cell } from '../../models/cell.model';
   styleUrls: ['./cell.component.scss']
 })
 export class CellComponent implements OnInit {
-  @Input() cell: Cell = null;
+  private _cell: Cell = null;
+  @Input() set cell(cell: Cell) {
+    if (cell) {
+      // console.log(cell);
+      this._cell = cell;
+    }
+  }
+
+  get cell() {
+    return this._cell;
+  }
   constructor() {}
 
   ngOnInit() {}

@@ -5,10 +5,10 @@ import { CellRenderer } from './cell-renderer-types';
  * Defines a Column
  */
 export interface Column {
-  // custom css class which will be rendered instead of styling
-  class?: string;
-  // custom ng-template which will be rendered instead of default column
-  template?: TemplateRef<any>;
-  // custom cell renderer which will be rendered insteaf of default column
-  cellRenderer?: CellRenderer;
+  // id of the column
+  id?: string | number;
+  // index of the column. will be set automatically if not seet
+  index?: number;
+  // defines if the column is visible or not
+  hide?: boolean;
 }
