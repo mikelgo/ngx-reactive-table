@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, isObservable } from 'rxjs';
 
 export interface Datasource<T> {
   /**
@@ -9,7 +9,10 @@ export interface Datasource<T> {
    *  Connects the data with the datasource and sets also the data
    * @param data
    */
-  connect(data?: T[], data$?: Observable<T[]>): void;
+  connect(data: T[]): void;
+  connect(data: Observable<T[]>): void;
+  connect(data: any): void;
+  // connect(data?: T[], data$?: Observable<T[]>): void;
   /**
    * Returns a snapshot of the current data
    */
@@ -25,14 +28,24 @@ export class TableDatasource<T> implements Datasource<T> {
   }
   // TODO fix this with nice method overloading signature
   // Currently user has to ds.connect(null, data$)
-  connect(data?: T[], data$?: Observable<T[]>): void {
-    if (data) {
+  connect(data: T[]): void;
+  connect(data: Observable<T[]>): void;
+  connect(data: any): void {
+    if (isObservable(data)) {
+      this.data$ = data as Observable<T[]>;
+    }
+    if (Array.isArray(data)) {
       this.data$$.next(data);
     }
-    if (data$) {
-      this.data$ = data$;
-    }
   }
+  // connect(data?: T[], data$?: Observable<T[]>): void {
+  //   if (data) {
+  //     this.data$$.next(data);
+  //   }
+  //   if (data$) {
+  //     this.data$ = data$;
+  //   }
+  // }
 
   getDataSnapshot() {
     if (this.data$$) {
