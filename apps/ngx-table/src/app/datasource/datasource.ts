@@ -9,7 +9,7 @@ export interface Datasource<T> {
    *  Connects the data with the datasource and sets also the data
    * @param data
    */
-  connect(data: T[]): void;
+  connect(data?: T[], data$?: Observable<T[]>): void;
   /**
    * Returns a snapshot of the current data
    */
@@ -17,16 +17,21 @@ export interface Datasource<T> {
 }
 
 export class TableDatasource<T> implements Datasource<T> {
-  private _data: T[] = [];
   private data$$: BehaviorSubject<T[]> = new BehaviorSubject(null);
   public data$: Observable<T[]> = this.data$$.asObservable();
 
-  constructor(data: T[]) {
-    this.data$$.next(data);
+  constructor() {
+    // this.data$$.next(data);
   }
-
-  connect(d: T[]): void {
-    this.data$$.next(d);
+  // TODO fix this with nice method overloading signature
+  // Currently user has to ds.connect(null, data$)
+  connect(data?: T[], data$?: Observable<T[]>): void {
+    if (data) {
+      this.data$$.next(data);
+    }
+    if (data$) {
+      this.data$ = data$;
+    }
   }
 
   getDataSnapshot() {

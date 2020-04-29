@@ -33,9 +33,14 @@ export class AppComponent implements OnInit {
   ];
 
   public testdata: ExampleData[] = getTestdata();
-  public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(
-    this.testdata
-  );
+  data$$ = new BehaviorSubject(this.testdata);
+  data$ = this.data$$.asObservable();
+  // public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(
+  //   this.testdata
+  // );
+  public datasource: Datasource<ExampleData> = new TableDatasource<
+    ExampleData
+  >();
 
   tableConfig: TableConfig = {
     width: '500px',
@@ -48,15 +53,16 @@ export class AppComponent implements OnInit {
       style: 'dense'
     }
   };
-  d$$ = new BehaviorSubject(this.testdata);
-  d$ = this.d$$.asObservable();
+  // d$$ = new BehaviorSubject(this.testdata);
+  // d$ = this.d$$.asObservable();
 
-  ds$$ = new BehaviorSubject(new TableDatasource<ExampleData>(this.testdata));
-  ds$ = this.ds$$.asObservable();
+  // ds$$ = new BehaviorSubject(new TableDatasource<ExampleData>(this.testdata));
+  // ds$ = this.ds$$.asObservable();
 
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
+    this.datasource.connect(null, this.data$);
     /**
      * Working but then in HTML: [datasource]="ds | async"
      */
@@ -74,7 +80,8 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       const ne = [...this.testdata];
       ne[0].p1 = 'abc';
-      this.datasource.connect(ne);
+      // this.datasource.connect(ne);
+      this.data$$.next(ne);
     }, 1500);
     // setTimeout(() => {
     //   this.config$$.next({
