@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
-    this.datasource.connect(null, this.data$);
+    this.datasource.connect(this.data$);
     /**
      * Working but then in HTML: [datasource]="ds | async"
      */
