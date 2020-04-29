@@ -50,7 +50,13 @@ export class AppComponent implements OnInit {
       titlePositioning: TitlePositions.LEFT_CENTER
     },
     rowConfig: {
-      style: 'dense'
+      style: 'dense',
+      striped: true,
+      stripedStyleConfig: {
+        backgroundColor: 'yellow',
+        bottomBorderStyle: '1px solid blue',
+        topBorderStyle: '1px solid blue'
+      }
     }
   };
   // d$$ = new BehaviorSubject(this.testdata);

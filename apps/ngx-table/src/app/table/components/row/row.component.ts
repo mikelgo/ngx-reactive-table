@@ -23,6 +23,7 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 export class RowComponent
   implements OnInit, OnDestroy, Selectable<RowComponent> {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
+  private _isOdd: boolean = false;
   private isSelected: boolean = false;
   private _row: DataRow = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
@@ -42,14 +43,20 @@ export class RowComponent
   @Input() set config(config: RowConfig) {
     if (config) {
       this._config = config;
-      this.initalizeStyles(config);
+      this.initalizeStyles(config, this._isOdd);
     }
   }
 
+  @Input() set odd(isOdd: boolean) {
+    this._isOdd = isOdd;
+  }
+
   @HostBinding('style.border-top')
-  borderTop: string = '1px solid transparent';
-  @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
-  @HostBinding('style.background-color') backgroundColor: string = 'white';
+  borderTop: string = this.initBorderTopStyle(this._config, this._isOdd);
+  @HostBinding('style.border-bottom')
+  borderBottom: string = this.initBorderBottomStyle(this._config, this._isOdd);
+  @HostBinding('style.background-color')
+  backgroundColor: string = this.initBackgroundStyle(this._config, this._isOdd);
   @HostBinding('style.grid-gap.px') gap = 4;
   @HostBinding('style.grid-template-columns')
   columns = '';
@@ -60,17 +67,30 @@ export class RowComponent
   @HostListener('mouseenter')
   onHover(selectable: RowComponent) {
     if (!this.isSelected) {
-      this.borderTop = '1px solid #4a5568';
-      this.borderBottom = '1px solid #4a5568';
-      this.backgroundColor = '#e2e8f0';
+      this.borderTop = '1px solid black';
+      this.borderBottom = '1px solid black';
     }
   }
 
   @HostListener('mouseleave') mouseLeave() {
-    if (!this.isSelected) {
+    if (!this.isSelected && !this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
       this.backgroundColor = 'white';
+    }
+    if (!this.isSelected && this._isOdd) {
+      this.borderTop = '1px solid transparent';
+      this.borderBottom = '1px solid #ccc';
+    }
+    if (
+      !this.isSelected &&
+      this._isOdd &&
+      this._config &&
+      this._config.striped
+    ) {
+      this.borderTop = this._config.stripedStyleConfig.topBorderStyle;
+      this.borderBottom = this._config.stripedStyleConfig.bottomBorderStyle;
+      this.backgroundColor = this._config.stripedStyleConfig.backgroundColor;
     }
   }
 
@@ -113,8 +133,11 @@ export class RowComponent
     return `repeat(${count}, 1fr)`;
   }
 
-  private initalizeStyles(config: RowConfig) {
+  private initalizeStyles(config: RowConfig, isOdd: boolean) {
     this.height = this.initRowHeight(config);
+    this.borderTop = this.initBorderTopStyle(config, isOdd);
+    this.borderBottom = this.initBorderBottomStyle(config, isOdd);
+    this.backgroundColor = this.initBackgroundStyle(config, isOdd);
   }
 
   private initRowHeight(config: RowConfig): string {
@@ -127,5 +150,30 @@ export class RowComponent
     } else {
       return getRowStyle('wide');
     }
+  }
+
+  private initBorderTopStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.topBorderStyle;
+    }
+    return '1px solid transparent';
+  }
+
+  private initBorderBottomStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.bottomBorderStyle;
+    }
+    return '1px solid #ccc';
+  }
+
+  private initBackgroundStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd && config.striped && config.stripedStyleConfig) {
+      return config.stripedStyleConfig.backgroundColor;
+    }
+    if (isOdd) {
+      return '#eee';
+    }
+
+    return 'white';
   }
 }
