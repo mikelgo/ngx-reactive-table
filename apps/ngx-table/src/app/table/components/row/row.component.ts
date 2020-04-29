@@ -73,9 +73,14 @@ export class RowComponent
   }
 
   @HostListener('mouseleave') mouseLeave() {
-    if (!this.isSelected) {
+    if (!this.isSelected && !this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
+    }
+    if (!this.isSelected && this._isOdd) {
+      this.borderTop = '1px solid transparent';
+      this.borderBottom = '1px solid #ccc';
+      this.backgroundColor = '#eee';
     }
   }
 
