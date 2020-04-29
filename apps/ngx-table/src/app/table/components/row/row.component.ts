@@ -67,9 +67,8 @@ export class RowComponent
   @HostListener('mouseenter')
   onHover(selectable: RowComponent) {
     if (!this.isSelected) {
-      this.borderTop = '1px solid #4a5568';
-      this.borderBottom = '1px solid #4a5568';
-      this.backgroundColor = '#e2e8f0';
+      this.borderTop = '1px solid black';
+      this.borderBottom = '1px solid black';
     }
   }
 
@@ -77,7 +76,6 @@ export class RowComponent
     if (!this.isSelected) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = 'white';
     }
   }
 
