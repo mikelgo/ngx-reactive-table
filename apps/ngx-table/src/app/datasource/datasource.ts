@@ -11,7 +11,6 @@ export interface Datasource<T> {
    */
   connect(data: T[]): void;
   connect(data: Observable<T[]>): void;
-  connect(data: any): void;
   // connect(data?: T[], data$?: Observable<T[]>): void;
   /**
    * Returns a snapshot of the current data
@@ -26,8 +25,7 @@ export class TableDatasource<T> implements Datasource<T> {
   constructor() {
     // this.data$$.next(data);
   }
-  // TODO fix this with nice method overloading signature
-  // Currently user has to ds.connect(null, data$)
+
   connect(data: T[]): void;
   connect(data: Observable<T[]>): void;
   connect(data: any): void {
@@ -38,14 +36,6 @@ export class TableDatasource<T> implements Datasource<T> {
       this.data$$.next(data);
     }
   }
-  // connect(data?: T[], data$?: Observable<T[]>): void {
-  //   if (data) {
-  //     this.data$$.next(data);
-  //   }
-  //   if (data$) {
-  //     this.data$ = data$;
-  //   }
-  // }
 
   getDataSnapshot() {
     if (this.data$$) {
