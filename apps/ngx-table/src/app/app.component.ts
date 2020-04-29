@@ -57,23 +57,25 @@ export class AppComponent implements OnInit {
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
-    // this.d$.subscribe(d => this.datasource.setData(d));
+    /**
+     * Working but then in HTML: [datasource]="ds | async"
+     */
     // setTimeout(() => {
     //   const ne = [...this.testdata];
     //   ne[0].p1 = 'abc';
-    //   this.testdata = [...ne];
+    //   const d = this.ds$$.getValue();
+    //   d.setData(ne);
+    //   this.ds$$.next(d);
     // }, 1500);
     /**
-     * This works because I'm referencing in table state servie the datasource!
-     * To make the above working I need to go to the datasource.data ! or introduce that I
-     * have new TableDatasource(datastream$)!!
+     * Working with HTML [datasource]="datasource"
+     * Would also be possible to next the datasource
      */
     setTimeout(() => {
       const ne = [...this.testdata];
       ne[0].p1 = 'abc';
-      this.ds$$.next(new TableDatasource<ExampleData>(ne));
+      this.datasource.setData(ne);
     }, 1500);
-
     // setTimeout(() => {
     //   this.config$$.next({
     //     ...this.tableConfig,
