@@ -5,11 +5,12 @@ import {
   HostBinding,
   OnDestroy,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
@@ -23,7 +24,8 @@ import { HiddenColumns } from './models/hidden-column.model';
   selector: 'ngx-table-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
-  providers: [TableStateService]
+  providers: [TableStateService],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   @Input() title: string = '';

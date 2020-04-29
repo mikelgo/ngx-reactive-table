@@ -48,6 +48,40 @@ export class AppComponent implements OnInit {
       style: 'dense'
     }
   };
+  d$$ = new BehaviorSubject(this.testdata);
+  d$ = this.d$$.asObservable();
 
-  ngOnInit() {}
+  ds$$ = new BehaviorSubject(new TableDatasource<ExampleData>(this.testdata));
+  ds$ = this.ds$$.asObservable();
+
+  config$$ = new BehaviorSubject(this.tableConfig);
+  config$ = this.config$$.asObservable();
+  ngOnInit() {
+    // this.d$.subscribe(d => this.datasource.setData(d));
+    // setTimeout(() => {
+    //   const ne = [...this.testdata];
+    //   ne[0].p1 = 'abc';
+    //   this.testdata = [...ne];
+    // }, 1500);
+    /**
+     * This works because I'm referencing in table state servie the datasource!
+     * To make the above working I need to go to the datasource.data ! or introduce that I
+     * have new TableDatasource(datastream$)!!
+     */
+    setTimeout(() => {
+      const ne = [...this.testdata];
+      ne[0].p1 = 'abc';
+      this.ds$$.next(new TableDatasource<ExampleData>(ne));
+    }, 1500);
+
+    // setTimeout(() => {
+    //   this.config$$.next({
+    //     ...this.tableConfig,
+    //     width: 'auto',
+    //     maxBodyHeight: '400px',
+    //     headerConfig: { titleRowHeight: '80px' },
+    //     rowConfig: { style: 'wide' }
+    //   });
+    // }, 3000);
+  }
 }

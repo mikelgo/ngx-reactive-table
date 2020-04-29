@@ -2,6 +2,7 @@ export interface Datasource<T> {
   // connect(data: T[]): void;
 
   getData(): T[];
+  setData(data: T[]): void;
 }
 
 export class TableDatasource<T> implements Datasource<T> {
@@ -13,5 +14,9 @@ export class TableDatasource<T> implements Datasource<T> {
 
   getData(): T[] {
     return this._data;
+  }
+
+  setData(d: T[]): void {
+    this._data = d;
   }
 }

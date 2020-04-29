@@ -4,14 +4,16 @@ import {
   Input,
   HostBinding,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { TitleColumn } from '../../../models/title-column.model';
 
 @Component({
   selector: 'ngx-table-header-element',
   templateUrl: './header-element.component.html',
-  styleUrls: ['./header-element.component.scss']
+  styleUrls: ['./header-element.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderElementComponent implements OnInit {
   @Input() header = null;

@@ -3,8 +3,8 @@
     [title]="'Table title'"
     [headerDefinition]="headerDefinition"
     [dataColumnDefinition]="dataColumnDefinition"
-    [datasource]="datasource"
-    [tableConfig]="tableConfig"
+    [datasource]="ds$ | async"
+    [tableConfig]="config$ | async"
   >
   </ngx-table-table>
 </div>
