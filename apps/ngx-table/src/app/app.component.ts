@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
 import { Datasource, TableDatasource } from './datasource/datasource';
@@ -7,6 +7,7 @@ import { DataColumn } from './table/models/data-column.model';
 import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
 import { TitlePositions } from './table/models/title-positions';
 import { delay } from 'rxjs/operators';
+import { CellRenderer } from './table/models/cell-renderer-types';
 
 @Component({
   selector: 'ngx-table-root',
@@ -14,24 +15,14 @@ import { delay } from 'rxjs/operators';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild('templateTest', { static: true }) templateTest: TemplateRef<any>;
   title = 'ngx-table';
 
-  public headerDefinition: TitleColumn[] = [
-    { columnTitle: 'ID' },
-    { columnTitle: 'Firstname' },
-    { columnTitle: 'Lastname' },
-    { columnTitle: 'Job', hide: false },
-    { columnTitle: 'App', hide: true }
-  ];
+  public headerDefinition: TitleColumn[] = [];
 
   // TODO check with custom template
-  public dataColumnDefinition: DataColumn[] = [
-    { displayProperty: 'id' },
-    { displayProperty: 'p1' },
-    { displayProperty: 'p2' },
-    { displayProperty: 'p3', hide: true },
-    { displayProperty: 'p4', hide: true }
-  ];
+  public dataColumnDefinition: DataColumn[] = [];
+  public dataColumnDefinition2: DataColumn[] = [];
 
   public testdata: ExampleData[] = getTestdata();
   data$$ = new BehaviorSubject(this.testdata);
@@ -39,9 +30,7 @@ export class AppComponent implements OnInit {
   // public datasource: Datasource<ExampleData> = new TableDatasource<ExampleData>(
   //   this.testdata
   // );
-  public datasource: Datasource<ExampleData> = new TableDatasource<
-    ExampleData
-  >();
+  public datasource: Datasource<ExampleData>;
 
   tableConfig: TableConfig = {
     width: '500px',
@@ -69,6 +58,29 @@ export class AppComponent implements OnInit {
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
+    console.log(this.templateTest);
+    this.headerDefinition = [
+      { columnTitle: 'ID' },
+      { columnTitle: 'Firstname' },
+      { columnTitle: 'Lastname' },
+      { columnTitle: 'Job', hide: false },
+      { columnTitle: 'App', hide: true }
+    ];
+    this.dataColumnDefinition = [
+      { displayProperty: 'id', template: this.templateTest },
+      { displayProperty: 'p1' },
+      { displayProperty: 'p2' },
+      { displayProperty: 'p3', hide: false },
+      { displayProperty: 'p4', hide: true }
+    ];
+    this.dataColumnDefinition2 = [
+      { displayProperty: 'id' },
+      { displayProperty: 'p1' },
+      { displayProperty: 'p2' },
+      { displayProperty: 'p3', hide: false },
+      { displayProperty: 'p4', hide: true }
+    ];
+    this.datasource = new TableDatasource<ExampleData>();
     /**
      * Simulating HTTP call
      * (1) -> works but table looks weird
