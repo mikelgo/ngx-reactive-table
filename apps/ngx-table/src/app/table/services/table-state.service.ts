@@ -14,7 +14,8 @@ import {
   distinctUntilChanged,
   scan,
   share,
-  shareReplay
+  shareReplay,
+  switchMap
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
@@ -48,12 +49,14 @@ export class TableStateService<T> implements OnDestroy {
     distinctUntilChanged()
   );
 
-  // private visibleDataColumnDefinitions$: Observable<DataColumn[]>;
-
   private datasource$: Observable<
     Datasource<T>
   > = this.datasource.asObservable().pipe(
     filter(v => v !== null),
+    distinctUntilChanged()
+  );
+  private data$: Observable<T[]> = this.datasource$.pipe(
+    switchMap(datasource => datasource.data$),
     distinctUntilChanged()
   );
 
@@ -70,9 +73,7 @@ export class TableStateService<T> implements OnDestroy {
   private lastSelectedRowCache$$ = new BehaviorSubject<DataRow>(null);
   public lastSelectedRow$ = this.lastSelectedRowCache$$.asObservable();
 
-  private initialization$: Observable<
-    [Datasource<T>, TitleColumn[], DataColumn[]]
-  >;
+  private initialization$: Observable<[T[], TitleColumn[], DataColumn[]]>;
   private showColumnAction$ = new Subject<TitleColumn>();
   private hideColumnAction$ = new Subject<TitleColumn>();
 
@@ -101,25 +102,22 @@ export class TableStateService<T> implements OnDestroy {
     );
 
     this.initialization$ = combineLatest([
-      this.datasource$,
+      this.data$,
       this.visibleHeaderDefinitions$,
       this.visibleDataColumnDefinitions$
     ]);
 
     this.renderHeaders$ = this.initialization$.pipe(
-      map(
-        ([datasource, headerDefinition, dataColumnDefinition]) =>
-          headerDefinition
-      ),
+      map(([data, headerDefinition, dataColumnDefinition]) => headerDefinition),
       map(titleColumns => titleColumns.filter(c => !c.hide))
     );
 
     this.renderRows$ = this.initialization$.pipe(
-      map(([datasource, headerDefinition, dataColumnDefinition]) =>
+      map(([data, headerDefinition, dataColumnDefinition]) =>
         this.mapColumnDefinitionToRowDefinition(
           headerDefinition,
           dataColumnDefinition,
-          datasource
+          data
         )
       )
     );
@@ -127,10 +125,7 @@ export class TableStateService<T> implements OnDestroy {
     this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
 
     this.hiddenColumns$ = this.initialization$.pipe(
-      map(
-        ([datasource, headerDefinition, dataColumnDefinition]) =>
-          headerDefinition
-      ),
+      map(([data, headerDefinition, dataColumnDefinition]) => headerDefinition),
       map(titleColumns => titleColumns.filter(c => c.hide))
     );
 
@@ -186,16 +181,10 @@ export class TableStateService<T> implements OnDestroy {
       header.index = index;
       header.hide = header.hide ? header.hide : false;
     });
-    // TODO check if incoming headerDefinition has ID - if all are unique otherwise throw error!
-    const ids = new Set(headers.map(h => h.id));
 
-    if (ids.size !== headers.map(h => h.index).length) {
-      throw new Error(
-        'Duplicate column-ID found. Please do assign unique ids '
-      );
-    } else {
-      this.headerDefinition.next(headers);
-    }
+    this.checkIdsAreUnique(headers);
+
+    this.headerDefinition.next(headers);
   }
 
   public getHeaderDefinition(): TitleColumn[] {
@@ -229,11 +218,11 @@ export class TableStateService<T> implements OnDestroy {
   private mapColumnDefinitionToRowDefinition(
     headerDefinition: TitleColumn[],
     columnDefinition: DataColumn[],
-    datasource: Datasource<T>
+    data: T[]
   ): DataRow[] {
     const rows: DataRow[] = [];
-    if (columnDefinition && datasource && headerDefinition) {
-      datasource.getData().forEach((row, index) => {
+    if (columnDefinition && data && headerDefinition) {
+      data.forEach((row, index) => {
         rows.push({
           index: index,
           values: this.getRowValues(row, headerDefinition, columnDefinition)
@@ -265,5 +254,14 @@ export class TableStateService<T> implements OnDestroy {
 
   private getID(): string {
     return uuidv4();
+  }
+
+  private checkIdsAreUnique(headers: TitleColumn[]) {
+    const ids = new Set(headers.map(h => h.id));
+    if (ids.size !== headers.map(h => h.index).length) {
+      throw new Error(
+        'Duplicate column-ID found. Please do assign unique ids '
+      );
+    }
   }
 }

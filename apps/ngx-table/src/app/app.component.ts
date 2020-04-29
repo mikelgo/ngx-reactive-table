@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       const ne = [...this.testdata];
       ne[0].p1 = 'abc';
-      this.datasource.setData(ne);
+      this.datasource.connect(ne);
     }, 1500);
     // setTimeout(() => {
     //   this.config$$.next({
