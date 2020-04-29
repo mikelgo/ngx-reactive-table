@@ -23,6 +23,7 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 export class RowComponent
   implements OnInit, OnDestroy, Selectable<RowComponent> {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
+  private _isOdd: boolean = false;
   private isSelected: boolean = false;
   private _row: DataRow = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
@@ -42,14 +43,20 @@ export class RowComponent
   @Input() set config(config: RowConfig) {
     if (config) {
       this._config = config;
-      this.initalizeStyles(config);
+      this.initalizeStyles(config, this._isOdd);
     }
   }
 
+  @Input() set odd(isOdd: boolean) {
+    this._isOdd = isOdd;
+  }
+
   @HostBinding('style.border-top')
-  borderTop: string = '1px solid transparent';
-  @HostBinding('style.border-bottom') borderBottom: string = '1px solid #ccc';
-  @HostBinding('style.background-color') backgroundColor: string = 'white';
+  borderTop: string = this.initBorderTopStyle(this._config, this._isOdd);
+  @HostBinding('style.border-bottom')
+  borderBottom: string = this.initBorderBottomStyle(this._config, this._isOdd);
+  @HostBinding('style.background-color')
+  backgroundColor: string = this.initBackgroundStyle(this._config, this._isOdd);
   @HostBinding('style.grid-gap.px') gap = 4;
   @HostBinding('style.grid-template-columns')
   columns = '';
@@ -113,8 +120,11 @@ export class RowComponent
     return `repeat(${count}, 1fr)`;
   }
 
-  private initalizeStyles(config: RowConfig) {
+  private initalizeStyles(config: RowConfig, isOdd: boolean) {
     this.height = this.initRowHeight(config);
+    this.borderTop = this.initBorderTopStyle(config, isOdd);
+    this.borderBottom = this.initBorderBottomStyle(config, isOdd);
+    this.backgroundColor = this.initBackgroundStyle(config, isOdd);
   }
 
   private initRowHeight(config: RowConfig): string {
@@ -127,5 +137,21 @@ export class RowComponent
     } else {
       return getRowStyle('wide');
     }
+  }
+
+  private initBorderTopStyle(config: RowConfig, isOdd: boolean): string {
+    return '1px solid transparent';
+  }
+
+  private initBorderBottomStyle(config: RowConfig, isOdd: boolean): string {
+    return '1px solid #ccc';
+  }
+
+  private initBackgroundStyle(config: RowConfig, isOdd: boolean): string {
+    if (isOdd) {
+      return '#eee';
+    }
+
+    return 'white';
   }
 }

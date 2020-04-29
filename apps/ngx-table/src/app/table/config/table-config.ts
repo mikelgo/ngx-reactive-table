@@ -9,7 +9,8 @@ export const DEFAULT_HEADER_CONFIG: HeaderConfig = {
 };
 
 export const DEFAULT_ROW_CONFIG: RowConfig = {
-  style: 'wide'
+  style: 'wide',
+  striped: false
 };
 
 export const DEFAULT_TABLE_CONFIG: TableConfig = {

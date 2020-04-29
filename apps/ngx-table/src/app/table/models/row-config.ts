@@ -11,4 +11,9 @@ export interface RowConfig {
    * Custom row height
    */
   height?: string;
+  /**
+   * Defines if striped rows are wanted.
+   * Default is false.
+   */
+  striped?: boolean;
 }

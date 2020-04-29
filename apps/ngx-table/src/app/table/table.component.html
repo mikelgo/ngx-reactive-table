@@ -12,8 +12,9 @@
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
   <ngx-table-row
-    *ngFor="let row of renderRows$ | async"
+    *ngFor="let row of renderRows$ | async; let index = i; let odd = odd"
     [row]="row"
+    [odd]="odd"
     [config]="tableConfig?.rowConfig"
     [renderColumnCount]="renderColumnCount$ | async"
     (click)="onRowSelect(row, row.index)"
