@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { TableConfig } from './table/models/table-config';
 import { ExampleData, getTestdata } from './_example/example.model';
-import { Datasource, TableDatasource } from './datasource/datasource';
+import { Datasource } from './datasource/datasource';
 import { TitleColumn } from './table/models/title-column.model';
 import { DataColumn } from './table/models/data-column.model';
 import { Subject, Observable, BehaviorSubject, of } from 'rxjs';
 import { TitlePositions } from './table/models/title-positions';
 import { delay } from 'rxjs/operators';
 import { CellRenderer } from './table/models/cell-renderer-types';
+import { TableDatasource } from './datasource/table-datasource';
 
 @Component({
   selector: 'ngx-table-root',
@@ -15,7 +16,6 @@ import { CellRenderer } from './table/models/cell-renderer-types';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
   @ViewChild('templateTest', { static: true }) templateTest: TemplateRef<any>;
 
   title = 'ngx-table';
