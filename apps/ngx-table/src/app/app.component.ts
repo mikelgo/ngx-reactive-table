@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
       style: 'dense',
       striped: true,
       stripedStyleConfig: {
-        backgroundColor: 'gray',
+        backgroundColor: 'yellow',
         bottomBorderStyle: '1px solid blue',
         topBorderStyle: '1px solid blue'
       }
