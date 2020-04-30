@@ -8,6 +8,7 @@ import {
 import { TableConfig } from '../../../models/table-config';
 import { DEFAULT_TABLE_CONFIG } from '../../../config/table-config';
 import { getRowStyle } from '../../../config/row-style-maps';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-table-loading-body',
@@ -17,13 +18,21 @@ import { getRowStyle } from '../../../config/row-style-maps';
 })
 export class LoadingBodyComponent implements OnInit {
   private _tableConfig;
+  private _count = 0;
+  private columnCount$$ = new Subject<number>();
+  private columnCount$ = this.columnCount$$.asObservable();
   @Input() set config(config: TableConfig) {
     if (config) {
       this._tableConfig = config;
       this.initalizeStyles(config);
     }
   }
-  @Input() columnCount: number = 0;
+  @Input() set columnCount(count: number) {
+    if (count) {
+      this.columnCount$$.next(count);
+      this._count = count;
+    }
+  }
   @HostBinding('style.height') height = this.initHeight(this._tableConfig);
   public ghostElements: any[] = this.initGhostRows(
     this.getLoadingRowsCount(this._tableConfig)
@@ -35,11 +44,13 @@ export class LoadingBodyComponent implements OnInit {
 
   gap = 4;
   getTemplateColumns(): string {
-    return `repeat(${this.columnCount}, 1fr)`;
+    return `repeat(${this._count}, 1fr)`;
   }
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.columnCount$.subscribe(console.log);
+  }
 
   private initalizeStyles(config: TableConfig) {
     this.height = this.initHeight(config);
