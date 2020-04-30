@@ -9,14 +9,10 @@ import {
 } from '@angular/core';
 import { TitleColumn } from '../../models/title-column.model';
 import { HeaderConfig } from '../../models/header-config';
-import {
-  DEFAULT_HEADER_CONFIG,
-  DEFAULT_TABLE_CONFIG
-} from '../../config/table-config';
+import { DEFAULT_HEADER_CONFIG } from '../../config/table-config';
 import { TitlePositions } from '../../models/title-positions';
 import { TitlePositionMaps } from '../../config/title-position-maps';
-import { parseUnit } from '../../../shared/util/parse-unit';
-import { calcAdjustedWidths } from '../../../shared/util/calculate-normalized-widths';
+
 @Component({
   selector: 'ngx-table-header',
   templateUrl: './header.component.html',

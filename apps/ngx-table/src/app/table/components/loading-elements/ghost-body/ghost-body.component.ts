@@ -8,15 +8,14 @@ import {
 import { TableConfig } from '../../../models/table-config';
 import { DEFAULT_TABLE_CONFIG } from '../../../config/table-config';
 import { getRowStyle } from '../../../config/row-style-maps';
-import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'ngx-table-loading-body',
-  templateUrl: './loading-body.component.html',
-  styleUrls: ['./loading-body.component.scss'],
+  selector: 'ngx-table-ghost-body',
+  templateUrl: './ghost-body.component.html',
+  styleUrls: ['./ghost-body.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoadingBodyComponent implements OnInit {
+export class GhostBodyComponent implements OnInit {
   private _tableConfig;
 
   @Input() set config(config: TableConfig) {
