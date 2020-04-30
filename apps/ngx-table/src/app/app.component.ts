@@ -48,8 +48,7 @@ export class AppComponent implements OnInit {
         backgroundColor: 'yellow',
         bottomBorderStyle: '1px solid blue',
         topBorderStyle: '1px solid blue'
-      },
-      loadingIndicatorMode: 'ghost'
+      }
     }
   };
   // d$$ = new BehaviorSubject(this.testdata);
@@ -127,6 +126,6 @@ export class AppComponent implements OnInit {
   }
 
   getExampleData(): Observable<ExampleData[]> {
-    return of(this.testdata).pipe(delay(Number.MAX_SAFE_INTEGER));
+    return of(this.testdata).pipe(delay(1500));
   }
 }

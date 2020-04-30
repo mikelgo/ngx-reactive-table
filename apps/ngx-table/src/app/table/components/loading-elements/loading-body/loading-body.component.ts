@@ -18,22 +18,14 @@ import { Subject } from 'rxjs';
 })
 export class LoadingBodyComponent implements OnInit {
   private _tableConfig;
-  private _count = 0;
-  private columnCount$$ = new Subject<number>();
-  private columnCount$ = this.columnCount$$.asObservable();
+
   @Input() set config(config: TableConfig) {
     if (config) {
-      console.log(config);
       this._tableConfig = config;
       this.initalizeStyles(config);
     }
   }
-  @Input() set columnCount(count: number) {
-    if (count) {
-      this.columnCount$$.next(count);
-      this._count = count;
-    }
-  }
+
   @HostBinding('style.height') height = this.initHeight(this._tableConfig);
   public ghostElements: any[] = this.initGhostRows(
     this.getLoadingRowsCount(this._tableConfig)
@@ -43,15 +35,9 @@ export class LoadingBodyComponent implements OnInit {
     return this._tableConfig;
   }
 
-  gap = 4;
-  getTemplateColumns(): string {
-    return `repeat(${this._count}, 1fr)`;
-  }
   constructor() {}
 
-  ngOnInit() {
-    this.columnCount$.subscribe(console.log);
-  }
+  ngOnInit() {}
 
   private initalizeStyles(config: TableConfig) {
     this.height = this.initHeight(config);
@@ -94,10 +80,7 @@ export class LoadingBodyComponent implements OnInit {
   private initGhostRows(count: number): any[] {
     const ghostRows = [];
     for (let i = 0; i <= count; i++) {
-      ghostRows.push({
-        id: i,
-        values: Array(4).fill(0) // TODO hardcoded value --> column count
-      });
+      ghostRows.push(i);
     }
     return ghostRows;
   }

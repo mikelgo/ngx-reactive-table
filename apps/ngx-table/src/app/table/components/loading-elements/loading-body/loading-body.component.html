@@ -1,22 +1,3 @@
-<!-- <ng-container *ngIf="config?.rowConfig?.loadingIndicatorMode === 'simple'">
-  <ngx-table-loading-row
-    *ngFor="let ghost of ghostElements; let index = i; let odd = odd"
-    [ghost]="ghost"
-    [odd]="odd"
-    [config]="config?.rowConfig"
-    class="element"
-    [style.grid-gap.px]="gap"
-    [style.grid-template-columns]="getTemplateColumns()"
-  ></ngx-table-loading-row>
-</ng-container>
-
-<ng-container *ngIf="config?.rowConfig?.loadingIndicatorMode === 'ghost'">
-  <ngx-table-ghost-row
-    *ngFor="let ghost of ghostElements"
-    [config]="config?.rowConfig"
-  >
-  </ngx-table-ghost-row>
-</ng-container> -->
 <ngx-table-ghost-row
   *ngFor="let ghost of ghostElements"
   [config]="config?.rowConfig"

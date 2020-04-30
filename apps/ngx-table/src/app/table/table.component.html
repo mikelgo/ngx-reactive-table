@@ -22,11 +22,7 @@
     ></ngx-table-row>
   </ng-container>
   <ng-container *ngIf="renderRowsLoading$ | async">
-    <!-- <div class="loading">loading animation...</div> -->
-    <ngx-table-loading-body
-      [config]="tableConfig"
-      [columnCount]="renderColumnCount$ | async"
-    ></ngx-table-loading-body>
+    <ngx-table-loading-body [config]="tableConfig"></ngx-table-loading-body>
   </ng-container>
 </ngx-table-body>
 
@@ -34,7 +30,3 @@
 <div>
   Currently {{ stateService.selectedRowsCount$ | async }} rows are selected
 </div>
-
-<ng-template #loading>
-  <div class="loading">loading animation...</div>
-</ng-template>
