@@ -8,7 +8,6 @@
     class="table-header-row-value"
     [style.justify-self]="horizontalElementAlignment"
     [style.align-self]="verticalElementAlignment"
-    [ngClass]="header.class ? header.class : ''"
   >
     {{ header.columnTitle }}
     <div class="edit-icon" (click)="onColumnHide(header)">
