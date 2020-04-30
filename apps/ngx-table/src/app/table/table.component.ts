@@ -81,6 +81,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
 
   public hiddenColumnsInfo$: Observable<HiddenColumns>;
 
+  public columnWidth: string;
+
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
@@ -104,6 +106,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
         map(i => this.hiddenColumns.emit(i))
       )
       .subscribe();
+    this.columnWidth = this.initializeColumnWidth(this._tableConfig);
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -143,6 +146,13 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
       return config.width;
     } else {
       return DEFAULT_TABLE_CONFIG.width;
+    }
+  }
+
+  private initializeColumnWidth(config: TableConfig): string {
+    if (config && config.defaultColumnWidth) {
+    } else {
+      return DEFAULT_TABLE_CONFIG.defaultColumnWidth;
     }
   }
 }

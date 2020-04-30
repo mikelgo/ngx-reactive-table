@@ -3,18 +3,20 @@ import {
   OnInit,
   Input,
   HostBinding,
-  Renderer2,
-  ElementRef,
   EventEmitter,
   Output,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { TitleColumn } from '../../models/title-column.model';
 import { HeaderConfig } from '../../models/header-config';
-import { DEFAULT_HEADER_CONFIG } from '../../config/table-config';
+import {
+  DEFAULT_HEADER_CONFIG,
+  DEFAULT_TABLE_CONFIG
+} from '../../config/table-config';
 import { TitlePositions } from '../../models/title-positions';
 import { TitlePositionMaps } from '../../config/title-position-maps';
-
+import { parseUnit } from '../../../shared/util/parse-unit';
+import { calcAdjustedWidths } from '../../../shared/util/calculate-normalized-widths';
 @Component({
   selector: 'ngx-table-header',
   templateUrl: './header.component.html',
@@ -59,8 +61,39 @@ export class HeaderComponent implements OnInit {
   }
 
   getTemplateColumns(): string {
-    return `repeat(${this.columnCount}, 1fr)`;
+    let columnWidths: string[];
+    let widthUnit: string;
+    let normalizedWidths: string[];
+    if (this._displayColumns) {
+      columnWidths = this._displayColumns.map(v => {
+        if (v.width) {
+          return v.width;
+        } else {
+          return DEFAULT_TABLE_CONFIG.defaultColumnWidth;
+        }
+      });
+      // TODO rethink this. It will not be really safe.
+      const widths: number[] = this._displayColumns.map(v => {
+        if (v.width) {
+          widthUnit = parseUnit(v.width);
+          return parseInt(v.width.split(widthUnit)[0]);
+        }
+      });
+
+      const sum = widths.reduce((a, b) => a + b, 0);
+      if (sum > 100) {
+        console.warn('The specified column widths exceed 100%');
+      }
+      /**
+       * Calculate normalized widths when widts are given with '%'
+       * to still reach 100 %.
+       */
+      normalizedWidths = calcAdjustedWidths(widths);
+    }
+
+    return normalizedWidths.join(' ');
   }
+
   constructor() {}
 
   ngOnInit() {}
@@ -117,6 +150,8 @@ export class HeaderComponent implements OnInit {
       return pos[1];
     }
   }
+
+  private getColumnWidth() {}
 
   // justify-self
   get horizontalElementAlignment() {
