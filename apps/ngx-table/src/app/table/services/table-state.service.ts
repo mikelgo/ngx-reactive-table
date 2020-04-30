@@ -15,7 +15,8 @@ import {
   scan,
   share,
   shareReplay,
-  switchMap
+  switchMap,
+  startWith
 } from 'rxjs/operators';
 import { Datasource } from '../../datasource/datasource';
 import { v4 as uuidv4 } from 'uuid';
@@ -86,6 +87,8 @@ export class TableStateService<T> implements OnDestroy {
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
 
+  public renderRowsLoading$: Observable<boolean>;
+
   public hiddenColumns$: Observable<TitleColumn[]>;
   public hiddenColumnsCount$: Observable<number>;
 
@@ -106,6 +109,10 @@ export class TableStateService<T> implements OnDestroy {
       this.visibleHeaderDefinitions$,
       this.visibleDataColumnDefinitions$
     ]);
+    this.renderRowsLoading$ = this.datasource$.pipe(
+      switchMap(ds => ds.fetchingData$),
+      startWith(false)
+    );
 
     this.renderHeaders$ = this.initialization$.pipe(
       map(([data, headerDefinition, dataColumnDefinition]) => headerDefinition),

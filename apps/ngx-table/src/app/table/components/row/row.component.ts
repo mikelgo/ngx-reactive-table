@@ -4,7 +4,8 @@ import {
   Input,
   HostBinding,
   HostListener,
-  OnDestroy
+  OnDestroy,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { Selectable } from './selectable';
@@ -18,7 +19,8 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 @Component({
   selector: 'ngx-table-row',
   templateUrl: './row.component.html',
-  styleUrls: ['./row.component.scss']
+  styleUrls: ['./row.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RowComponent
   implements OnInit, OnDestroy, Selectable<RowComponent> {

@@ -11,14 +11,19 @@
   (hideColumn)="onColumnHide($event)"
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
-  <ngx-table-row
-    *ngFor="let row of renderRows$ | async; let index = i; let odd = odd"
-    [row]="row"
-    [odd]="odd"
-    [config]="tableConfig?.rowConfig"
-    [renderColumnCount]="renderColumnCount$ | async"
-    (click)="onRowSelect(row, row.index)"
-  ></ngx-table-row>
+  <ng-container *ngIf="!(renderRowsLoading$ | async)">
+    <ngx-table-row
+      *ngFor="let row of renderRows$ | async; let index = i; let odd = odd"
+      [row]="row"
+      [odd]="odd"
+      [config]="tableConfig?.rowConfig"
+      [renderColumnCount]="renderColumnCount$ | async"
+      (click)="onRowSelect(row, row.index)"
+    ></ngx-table-row>
+  </ng-container>
+  <ng-container *ngIf="renderRowsLoading$ | async">
+    <ngx-table-loading-body [config]="tableConfig"></ngx-table-loading-body>
+  </ng-container>
 </ngx-table-body>
 
 <hr />

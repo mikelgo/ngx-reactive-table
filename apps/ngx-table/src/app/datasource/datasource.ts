@@ -6,6 +6,10 @@ export interface Datasource<T> {
    */
   data$: Observable<T[]>;
   /**
+   * Observable indicating if data is currently fetched from remote source
+   */
+  fetchingData$: Observable<boolean>;
+  /**
    *  Connects the data with the datasource and sets also the data
    * @param data
    */

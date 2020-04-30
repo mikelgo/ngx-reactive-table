@@ -60,7 +60,6 @@ export class AppComponent implements OnInit {
   config$$ = new BehaviorSubject(this.tableConfig);
   config$ = this.config$$.asObservable();
   ngOnInit() {
-    console.log(this.templateTest);
     this.headerDefinition = [
       { columnTitle: 'ID' },
       { columnTitle: 'Firstname' },
@@ -91,6 +90,7 @@ export class AppComponent implements OnInit {
     // (1)
     const d$ = this.getExampleData();
     this.datasource.connect(d$);
+
     // (2)
     // this.getExampleData().subscribe(d => this.datasource.connect(d));
 
