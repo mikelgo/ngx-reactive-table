@@ -19,6 +19,7 @@ import { TitleColumn } from './models/title-column.model';
 import { DataColumn } from './models/data-column.model';
 import { takeUntil, tap, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
+import { getRowStyle } from './config/row-style-maps';
 
 @Component({
   selector: 'ngx-table-table',
@@ -73,6 +74,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
 
+  public renderRowsLoading$: Observable<boolean>;
+
   public hiddenColumns$: Observable<TitleColumn[]>;
   public hiddenColumnsCount$: Observable<number>;
 
@@ -86,7 +89,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
     this.hiddenColumns$ = this.stateService.hiddenColumns$;
     this.hiddenColumnsCount$ = this.stateService.hiddenColumnsCount$;
-
+    this.renderRowsLoading$ = this.stateService.renderRowsLoading$;
     this.showHiddenColumnAction$
       .pipe(
         takeUntil(this.destroy$),

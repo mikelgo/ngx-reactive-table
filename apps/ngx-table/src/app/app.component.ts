@@ -126,6 +126,6 @@ export class AppComponent implements OnInit {
   }
 
   getExampleData(): Observable<ExampleData[]> {
-    return of(this.testdata).pipe(delay(3000));
+    return of(this.testdata).pipe(delay(Number.MAX_SAFE_INTEGER));
   }
 }

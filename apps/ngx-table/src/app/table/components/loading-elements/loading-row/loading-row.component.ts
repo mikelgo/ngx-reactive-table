@@ -1,44 +1,36 @@
 import {
   Component,
   OnInit,
+  ChangeDetectionStrategy,
   Input,
   HostBinding,
-  HostListener,
-  OnDestroy,
-  ChangeDetectionStrategy
+  OnDestroy
 } from '@angular/core';
+import { RowConfig } from '../../../models/row-config';
+import { DEFAULT_ROW_CONFIG } from '../../../config/table-config';
+import { DataRow } from '../../../models/data-row.model';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
+import { getRowStyle } from '../../../config/row-style-maps';
 
-import { Selectable } from './selectable';
-import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { DataRow } from '../../models/data-row.model';
-import { RowConfig } from '../../models/row-config';
-import { getRowStyle } from '../../config/row-style-maps';
-import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
-
+// TODO refactoring: create base row component to extended by this component and the row-component
 @Component({
-  selector: 'ngx-table-row',
-  templateUrl: './row.component.html',
-  styleUrls: ['./row.component.scss'],
+  selector: 'ngx-table-loading-row',
+  templateUrl: './loading-row.component.html',
+  styleUrls: ['./loading-row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RowComponent
-  implements OnInit, OnDestroy, Selectable<RowComponent> {
+export class LoadingRowComponent implements OnInit, OnDestroy {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
   private _isOdd: boolean = false;
-  private isSelected: boolean = false;
-  private _row: DataRow = null;
+  private _row: { id: number; values: number[] } = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
   private columnsRenderer$: Observable<string>;
   private destroy$ = new Subject();
-  @Input() set row(row: DataRow) {
-    if (row) {
-      this._row = row;
-    }
-  }
-  @Input() set renderColumnCount(count: number) {
-    if (count) {
-      this._renderColumnCount.next(count);
+  @Input() set ghost(ghost: { id: number; values: number[] }) {
+    if (ghost) {
+      console.log(ghost);
+      this._row = ghost;
     }
   }
 
@@ -48,11 +40,14 @@ export class RowComponent
       this.initalizeStyles(config, this._isOdd);
     }
   }
-
+  @Input() set renderColumnCount(count: number) {
+    if (count) {
+      this._renderColumnCount.next(count);
+    }
+  }
   @Input() set odd(isOdd: boolean) {
     this._isOdd = isOdd;
   }
-
   @HostBinding('style.border-top')
   borderTop: string = this.initBorderTopStyle(this._config, this._isOdd);
   @HostBinding('style.border-bottom')
@@ -65,46 +60,9 @@ export class RowComponent
   @HostBinding('style.min-height') height: string = this.initRowHeight(
     this._config
   );
-
-  @HostListener('mouseenter')
-  onHover(selectable: RowComponent) {
-    if (!this.isSelected) {
-      this.borderTop = '1px solid black';
-      this.borderBottom = '1px solid black';
-    }
-  }
-
-  @HostListener('mouseleave') mouseLeave() {
-    if (!this.isSelected && !this._isOdd) {
-      this.borderTop = '1px solid transparent';
-      this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = 'white';
-    }
-    if (!this.isSelected && this._isOdd) {
-      this.borderTop = '1px solid transparent';
-      this.borderBottom = '1px solid #ccc';
-    }
-    if (
-      !this.isSelected &&
-      this._isOdd &&
-      this._config &&
-      this._config.striped
-    ) {
-      this.borderTop = this._config.stripedStyleConfig.topBorderStyle;
-      this.borderBottom = this._config.stripedStyleConfig.bottomBorderStyle;
-      this.backgroundColor = this._config.stripedStyleConfig.backgroundColor;
-    }
-  }
-
-  @HostListener('click') onSelect(selectable: RowComponent) {
-    this.isSelected = !this.isSelected;
-    this.setClickStyle(this.isSelected);
-  }
-
-  get row(): DataRow {
+  get row(): { id: number; values: number[] } {
     return this._row;
   }
-
   constructor() {}
 
   ngOnInit() {
@@ -118,18 +76,6 @@ export class RowComponent
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private setClickStyle(selected: boolean) {
-    if (selected) {
-      this.borderTop = '1px solid #4a5568';
-      this.borderBottom = '1px solid #4a5568';
-      this.backgroundColor = '#e2e8f0';
-    } else {
-      this.borderTop = '1px solid transparent';
-      this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = 'white';
-    }
   }
   getTemplateColumns(count: number): string {
     return `repeat(${count}, 1fr)`;
