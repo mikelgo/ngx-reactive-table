@@ -3,3 +3,7 @@
   width: 100%;
   background-color: seagreen;
 }
+.element {
+  box-sizing: border-box;
+  // grid-template-columns: repeat(4, 1fr);
+}

@@ -32,6 +32,11 @@ export class LoadingBodyComponent implements OnInit {
   get config() {
     return this._tableConfig;
   }
+
+  gap = 4;
+  getTemplateColumns(): string {
+    return `repeat(${this.columnCount}, 1fr)`;
+  }
   constructor() {}
 
   ngOnInit() {

@@ -6,4 +6,7 @@
   [ghost]="ghost"
   [odd]="odd"
   [config]="config?.rowConfig"
+  class="element"
+  [style.grid-gap.px]="gap"
+  [style.grid-template-columns]="getTemplateColumns()"
 ></ngx-table-loading-row>
