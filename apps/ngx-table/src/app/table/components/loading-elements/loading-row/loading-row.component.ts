@@ -12,6 +12,7 @@ import { DataRow } from '../../../models/data-row.model';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { getRowStyle } from '../../../config/row-style-maps';
+import { Ghost } from '../models/ghost.model';
 
 // TODO refactoring: create base row component to extended by this component and the row-component
 @Component({
@@ -23,13 +24,12 @@ import { getRowStyle } from '../../../config/row-style-maps';
 export class LoadingRowComponent implements OnInit, OnDestroy {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
   private _isOdd: boolean = false;
-  private _row: { id: number; values: number[] } = null;
+  private _row: Ghost = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
   private columnsRenderer$: Observable<string>;
   private destroy$ = new Subject();
-  @Input() set ghost(ghost: { id: number; values: number[] }) {
+  @Input() set ghost(ghost: Ghost) {
     if (ghost) {
-      console.log(ghost);
       this._row = ghost;
     }
   }
@@ -60,7 +60,7 @@ export class LoadingRowComponent implements OnInit, OnDestroy {
   @HostBinding('style.min-height') height: string = this.initRowHeight(
     this._config
   );
-  get row(): { id: number; values: number[] } {
+  get row(): Ghost {
     return this._row;
   }
   constructor() {}

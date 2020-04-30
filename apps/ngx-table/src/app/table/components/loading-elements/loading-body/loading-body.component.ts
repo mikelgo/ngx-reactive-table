@@ -39,9 +39,7 @@ export class LoadingBodyComponent implements OnInit {
   }
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.ghostElements);
-  }
+  ngOnInit() {}
 
   private initalizeStyles(config: TableConfig) {
     this.height = this.initHeight(config);
@@ -83,8 +81,6 @@ export class LoadingBodyComponent implements OnInit {
 
   private initGhostRows(count: number): any[] {
     const ghostRows = [];
-
-    console.log(count);
     for (let i = 0; i <= count; i++) {
       ghostRows.push({
         id: i,
