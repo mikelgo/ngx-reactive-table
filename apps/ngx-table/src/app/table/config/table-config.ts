@@ -10,7 +10,8 @@ export const DEFAULT_HEADER_CONFIG: HeaderConfig = {
 
 export const DEFAULT_ROW_CONFIG: RowConfig = {
   style: 'wide',
-  striped: false
+  striped: false,
+  loadingIndicatorMode: 'ghost'
 };
 
 export const DEFAULT_TABLE_CONFIG: TableConfig = {

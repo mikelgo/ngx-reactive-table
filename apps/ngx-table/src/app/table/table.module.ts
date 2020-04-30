@@ -12,6 +12,7 @@ import { TopInfobarComponent } from './components/infobar/top-infobar/top-infoba
 import { SharedModule } from '../shared/shared.module';
 import { LoadingRowComponent } from './components/loading-elements/loading-row/loading-row.component';
 import { LoadingBodyComponent } from './components/loading-elements/loading-body/loading-body.component';
+import { GhostRowComponent } from './components/loading-elements/ghost-row/ghost-row.component';
 
 const COMPONENTS = [
   TableComponent,
@@ -24,7 +25,8 @@ const COMPONENTS = [
   HeaderElementComponent,
   TopInfobarComponent,
   LoadingRowComponent,
-  LoadingBodyComponent
+  LoadingBodyComponent,
+  GhostRowComponent
 ];
 const MODULES = [CommonModule, SharedModule];
 

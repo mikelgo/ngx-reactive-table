@@ -63,6 +63,10 @@ export class LoadingRowComponent implements OnInit, OnDestroy {
   get row(): Ghost {
     return this._row;
   }
+
+  get config() {
+    return this._config;
+  }
   constructor() {}
 
   ngOnInit() {

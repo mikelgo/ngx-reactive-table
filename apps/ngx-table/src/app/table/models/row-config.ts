@@ -24,4 +24,13 @@ export interface RowConfig {
    * 'striped' is set to true.
    */
   stripedStyleConfig?: StripedStyleConfig;
+
+  /**
+   * Defines the mode how rows are displayed while feteched from
+   * a remote source.
+   * Options:
+   *  'ghost': display ghost row elements
+   *  'simple': display some arbitrary '...loading...' string while loading
+   */
+  loadingIndicatorMode?: 'ghost' | 'simple';
 }

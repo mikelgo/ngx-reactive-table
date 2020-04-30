@@ -23,6 +23,7 @@ export class LoadingBodyComponent implements OnInit {
   private columnCount$ = this.columnCount$$.asObservable();
   @Input() set config(config: TableConfig) {
     if (config) {
+      console.log(config);
       this._tableConfig = config;
       this.initalizeStyles(config);
     }

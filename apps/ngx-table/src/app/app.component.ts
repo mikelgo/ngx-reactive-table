@@ -48,7 +48,8 @@ export class AppComponent implements OnInit {
         backgroundColor: 'yellow',
         bottomBorderStyle: '1px solid blue',
         topBorderStyle: '1px solid blue'
-      }
+      },
+      loadingIndicatorMode: 'ghost'
     }
   };
   // d$$ = new BehaviorSubject(this.testdata);
