@@ -1,14 +1,18 @@
-import { TemplateRef } from '@angular/core';
-import { CellRenderer } from './cell-renderer-types';
-
 /**
- * Defines a Column
+ * Defines a common column.
  */
 export interface Column {
-  // id of the column
+  /**
+   * ID of the column. Must be unique!
+   * If there are columns with non-unique ID's a runtime error will be thrown.
+   */
   id?: string | number;
-  // index of the column. will be set automatically if not seet
+  /**
+   * Index of the column. Will be set automatically if not set by definition.
+   */
   index?: number;
-  // defines if the column is visible or not
+  /**
+   * Defines if the column is visible or not.
+   */
   hide?: boolean;
 }
