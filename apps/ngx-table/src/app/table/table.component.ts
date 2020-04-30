@@ -41,9 +41,6 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   @Input() set headerDefinition(headerDefinition: TitleColumn[]) {
     if (headerDefinition) {
       this.stateService.setHeaderDefinition(headerDefinition);
-      // const visible: TitleColumn[] = headerDefinition.filter(v => !v.hide);
-      // console.log(visible);
-      // this.displayColumnWidths$$.next(this.getColumnWidths(visible));
     }
   }
 
@@ -97,7 +94,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(
       map(header => this.getColumnWidths(header))
     );
-    this.displayColumnWidths$.subscribe(console.log);
+
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
