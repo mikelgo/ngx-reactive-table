@@ -8,6 +8,7 @@
   [displayColumns]="renderHeaders$ | async"
   [columnCount]="renderColumnCount$ | async"
   [config]="tableConfig?.headerConfig"
+  [columnWidths]="displayColumnWidths$ | async"
   (hideColumn)="onColumnHide($event)"
 ></ngx-table-header>
 <ngx-table-body [maxBodyHeight]="tableConfig">
@@ -18,6 +19,7 @@
       [odd]="odd"
       [config]="tableConfig?.rowConfig"
       [renderColumnCount]="renderColumnCount$ | async"
+      [columnWidths]="displayColumnWidths$ | async"
       (click)="onRowSelect(row, row.index)"
     ></ngx-table-row>
   </ng-container>

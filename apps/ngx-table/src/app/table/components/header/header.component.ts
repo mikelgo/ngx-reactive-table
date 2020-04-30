@@ -26,6 +26,7 @@ import { calcAdjustedWidths } from '../../../shared/util/calculate-normalized-wi
 export class HeaderComponent implements OnInit {
   private _config: HeaderConfig;
   private _displayColumns: TitleColumn[] = [];
+  private _columnWidhts: string;
   private _horizontalElementAlignment: string = this.initHorizontalElementAlignment(
     this._config
   );
@@ -44,6 +45,11 @@ export class HeaderComponent implements OnInit {
     this._displayColumns = displayColumns;
   }
   @Input() columnCount: number = 0;
+  @Input() set columnWidths(arg) {
+    if (arg) {
+      this._columnWidhts = arg;
+    }
+  }
 
   @Output() hideColumn = new EventEmitter<TitleColumn>();
 
@@ -60,38 +66,8 @@ export class HeaderComponent implements OnInit {
     return this._config;
   }
 
-  getTemplateColumns(): string {
-    let columnWidths: string[];
-    let widthUnit: string;
-    let normalizedWidths: string[];
-    if (this._displayColumns) {
-      columnWidths = this._displayColumns.map(v => {
-        if (v.width) {
-          return v.width;
-        } else {
-          return DEFAULT_TABLE_CONFIG.defaultColumnWidth;
-        }
-      });
-      // TODO rethink this. It will not be really safe.
-      const widths: number[] = this._displayColumns.map(v => {
-        if (v.width) {
-          widthUnit = parseUnit(v.width);
-          return parseInt(v.width.split(widthUnit)[0]);
-        }
-      });
-
-      const sum = widths.reduce((a, b) => a + b, 0);
-      if (sum > 100) {
-        console.warn('The specified column widths exceed 100%');
-      }
-      /**
-       * Calculate normalized widths when widts are given with '%'
-       * to still reach 100 %.
-       */
-      normalizedWidths = calcAdjustedWidths(widths);
-    }
-
-    return normalizedWidths.join(' ');
+  get columnWidths() {
+    return this._columnWidhts;
   }
 
   constructor() {}
@@ -150,8 +126,6 @@ export class HeaderComponent implements OnInit {
       return pos[1];
     }
   }
-
-  private getColumnWidth() {}
 
   // justify-self
   get horizontalElementAlignment() {
