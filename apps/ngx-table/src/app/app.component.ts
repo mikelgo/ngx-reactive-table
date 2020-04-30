@@ -61,11 +61,11 @@ export class AppComponent implements OnInit {
   config$ = this.config$$.asObservable();
   ngOnInit() {
     this.headerDefinition = [
-      { columnTitle: 'ID' },
-      { columnTitle: 'Firstname' },
-      { columnTitle: 'Lastname' },
-      { columnTitle: 'Job', hide: false },
-      { columnTitle: 'App', hide: true }
+      { columnTitle: 'ID', width: '10%' },
+      { columnTitle: 'Firstname', width: '20%' },
+      { columnTitle: 'Lastname', width: '20%' },
+      { columnTitle: 'Job', hide: false, width: '25%' },
+      { columnTitle: 'App', hide: true, width: '25%' }
     ];
     this.dataColumnDefinition = [
       { displayProperty: 'id', template: this.templateTest },
