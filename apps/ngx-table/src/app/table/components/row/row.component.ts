@@ -25,11 +25,12 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 export class RowComponent
   implements OnInit, OnDestroy, Selectable<RowComponent> {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
+  private _columnWidhts: string;
   private _isOdd: boolean = false;
   private isSelected: boolean = false;
   private _row: DataRow = null;
   private _renderColumnCount = new BehaviorSubject<number>(0);
-  private columnsRenderer$: Observable<string>;
+
   private destroy$ = new Subject();
   @Input() set row(row: DataRow) {
     if (row) {
@@ -51,6 +52,9 @@ export class RowComponent
 
   @Input() set odd(isOdd: boolean) {
     this._isOdd = isOdd;
+  }
+  @Input() set columnWidths(arg) {
+    this.columns = arg;
   }
 
   @HostBinding('style.border-top')
@@ -107,14 +111,7 @@ export class RowComponent
 
   constructor() {}
 
-  ngOnInit() {
-    this.columnsRenderer$ = this._renderColumnCount.asObservable().pipe(
-      takeUntil(this.destroy$),
-      map(count => this.getTemplateColumns(count))
-    );
-
-    this.columnsRenderer$.subscribe(v => (this.columns = v));
-  }
+  ngOnInit() {}
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -130,9 +127,6 @@ export class RowComponent
       this.borderBottom = '1px solid #ccc';
       this.backgroundColor = 'white';
     }
-  }
-  getTemplateColumns(count: number): string {
-    return `repeat(${count}, 1fr)`;
   }
 
   private initalizeStyles(config: RowConfig, isOdd: boolean) {

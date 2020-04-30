@@ -17,5 +17,6 @@ export const DEFAULT_TABLE_CONFIG: TableConfig = {
   headerConfig: DEFAULT_HEADER_CONFIG,
   rowConfig: DEFAULT_ROW_CONFIG,
   width: '100%',
-  maxBodyHeight: '300px'
+  maxBodyHeight: '300px',
+  defaultColumnWidth: '1fr'
 };

@@ -3,18 +3,20 @@ import {
   OnInit,
   Input,
   HostBinding,
-  Renderer2,
-  ElementRef,
   EventEmitter,
   Output,
   ChangeDetectionStrategy
 } from '@angular/core';
 import { TitleColumn } from '../../models/title-column.model';
 import { HeaderConfig } from '../../models/header-config';
-import { DEFAULT_HEADER_CONFIG } from '../../config/table-config';
+import {
+  DEFAULT_HEADER_CONFIG,
+  DEFAULT_TABLE_CONFIG
+} from '../../config/table-config';
 import { TitlePositions } from '../../models/title-positions';
 import { TitlePositionMaps } from '../../config/title-position-maps';
-
+import { parseUnit } from '../../../shared/util/parse-unit';
+import { calcAdjustedWidths } from '../../../shared/util/calculate-normalized-widths';
 @Component({
   selector: 'ngx-table-header',
   templateUrl: './header.component.html',
@@ -24,6 +26,7 @@ import { TitlePositionMaps } from '../../config/title-position-maps';
 export class HeaderComponent implements OnInit {
   private _config: HeaderConfig;
   private _displayColumns: TitleColumn[] = [];
+  private _columnWidhts: string;
   private _horizontalElementAlignment: string = this.initHorizontalElementAlignment(
     this._config
   );
@@ -42,6 +45,11 @@ export class HeaderComponent implements OnInit {
     this._displayColumns = displayColumns;
   }
   @Input() columnCount: number = 0;
+  @Input() set columnWidths(arg) {
+    if (arg) {
+      this._columnWidhts = arg;
+    }
+  }
 
   @Output() hideColumn = new EventEmitter<TitleColumn>();
 
@@ -58,9 +66,10 @@ export class HeaderComponent implements OnInit {
     return this._config;
   }
 
-  getTemplateColumns(): string {
-    return `repeat(${this.columnCount}, 1fr)`;
+  get columnWidths() {
+    return this._columnWidhts;
   }
+
   constructor() {}
 
   ngOnInit() {}

@@ -20,6 +20,8 @@ import { DataColumn } from './models/data-column.model';
 import { takeUntil, tap, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
 import { getRowStyle } from './config/row-style-maps';
+import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
+import { parseUnit } from '../shared/util/parse-unit';
 
 @Component({
   selector: 'ngx-table-table',
@@ -81,9 +83,18 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
 
   public hiddenColumnsInfo$: Observable<HiddenColumns>;
 
+  public columnWidth: string;
+
+  private displayColumnWidths$$ = new Subject();
+  public displayColumnWidths$: Observable<string>;
+
   constructor(public stateService: TableStateService<T>) {}
 
   ngOnInit() {
+    this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(
+      map(header => this.getColumnWidths(header))
+    );
+
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
@@ -104,6 +115,13 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
         map(i => this.hiddenColumns.emit(i))
       )
       .subscribe();
+    this.columnWidth = this.initializeColumnWidth(this._tableConfig);
+
+    // this.renderHeaders$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(header =>
+    //     this.displayColumnWidths$$.next(this.getColumnWidths(header))
+    //   );
   }
   ngOnDestroy() {
     this.destroy$.next();
@@ -144,5 +162,46 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     } else {
       return DEFAULT_TABLE_CONFIG.width;
     }
+  }
+
+  private initializeColumnWidth(config: TableConfig): string {
+    if (config && config.defaultColumnWidth) {
+    } else {
+      return DEFAULT_TABLE_CONFIG.defaultColumnWidth;
+    }
+  }
+
+  getColumnWidths(displayColumns: TitleColumn[]): string {
+    let columnWidths: string[];
+    let widthUnit: string;
+    let normalizedWidths: string[];
+    if (displayColumns) {
+      columnWidths = displayColumns.map(v => {
+        if (v.width) {
+          return v.width;
+        } else {
+          return DEFAULT_TABLE_CONFIG.defaultColumnWidth;
+        }
+      });
+      // TODO rethink this. It will not be really safe with not %-values.
+      const widths: number[] = displayColumns.map(v => {
+        if (v.width) {
+          widthUnit = parseUnit(v.width);
+          return parseInt(v.width.split(widthUnit)[0]);
+        }
+      });
+
+      const sum = widths.reduce((a, b) => a + b, 0);
+      if (sum > 100) {
+        console.warn('The specified column widths exceed 100%');
+      }
+      /**
+       * Calculate normalized widths when widts are given with '%'
+       * to still reach 100 %.
+       */
+      normalizedWidths = calcAdjustedWidths(widths);
+    }
+
+    return normalizedWidths.join(' ');
   }
 }

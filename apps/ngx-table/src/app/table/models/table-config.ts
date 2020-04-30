@@ -12,9 +12,12 @@ import { RowConfig } from './row-config';
  */
 export interface TableConfig {
   /**
-   * Configuration for the table header
+   * Configuration of the table header
    */
   headerConfig?: HeaderConfig;
+  /**
+   * Configuration of the table rows
+   */
   rowConfig?: RowConfig;
 
   bodyHeight?: string;
@@ -31,4 +34,12 @@ export interface TableConfig {
    * Max. width of the table
    */
   maxWidth?: string;
+  /**
+   * Default widht of the table columns.
+   *
+   * Default value is '1fr'.
+   *
+   * Value can be overwritten by setting the 'width' attribute on {@link TitleColumn}
+   */
+  defaultColumnWidth?: string;
 }

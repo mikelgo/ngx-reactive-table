@@ -1,7 +1,7 @@
 <div
   class="table-header-row"
   [style.grid-gap.px]="gap"
-  [style.grid-template-columns]="getTemplateColumns()"
+  [style.grid-template-columns]="columnWidths"
 >
   <div
     *ngFor="let header of displayColumns"
