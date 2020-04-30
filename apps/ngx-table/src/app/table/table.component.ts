@@ -24,7 +24,7 @@ import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
 import { parseUnit } from '../shared/util/parse-unit';
 
 @Component({
-  selector: 'ngx-table-table',
+  selector: 'ngx-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   providers: [TableStateService],

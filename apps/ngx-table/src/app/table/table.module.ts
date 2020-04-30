@@ -10,7 +10,7 @@ import { InputCellRendererComponent } from './components/cell/cell-renderer/inpu
 import { HeaderElementComponent } from './components/header/header-element/header-element.component';
 import { TopInfobarComponent } from './components/infobar/top-infobar/top-infobar.component';
 import { SharedModule } from '../shared/shared.module';
-import { LoadingBodyComponent } from './components/loading-elements/loading-body/loading-body.component';
+import { GhostBodyComponent } from './components/loading-elements/ghost-body/ghost-body.component';
 import { GhostRowComponent } from './components/loading-elements/ghost-row/ghost-row.component';
 
 const COMPONENTS = [
@@ -23,7 +23,7 @@ const COMPONENTS = [
   InputCellRendererComponent,
   HeaderElementComponent,
   TopInfobarComponent,
-  LoadingBodyComponent,
+  GhostBodyComponent,
   GhostRowComponent
 ];
 const MODULES = [CommonModule, SharedModule];

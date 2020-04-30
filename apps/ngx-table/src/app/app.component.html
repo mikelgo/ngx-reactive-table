@@ -1,22 +1,22 @@
 <div class="container">
-  <ngx-table-table
+  <ngx-table
     [title]="'Table title'"
     [headerDefinition]="headerDefinition"
     [dataColumnDefinition]="dataColumnDefinition"
     [datasource]="datasource"
     [tableConfig]="config$ | async"
   >
-  </ngx-table-table>
+  </ngx-table>
 </div>
 
 <div class="container-2">
-  <ngx-table-table
+  <ngx-table
     [title]="'Table title'"
     [headerDefinition]="headerDefinition"
     [dataColumnDefinition]="dataColumnDefinition2"
     [datasource]="datasource"
   >
-  </ngx-table-table>
+  </ngx-table>
 </div>
 
 <ng-template #templateTest let-element="element">

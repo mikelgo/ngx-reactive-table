@@ -24,7 +24,7 @@
     ></ngx-table-row>
   </ng-container>
   <ng-container *ngIf="renderRowsLoading$ | async">
-    <ngx-table-loading-body [config]="tableConfig"></ngx-table-loading-body>
+    <ngx-table-ghost-body [config]="tableConfig"></ngx-table-ghost-body>
   </ng-container>
 </ngx-table-body>
 
