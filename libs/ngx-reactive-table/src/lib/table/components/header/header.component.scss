@@ -2,7 +2,6 @@
   display: block;
   box-sizing: border-box;
   width: 100%;
-  // height: 50px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   margin-bottom: 4px;
@@ -16,15 +15,11 @@
 
 .table-header-row-value {
   box-sizing: border-box;
-
-  // justify-self: flex-start;
-  // align-self: center;
 }
 
 .edit-icon {
   width: 20px;
   height: 20px;
-  // background-color: royalblue;
   cursor: pointer;
   margin: auto;
 }
