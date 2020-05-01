@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin-bottom: 4px;
+}
+
+.table-header-row {
+  box-sizing: border-box;
+  height: 100%;
+  display: grid;
+}
+
+.table-header-row-value {
+  box-sizing: border-box;
+}
+
+.edit-icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin: auto;
+}
+span {
+  font-size: 14px;
+  text-align: center;
+  color: #aaa;
+}
