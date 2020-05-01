@@ -112,9 +112,9 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       const ne = [...this.testdata];
       ne[0].p1 = 'abc';
-      // this.datasource.connect(ne);
+      this.datasource.connect(ne);
       this.data$$.next(ne);
-    }, 1500);
+    }, 4000);
     // setTimeout(() => {
     //   this.config$$.next({
     //     ...this.tableConfig,
