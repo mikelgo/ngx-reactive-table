@@ -1,9 +1,3 @@
-<ngx-table-top-infobar
-  [hiddenColumns]="hiddenColumns$ | async"
-  [hiddenColumnsCount]="hiddenColumnsCount$ | async"
-  (showHiddenColumn)="onColumnShow($event)"
-></ngx-table-top-infobar>
-
 <ngx-table-header
   [displayColumns]="renderHeaders$ | async"
   [columnCount]="renderColumnCount$ | async"
@@ -27,8 +21,3 @@
     <ngx-table-ghost-body [config]="tableConfig"></ngx-table-ghost-body>
   </ng-container>
 </ngx-table-body>
-
-<hr />
-<div>
-  Currently {{ stateService.selectedRowsCount$ | async }} rows are selected
-</div>

@@ -31,7 +31,7 @@ const MODULES = [CommonModule, SharedModule];
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [...MODULES],
-  exports: [TableComponent],
+  exports: [TableComponent, TopInfobarComponent],
   providers: []
 })
 export class TableModule {}
