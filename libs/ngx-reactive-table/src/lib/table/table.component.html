@@ -21,3 +21,7 @@
     <ngx-table-ghost-body [config]="tableConfig"></ngx-table-ghost-body>
   </ng-container>
 </ngx-table-body>
+<ngx-table-footer
+  [rowCount]="renderRowsCount$ | async"
+  [selectedRowsCount]="selectedRowsCount$ | async"
+></ngx-table-footer>

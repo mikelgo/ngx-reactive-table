@@ -86,6 +86,7 @@ export class TableStateService<T> implements OnDestroy {
   public renderHeaders$: Observable<TitleColumn[]>;
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
+  public renderRowsCount$: Observable<number>;
 
   public renderRowsLoading$: Observable<boolean>;
 
@@ -130,6 +131,7 @@ export class TableStateService<T> implements OnDestroy {
     );
 
     this.renderColumnCount$ = this.renderHeaders$.pipe(map(v => v.length));
+    this.renderRowsCount$ = this.renderRows$.pipe(map(v => v.length));
 
     this.hiddenColumns$ = this.initialization$.pipe(
       map(([data, headerDefinition, dataColumnDefinition]) => headerDefinition),

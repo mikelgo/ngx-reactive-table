@@ -19,7 +19,6 @@ import { TitleColumn } from './models/title-column.model';
 import { DataColumn } from './models/data-column.model';
 import { takeUntil, tap, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
-import { getRowStyle } from './config/row-style-maps';
 import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
 import { parseUnit } from '../shared/util/parse-unit';
 
@@ -75,6 +74,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   public renderHeaders$: Observable<TitleColumn[]>;
   public renderRows$: Observable<DataRow[]>;
   public renderColumnCount$: Observable<number>;
+  public renderRowsCount$: Observable<number>;
+  public selectedRowsCount$: Observable<number>;
 
   public renderRowsLoading$: Observable<boolean>;
 
@@ -98,6 +99,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     this.renderHeaders$ = this.stateService.renderHeaders$;
     this.renderRows$ = this.stateService.renderRows$;
     this.renderColumnCount$ = this.stateService.renderColumnCount$;
+    this.renderRowsCount$ = this.stateService.renderRowsCount$;
+    this.selectedRowsCount$ = this.stateService.selectedRowsCount$;
     this.hiddenColumns$ = this.stateService.hiddenColumns$;
     this.hiddenColumnsCount$ = this.stateService.hiddenColumnsCount$;
     this.renderRowsLoading$ = this.stateService.renderRowsLoading$;
