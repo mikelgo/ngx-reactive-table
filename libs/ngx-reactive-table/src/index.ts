@@ -1,1 +1,1 @@
-export * from './lib/ngx-reactive-table.module';
+export * from './lib/public-api';
