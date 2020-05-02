@@ -1,3 +1,7 @@
+/**
+ * Parses the CSS dimension unit
+ * @param width
+ */
 export function parseUnit(width: string): string {
   if (width.indexOf('%') > -1) {
     return '%';
@@ -9,5 +13,7 @@ export function parseUnit(width: string): string {
     return 'em';
   } else if (width.indexOf('fr') > -1) {
     return 'fr';
+  } else {
+    throw new Error('No valid CSS unit');
   }
 }
