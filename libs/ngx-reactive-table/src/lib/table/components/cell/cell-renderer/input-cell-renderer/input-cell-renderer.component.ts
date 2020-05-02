@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'ngx-table-input-cell-renderer',
@@ -13,8 +8,16 @@ import {
 })
 export class InputCellRendererComponent implements OnInit {
   @Input() label: string = '';
-  @Input() value: any;
+  @Input() value: any = null;
   constructor() {}
 
   ngOnInit() {}
+
+  public showLabel(): boolean {
+    if (this.label && this.label.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
