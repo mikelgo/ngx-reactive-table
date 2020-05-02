@@ -6,10 +6,6 @@ export interface HeaderConfig {
    */
   titleRowHeight?: string;
   /**
-   * Defines if the table rows should have a higher height or lower
-   */
-  denseRows?: boolean;
-  /**
    * Defines the position of the title columns (header).
    */
   titlePositioning?: TitlePositions;
