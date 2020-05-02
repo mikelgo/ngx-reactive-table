@@ -10,7 +10,6 @@ import {
 
 import { Selectable } from './selectable';
 import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
 import { DataRow } from '../../models/data-row.model';
 import { RowConfig } from '../../models/row-config';
 import { getRowStyle } from '../../config/row-style-maps';
@@ -22,8 +21,7 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
   styleUrls: ['./row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RowComponent
-  implements OnInit, OnDestroy, Selectable<RowComponent> {
+export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent> {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
   private _columnWidhts: string;
   private _isOdd: boolean = false;
@@ -66,9 +64,7 @@ export class RowComponent
   @HostBinding('style.grid-gap.px') gap = 4;
   @HostBinding('style.grid-template-columns')
   columns = '';
-  @HostBinding('style.min-height') height: string = this.initRowHeight(
-    this._config
-  );
+  @HostBinding('style.min-height') height: string = this.initRowHeight(this._config);
 
   @HostListener('mouseenter')
   onHover(selectable: RowComponent) {
@@ -88,12 +84,7 @@ export class RowComponent
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
     }
-    if (
-      !this.isSelected &&
-      this._isOdd &&
-      this._config &&
-      this._config.striped
-    ) {
+    if (!this.isSelected && this._isOdd && this._config && this._config.striped) {
       this.borderTop = this._config.stripedStyleConfig.topBorderStyle;
       this.borderBottom = this._config.stripedStyleConfig.bottomBorderStyle;
       this.backgroundColor = this._config.stripedStyleConfig.backgroundColor;
