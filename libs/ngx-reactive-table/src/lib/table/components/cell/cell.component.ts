@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-
-import { CellRenderer } from '../../models/cell-renderer-types';
 import { Cell } from '../../models/cell.model';
 
 @Component({
@@ -12,7 +10,6 @@ export class CellComponent implements OnInit {
   private _cell: Cell = null;
   @Input() set cell(cell: Cell) {
     if (cell) {
-      // console.log(cell);
       this._cell = cell;
     }
   }
@@ -23,10 +20,4 @@ export class CellComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  getCellRendererType(): CellRenderer {
-    if (this.cell.cellRenderer) {
-      return this.cell.cellRenderer;
-    }
-  }
 }
