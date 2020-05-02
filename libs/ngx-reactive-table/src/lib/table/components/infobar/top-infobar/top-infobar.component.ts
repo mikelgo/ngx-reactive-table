@@ -18,9 +18,7 @@ import { TitleColumn } from '../../../models/title-column.model';
 })
 export class TopInfobarComponent implements OnInit {
   private hiddenColumns$$ = new ReplaySubject<TitleColumn[]>(1);
-  public hiddenColumns$: Observable<
-    TitleColumn[]
-  > = this.hiddenColumns$$.asObservable();
+  public hiddenColumns$: Observable<TitleColumn[]> = this.hiddenColumns$$.asObservable();
   private hiddenColumnsCount$$ = new ReplaySubject<number>(1);
   public hiddenColumnsCount$ = this.hiddenColumnsCount$$.asObservable();
 
@@ -42,7 +40,7 @@ export class TopInfobarComponent implements OnInit {
 
   ngOnInit() {}
 
-  onColumnShow(column: TitleColumn) {
+  public onColumnShow(column: TitleColumn) {
     let col = { ...column, hide: false };
     this.showHiddenColumn.emit(col);
   }
