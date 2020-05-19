@@ -7,10 +7,14 @@ describe('CalculateNormalizedWidth', () => {
   it('calcAdjustedWidths(): should take the incoming element-values and calculate an adjusted sum to have 100 in total', () => {
     let elements: number[] = [10, 10, 80]; // sum already 100
 
-    expect(calcAdjustedWidths(elements)).toEqual('100%');
+    expect(calcAdjustedWidths(elements)).toEqual(['10%', '10%', '80%']);
 
     elements = [10, 10, 70];
-    expect(calcAdjustedWidths(elements)).toEqual('100%');
+    expect(calcAdjustedWidths(elements)).toEqual([
+      '13.333333333333334%',
+      '13.333333333333334%',
+      '73.33333333333333%'
+    ]);
   });
 
   it('calculateAdjustedWidthForElement(): should calculate the adjusted with for a single element', () => {
