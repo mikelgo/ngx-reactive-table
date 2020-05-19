@@ -21,7 +21,7 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
   styleUrls: ['./row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent> {
+export class RowComponent implements OnInit, OnDestroy, Selectable {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
   private _isOdd: boolean = false;
   private isSelected: boolean = false;
@@ -60,7 +60,7 @@ export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent>
   @HostBinding('style.min-height') height: string = this.initRowHeight(this._config);
 
   @HostListener('mouseenter')
-  onHover(selectable: RowComponent) {
+  onHover() {
     if (!this.isSelected) {
       this.borderTop = '1px solid black';
       this.borderBottom = '1px solid black';
@@ -84,7 +84,7 @@ export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent>
     }
   }
 
-  @HostListener('click') onSelect(selectable: RowComponent) {
+  @HostListener('click') onSelect() {
     this.isSelected = !this.isSelected;
     this.setClickStyle(this.isSelected);
   }
