@@ -6,5 +6,6 @@ import { Observable } from 'rxjs';
 export interface Selectable {
   onSelect(): void;
 
-  onHover(): void;
+  onHoverEnter(): void;
+  onHoverLeave(): void;
 }

@@ -60,14 +60,14 @@ export class RowComponent implements OnInit, OnDestroy, Selectable {
   @HostBinding('style.min-height') height: string = this.initRowHeight(this._config);
 
   @HostListener('mouseenter')
-  onHover() {
+  onHoverEnter() {
     if (!this.isSelected) {
       this.borderTop = '1px solid black';
       this.borderBottom = '1px solid black';
     }
   }
 
-  @HostListener('mouseleave') mouseLeave() {
+  @HostListener('mouseleave') onHoverLeave() {
     if (!this.isSelected && !this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
@@ -115,9 +115,9 @@ export class RowComponent implements OnInit, OnDestroy, Selectable {
       this.borderBottom = '1px solid #4a5568';
       this.backgroundColor = '#e2e8f0';
     } else {
-      this.borderTop = '1px solid transparent';
-      this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = 'white';
+      this.borderTop = DEFAULT_ROW_CONFIG.borderTopStyle;
+      this.borderBottom = DEFAULT_ROW_CONFIG.borderBottomStyle;
+      this.backgroundColor = DEFAULT_ROW_CONFIG.backgroundColor;
     }
   }
 
