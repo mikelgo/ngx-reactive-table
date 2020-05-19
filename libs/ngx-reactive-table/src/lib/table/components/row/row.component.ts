@@ -23,21 +23,14 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
 })
 export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent> {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
-  private _columnWidhts: string;
   private _isOdd: boolean = false;
   private isSelected: boolean = false;
   private _row: DataRow = null;
-  private _renderColumnCount = new BehaviorSubject<number>(0);
 
   private destroy$ = new Subject();
   @Input() set row(row: DataRow) {
     if (row) {
       this._row = row;
-    }
-  }
-  @Input() set renderColumnCount(count: number) {
-    if (count) {
-      this._renderColumnCount.next(count);
     }
   }
 
@@ -100,6 +93,14 @@ export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent>
     return this._row;
   }
 
+  get odd(): boolean {
+    return this._isOdd;
+  }
+
+  get config(): RowConfig {
+    return this._config;
+  }
+
   constructor() {}
 
   ngOnInit() {}
@@ -143,14 +144,14 @@ export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent>
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.topBorderStyle;
     }
-    return '1px solid transparent';
+    return DEFAULT_ROW_CONFIG.borderTopStyle;
   }
 
   private initBorderBottomStyle(config: RowConfig, isOdd: boolean): string {
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.bottomBorderStyle;
     }
-    return '1px solid #ccc';
+    return DEFAULT_ROW_CONFIG.borderBottomStyle;
   }
 
   private initBackgroundStyle(config: RowConfig, isOdd: boolean): string {
@@ -161,6 +162,6 @@ export class RowComponent implements OnInit, OnDestroy, Selectable<RowComponent>
       return '#eee';
     }
 
-    return 'white';
+    return DEFAULT_ROW_CONFIG.backgroundColor;
   }
 }
