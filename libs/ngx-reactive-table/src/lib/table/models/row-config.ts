@@ -24,4 +24,16 @@ export interface RowConfig {
    * 'striped' is set to true.
    */
   stripedStyleConfig?: StripedStyleConfig;
+  /**
+   * Top border style
+   */
+  borderTopStyle?: string;
+  /**
+   * Bottom border style
+   */
+  borderBottomStyle?: string;
+  /**
+   * Background color
+   */
+  backgroundColor?: string;
 }
