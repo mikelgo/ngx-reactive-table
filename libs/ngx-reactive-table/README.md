@@ -2,16 +2,13 @@
 
 This library was generated with [Nx](https://nx.dev).
 
-TOC
+## TOC
 
 - [Why this library?](#why-this-library)
 - [Quick start](#quick-start)
 - [Configuration](#configuration)
-- Datasource
-- loading indication
-- CellRenderer
-- Celltemplates
 - [Open requirements](#open-requirements)
+- [Contribution](#contribution)
 
 ## Why this library?
 
