@@ -4,6 +4,7 @@
 export interface Column {
   /**
    * ID of the column. Must be unique!
+   * If no ID is given one is automatically generated.
    * If there are columns with non-unique ID's a runtime error will be thrown.
    */
   id?: string | number;
