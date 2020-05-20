@@ -1,32 +1,18 @@
 <div class="container">
-  <!-- TODO add -->
-  <!-- <ngx-table-top-infobar
-    [hiddenColumns]="hiddenColumns$ | async"
-    [hiddenColumnsCount]="hiddenColumnsCount$ | async"
-    (showHiddenColumn)="onColumnShow($event)"
-  ></ngx-table-top-infobar> -->
-  <ngx-table
-    [title]="'Table title'"
-    [headerDefinition]="headerDefinition"
-    [dataColumnDefinition]="dataColumnDefinition"
-    [datasource]="datasource"
-    [tableConfig]="config$ | async"
-  >
-  </ngx-table>
-</div>
-
-<div class="container-2">
-  <ngx-table
-    [title]="'Table title'"
-    [headerDefinition]="headerDefinition"
-    [dataColumnDefinition]="dataColumnDefinition2"
-    [datasource]="datasource"
-  >
-  </ngx-table>
-</div>
-
-<ng-template #templateTest let-element="element">
-  <div class="test">
-    {{ element }}
+  <div class="menu-container">
+    <h2>ngx-reactive-table demo</h2>
+    <hr />
+    <br />
+    <h4>TOC</h4>
+    <!-- Menu -->
+    <ul class="menu-content">
+      <li class="menu-item">Basic usage</li>
+      <li class="menu-item">Basic usage</li>
+      <li class="menu-item">Basic usage</li>
+    </ul>
   </div>
-</ng-template>
+  <!-- Content of demo -->
+  <div class="content-container">
+    <h1>Basic usage</h1>
+  </div>
+</div>
