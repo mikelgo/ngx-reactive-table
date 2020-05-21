@@ -1,365 +1,365 @@
-export interface ExampleData {
+export interface Person {
   id: number | string;
-  p1: string;
-  p2: string;
-  p3: string;
-  // p4: { street: string; zipCode: number };
-  p4: string;
+  firstName: string;
+  lastName: string;
+  jobDesc: string;
+  // random: { street: string; zipCode: number };
+  random: string;
 }
 
-const EXAMPLE_DATA: ExampleData[] = [
+const EXAMPLE_DATA: Person[] = [
   {
     id: 1,
-    p1: 'Fin',
-    p2: 'Freear',
-    p3: 'Business Development',
-    p4: 'Trippledex'
+    firstName: 'Fin',
+    lastName: 'Freear',
+    jobDesc: 'Business Development',
+    random: 'Trippledex'
   },
   {
     id: 2,
-    p1: 'Devi',
-    p2: 'Quarton',
-    p3: 'Sales',
-    p4: 'Stronghold'
+    firstName: 'Devi',
+    lastName: 'Quarton',
+    jobDesc: 'Sales',
+    random: 'Stronghold'
   },
   {
     id: 3,
-    p1: 'Denys',
-    p2: 'Reek',
-    p3: 'Support',
-    p4: 'Ronstring'
+    firstName: 'Denys',
+    lastName: 'Reek',
+    jobDesc: 'Support',
+    random: 'Ronstring'
   },
   {
     id: 4,
-    p1: 'Bart',
-    p2: 'Walkington',
-    p3: 'Sales',
-    p4: 'Overhold'
+    firstName: 'Bart',
+    lastName: 'Walkington',
+    jobDesc: 'Sales',
+    random: 'Overhold'
   },
   {
     id: 5,
-    p1: 'Yance',
-    p2: 'Heffron',
-    p3: 'Training',
-    p4: 'Sub-Ex'
+    firstName: 'Yance',
+    lastName: 'Heffron',
+    jobDesc: 'Training',
+    random: 'Sub-Ex'
   },
   {
     id: 6,
-    p1: 'Margareta',
-    p2: 'Eede',
-    p3: 'Business Development',
-    p4: 'Holdlamis'
+    firstName: 'Margareta',
+    lastName: 'Eede',
+    jobDesc: 'Business Development',
+    random: 'Holdlamis'
   },
   {
     id: 7,
-    p1: 'Jessalyn',
-    p2: 'Eddowes',
-    p3: 'Legal',
-    p4: 'Wrapsafe'
+    firstName: 'Jessalyn',
+    lastName: 'Eddowes',
+    jobDesc: 'Legal',
+    random: 'Wrapsafe'
   },
   {
     id: 8,
-    p1: 'Arlena',
-    p2: 'Shinton',
-    p3: 'Legal',
-    p4: 'Ronstring'
+    firstName: 'Arlena',
+    lastName: 'Shinton',
+    jobDesc: 'Legal',
+    random: 'Ronstring'
   },
   {
     id: 9,
-    p1: 'Dodie',
-    p2: 'Keyzman',
-    p3: 'Support',
-    p4: 'Kanlam'
+    firstName: 'Dodie',
+    lastName: 'Keyzman',
+    jobDesc: 'Support',
+    random: 'Kanlam'
   },
   {
     id: 10,
-    p1: 'Currie',
-    p2: 'Milward',
-    p3: 'Legal',
-    p4: 'Otcom'
+    firstName: 'Currie',
+    lastName: 'Milward',
+    jobDesc: 'Legal',
+    random: 'Otcom'
   },
   {
     id: 11,
-    p1: 'Robinson',
-    p2: 'MacKaig',
-    p3: 'Business Development',
-    p4: 'Cardguard'
+    firstName: 'Robinson',
+    lastName: 'MacKaig',
+    jobDesc: 'Business Development',
+    random: 'Cardguard'
   },
   {
     id: 12,
-    p1: 'Salome',
-    p2: 'Barents',
-    p3: 'Engineering',
-    p4: 'Voyatouch'
+    firstName: 'Salome',
+    lastName: 'Barents',
+    jobDesc: 'Engineering',
+    random: 'Voyatouch'
   },
   {
     id: 13,
-    p1: 'Darci',
-    p2: 'Farriar',
-    p3: 'Engineering',
-    p4: 'Sonair'
+    firstName: 'Darci',
+    lastName: 'Farriar',
+    jobDesc: 'Engineering',
+    random: 'Sonair'
   },
   {
     id: 14,
-    p1: 'Mallory',
-    p2: 'Iffe',
-    p3: 'Accounting',
-    p4: 'Sonair'
+    firstName: 'Mallory',
+    lastName: 'Iffe',
+    jobDesc: 'Accounting',
+    random: 'Sonair'
   },
   {
     id: 15,
-    p1: 'Neddy',
-    p2: 'Solomon',
-    p3: 'Services',
-    p4: 'Tres-Zap'
+    firstName: 'Neddy',
+    lastName: 'Solomon',
+    jobDesc: 'Services',
+    random: 'Tres-Zap'
   },
   {
     id: 16,
-    p1: 'Clyve',
-    p2: 'Buttle',
-    p3: 'Research and Development',
-    p4: 'Sonair'
+    firstName: 'Clyve',
+    lastName: 'Buttle',
+    jobDesc: 'Research and Development',
+    random: 'Sonair'
   },
   {
     id: 17,
-    p1: 'Tiffani',
-    p2: 'Ikin',
-    p3: 'Training',
-    p4: 'Lotstring'
+    firstName: 'Tiffani',
+    lastName: 'Ikin',
+    jobDesc: 'Training',
+    random: 'Lotstring'
   },
   {
     id: 18,
-    p1: 'Zahara',
-    p2: 'Gerty',
-    p3: 'Support',
-    p4: 'Hatity'
+    firstName: 'Zahara',
+    lastName: 'Gerty',
+    jobDesc: 'Support',
+    random: 'Hatity'
   },
   {
     id: 19,
-    p1: 'Roderich',
-    p2: 'Ezzell',
-    p3: 'Sales',
-    p4: 'Bigtax'
+    firstName: 'Roderich',
+    lastName: 'Ezzell',
+    jobDesc: 'Sales',
+    random: 'Bigtax'
   },
   {
     id: 20,
-    p1: 'Parker',
-    p2: 'Pretor',
-    p3: 'Sales',
-    p4: 'Quo Lux'
+    firstName: 'Parker',
+    lastName: 'Pretor',
+    jobDesc: 'Sales',
+    random: 'Quo Lux'
   },
   {
     id: 21,
-    p1: 'Winny',
-    p2: 'Bellord',
-    p3: 'Accounting',
-    p4: 'Tres-Zap'
+    firstName: 'Winny',
+    lastName: 'Bellord',
+    jobDesc: 'Accounting',
+    random: 'Tres-Zap'
   },
   {
     id: 22,
-    p1: 'Odey',
-    p2: 'Mariotte',
-    p3: 'Training',
-    p4: 'Transcof'
+    firstName: 'Odey',
+    lastName: 'Mariotte',
+    jobDesc: 'Training',
+    random: 'Transcof'
   },
   {
     id: 23,
-    p1: 'North',
-    p2: 'Baybutt',
-    p3: 'Legal',
-    p4: 'Namfix'
+    firstName: 'North',
+    lastName: 'Baybutt',
+    jobDesc: 'Legal',
+    random: 'Namfix'
   },
   {
     id: 24,
-    p1: 'Rebecca',
-    p2: 'Rihosek',
-    p3: 'Legal',
-    p4: 'Temp'
+    firstName: 'Rebecca',
+    lastName: 'Rihosek',
+    jobDesc: 'Legal',
+    random: 'Temp'
   },
   {
     id: 25,
-    p1: 'Sheelah',
-    p2: 'Firebrace',
-    p3: 'Sales',
-    p4: 'Regrant'
+    firstName: 'Sheelah',
+    lastName: 'Firebrace',
+    jobDesc: 'Sales',
+    random: 'Regrant'
   },
   {
     id: 26,
-    p1: 'Vladimir',
-    p2: 'Zanardii',
-    p3: 'Accounting',
-    p4: 'Matsoft'
+    firstName: 'Vladimir',
+    lastName: 'Zanardii',
+    jobDesc: 'Accounting',
+    random: 'Matsoft'
   },
   {
     id: 27,
-    p1: 'Breena',
-    p2: 'De Francesco',
-    p3: 'Human Resources',
-    p4: 'Tres-Zap'
+    firstName: 'Breena',
+    lastName: 'De Francesco',
+    jobDesc: 'Human Resources',
+    random: 'Tres-Zap'
   },
   {
     id: 28,
-    p1: 'Cory',
-    p2: 'Blackden',
-    p3: 'Training',
-    p4: 'Tempsoft'
+    firstName: 'Cory',
+    lastName: 'Blackden',
+    jobDesc: 'Training',
+    random: 'Tempsoft'
   },
   {
     id: 29,
-    p1: 'Elisabet',
-    p2: 'Threadgill',
-    p3: 'Support',
-    p4: 'Cookley'
+    firstName: 'Elisabet',
+    lastName: 'Threadgill',
+    jobDesc: 'Support',
+    random: 'Cookley'
   },
   {
     id: 30,
-    p1: 'Towney',
-    p2: 'Olcot',
-    p3: 'Legal',
-    p4: 'Ronstring'
+    firstName: 'Towney',
+    lastName: 'Olcot',
+    jobDesc: 'Legal',
+    random: 'Ronstring'
   },
   {
     id: 31,
-    p1: 'Eveleen',
-    p2: 'Glowacz',
-    p3: 'Research and Development',
-    p4: 'Temp'
+    firstName: 'Eveleen',
+    lastName: 'Glowacz',
+    jobDesc: 'Research and Development',
+    random: 'Temp'
   },
   {
     id: 32,
-    p1: 'Giustina',
-    p2: 'Chritchlow',
-    p3: 'Legal',
-    p4: 'Alphazap'
+    firstName: 'Giustina',
+    lastName: 'Chritchlow',
+    jobDesc: 'Legal',
+    random: 'Alphazap'
   },
   {
     id: 33,
-    p1: 'Aubrey',
-    p2: 'Apfler',
-    p3: 'Legal',
-    p4: 'Domainer'
+    firstName: 'Aubrey',
+    lastName: 'Apfler',
+    jobDesc: 'Legal',
+    random: 'Domainer'
   },
   {
     id: 34,
-    p1: 'Parker',
-    p2: 'Kingcote',
-    p3: 'Training',
-    p4: 'Veribet'
+    firstName: 'Parker',
+    lastName: 'Kingcote',
+    jobDesc: 'Training',
+    random: 'Veribet'
   },
   {
     id: 35,
-    p1: 'Cordy',
-    p2: 'Skipworth',
-    p3: 'Research and Development',
-    p4: 'Voltsillam'
+    firstName: 'Cordy',
+    lastName: 'Skipworth',
+    jobDesc: 'Research and Development',
+    random: 'Voltsillam'
   },
   {
     id: 36,
-    p1: 'Marcos',
-    p2: 'Tupling',
-    p3: 'Training',
-    p4: 'Otcom'
+    firstName: 'Marcos',
+    lastName: 'Tupling',
+    jobDesc: 'Training',
+    random: 'Otcom'
   },
   {
     id: 37,
-    p1: 'Pamela',
-    p2: 'Carabet',
-    p3: 'Engineering',
-    p4: 'Quo Lux'
+    firstName: 'Pamela',
+    lastName: 'Carabet',
+    jobDesc: 'Engineering',
+    random: 'Quo Lux'
   },
   {
     id: 38,
-    p1: 'Jen',
-    p2: 'Bartrop',
-    p3: 'Accounting',
-    p4: 'Job'
+    firstName: 'Jen',
+    lastName: 'Bartrop',
+    jobDesc: 'Accounting',
+    random: 'Job'
   },
   {
     id: 39,
-    p1: 'Whittaker',
-    p2: 'Yearn',
-    p3: 'Engineering',
-    p4: 'Fix San'
+    firstName: 'Whittaker',
+    lastName: 'Yearn',
+    jobDesc: 'Engineering',
+    random: 'Fix San'
   },
   {
     id: 40,
-    p1: 'Cammie',
-    p2: 'Heugel',
-    p3: 'Engineering',
-    p4: 'Voyatouch'
+    firstName: 'Cammie',
+    lastName: 'Heugel',
+    jobDesc: 'Engineering',
+    random: 'Voyatouch'
   },
   {
     id: 41,
-    p1: 'Melli',
-    p2: 'Pollastrino',
-    p3: 'Business Development',
-    p4: 'Tresom'
+    firstName: 'Melli',
+    lastName: 'Pollastrino',
+    jobDesc: 'Business Development',
+    random: 'Tresom'
   },
   {
     id: 42,
-    p1: 'Mersey',
-    p2: 'Fearne',
-    p3: 'Accounting',
-    p4: 'Zaam-Dox'
+    firstName: 'Mersey',
+    lastName: 'Fearne',
+    jobDesc: 'Accounting',
+    random: 'Zaam-Dox'
   },
   {
     id: 43,
-    p1: 'Edi',
-    p2: 'Costerd',
-    p3: 'Research and Development',
-    p4: 'Zaam-Dox'
+    firstName: 'Edi',
+    lastName: 'Costerd',
+    jobDesc: 'Research and Development',
+    random: 'Zaam-Dox'
   },
   {
     id: 44,
-    p1: 'Omar',
-    p2: 'Yakov',
-    p3: 'Research and Development',
-    p4: 'Sonair'
+    firstName: 'Omar',
+    lastName: 'Yakov',
+    jobDesc: 'Research and Development',
+    random: 'Sonair'
   },
   {
     id: 45,
-    p1: 'Dolf',
-    p2: 'McConville',
-    p3: 'Services',
-    p4: 'Y-Solowarm'
+    firstName: 'Dolf',
+    lastName: 'McConville',
+    jobDesc: 'Services',
+    random: 'Y-Solowarm'
   },
   {
     id: 46,
-    p1: 'Doroteya',
-    p2: 'Sidaway',
-    p3: 'Business Development',
-    p4: 'Otcom'
+    firstName: 'Doroteya',
+    lastName: 'Sidaway',
+    jobDesc: 'Business Development',
+    random: 'Otcom'
   },
   {
     id: 47,
-    p1: 'Loren',
-    p2: 'McPhaden',
-    p3: 'Support',
-    p4: 'Fintone'
+    firstName: 'Loren',
+    lastName: 'McPhaden',
+    jobDesc: 'Support',
+    random: 'Fintone'
   },
   {
     id: 48,
-    p1: 'Dotty',
-    p2: 'Copperwaite',
-    p3: 'Product Management',
-    p4: 'Rank'
+    firstName: 'Dotty',
+    lastName: 'Copperwaite',
+    jobDesc: 'Product Management',
+    random: 'Rank'
   },
   {
     id: 49,
-    p1: 'Stefanie',
-    p2: 'Pember',
-    p3: 'Sales',
-    p4: 'Mat Lam Tam'
+    firstName: 'Stefanie',
+    lastName: 'Pember',
+    jobDesc: 'Sales',
+    random: 'Mat Lam Tam'
   },
   {
     id: 50,
-    p1: 'Rowney',
-    p2: 'Crookshank',
-    p3: 'Services',
-    p4: 'Hatity'
+    firstName: 'Rowney',
+    lastName: 'Crookshank',
+    jobDesc: 'Services',
+    random: 'Hatity'
   }
 ];
 
-export function getTestdata(amount: number = 10): ExampleData[] {
+export function getTestdata(amount: number = 10): Person[] {
   return EXAMPLE_DATA.slice(0, amount);
 }

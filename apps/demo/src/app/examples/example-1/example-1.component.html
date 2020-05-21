@@ -1,0 +1,19 @@
+<h3>Display static data</h3>
+<!-- <markdown ngPreserveWhitespaces [src]="'./assets/example1.md'">
+</markdown> -->
+
+<ngx-table
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnDefinition"
+  [datasource]="staticDatasource"
+>
+</ngx-table>
+
+<h3>Display dynamic data from HTTP-response</h3>
+
+<ngx-table
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnDefinition"
+  [datasource]="dynamicDatasource"
+>
+</ngx-table>
