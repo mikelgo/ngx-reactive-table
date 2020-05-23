@@ -11,6 +11,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions, MarkedRenderer  } from 'ngx-markdown';
 import { ExampleConfigurationComponent } from './examples/example-configuration/example-configuration/example-configuration.component';
 import { ExampleLoadingIndicationComponent } from './examples/example-loading-indication/example-loading-indication.component';
+import { ExampleHideShowColumnsComponent } from './examples/example-hide-show-columns/example-hide-show-columns.component';
 
 // function that returns `MarkedOptions` with renderer override
 export function markedOptionsFactory(): MarkedOptions {
@@ -31,7 +32,7 @@ export function markedOptionsFactory(): MarkedOptions {
 }
 
 @NgModule({
-  declarations: [AppComponent, Example1Component, ExampleConfigurationComponent, ExampleLoadingIndicationComponent],
+  declarations: [AppComponent, Example1Component, ExampleConfigurationComponent, ExampleLoadingIndicationComponent, ExampleHideShowColumnsComponent],
   imports: [
     BrowserModule,
     FormsModule,
