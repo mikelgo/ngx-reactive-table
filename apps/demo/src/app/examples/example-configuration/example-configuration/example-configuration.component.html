@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="control-element">
+    <label for="">Table width</label>
+    <input type="number" name="" id="" [formControl]="tableWidthInput" >
+    <select name="" id="" [formControl]="tableWidthUnitSelect">
+      <option value="%">%</option>
+      <option value="px">px</option>
+    </select>
+  </div>
+
+  <div class="control-element">
+    <label for="">Max. body height</label>
+    <input type="number" name="" id="" [formControl]="tableBodyHeight" >
+  </div>
+
+  <div class="control-element">
+    <label for="">Header position</label>
+    <select name="" id="" [formControl]="headerPositionSelect">
+      <option [value]="TITLE_POSITIONS.CENTER_CENTER">center-center</option>
+      <option [value]="TITLE_POSITIONS.LEFT_CENTER">left-center</option>
+      <option [value]="TITLE_POSITIONS.RIGHT_CENTER">right-center</option>
+    </select>
+  </div>
+
+  <div class="control-element">
+    <label for="">Toggle row style</label>
+    <select name="" id="" [formControl]="rowStyleSelect">
+      <option value="dense">dense</option>
+      <option value="wide">wide</option>
+      <option value="superWide">super wide</option>
+    </select>
+  </div>
+
+  <div class="control-element">
+    <label for="">Striped rows</label>
+    <select name="" id="" [formControl]="rowStripedSelect">
+      <option value="false">false</option>
+      <option value="true">true</option>
+    </select>
+  </div>
+</div>
+
+<ngx-table
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnDefinition"
+  [datasource]="staticDatasource"
+  [tableConfig]="config$ | async"
+>
+</ngx-table>
+
+
+<h3>Use custom cell template</h3>
+In below table a custom template is used to render the ID-column.
+<ngx-table
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnWithTemplateDefinition"
+  [datasource]="staticDatasource"
+>
+</ngx-table>
+
+
+<ng-template #customTemplate let-element="element" class="custom">
+  <div class="custom">
+    {{ element }}
+  </div>
+</ng-template>

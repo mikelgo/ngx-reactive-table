@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit {
   @HostBinding('style.height') headerHeight: string =
     DEFAULT_HEADER_CONFIG.titleRowHeight;
 
-  gap = 4;
+  gap = 0;
 
   get displayColumns() {
     return this._displayColumns;

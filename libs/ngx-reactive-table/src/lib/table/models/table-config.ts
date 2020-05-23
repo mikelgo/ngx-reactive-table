@@ -20,8 +20,6 @@ export interface TableConfig {
    */
   rowConfig?: RowConfig;
 
-  bodyHeight?: string;
-  minBodyHeight?: string;
   /**
    * Max. height of the table body
    */
@@ -30,10 +28,6 @@ export interface TableConfig {
    * Width of the table
    */
   width?: string;
-  /**
-   * Max. width of the table
-   */
-  maxWidth?: string;
   /**
    * Default widht of the table columns.
    *
