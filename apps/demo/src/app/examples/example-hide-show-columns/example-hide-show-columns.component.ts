@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Person, getTestdata } from '../../_example/example.model';
 import { TitleColumn, DataColumn, Datasource, TableDatasource } from '@ngx-table/ngx-reactive-table';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-table-example-hide-show-columns',
@@ -9,6 +10,9 @@ import { TitleColumn, DataColumn, Datasource, TableDatasource } from '@ngx-table
 })
 export class ExampleHideShowColumnsComponent implements OnInit {
   public testdata: Person[] = getTestdata();
+
+  hiddencolumns$ = new Subject();
+  hidden$ = this.hiddencolumns$.asObservable();
 
   public headerDefinition: TitleColumn[] = [
     { columnTitle: 'ID', width: '1fr' },
@@ -32,7 +36,10 @@ export class ExampleHideShowColumnsComponent implements OnInit {
     this.staticDatasource.connect(this.testdata);
 
   }
-
+  setHiddenColumns(e){
+    console.log(e)
+    this.hiddencolumns$.next(e.titleColumns);
+  }
 
 
 }
