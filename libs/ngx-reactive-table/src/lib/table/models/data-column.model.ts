@@ -23,7 +23,7 @@ export interface DataColumn extends Column {
    */
   template?: TemplateRef<any>;
   /**
-   * Custom cell renderer which will be rendered insteaf of default column.
+   * Custom cell renderer which will be rendered instead of default column.
    */
   cellRenderer?: CellRenderer;
 }
