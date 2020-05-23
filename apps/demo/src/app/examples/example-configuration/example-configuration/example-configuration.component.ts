@@ -29,6 +29,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   public headerPositionSelect = new FormControl(this.TITLE_POSITIONS.CENTER_CENTER);
 
   public rowStyleSelect = new FormControl('wide');
+  public rowStripedSelect = new FormControl(false);
 
 
 
@@ -68,6 +69,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
    this.subscribeToTableWidthChange();
    this.subscribeToTitlePositionChange();
    this.subscribeToBodyHeightChange();
+   this.subscribeToStripedRowsChange();
   }
 
   private subscribeToRowStyleSelect() {
@@ -114,7 +116,9 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToTitlePositionChange() {
-    this.headerPositionSelect.valueChanges.subscribe(position => {
+    this.headerPositionSelect.valueChanges.pipe(
+      takeUntil(this.destroy$$)
+    ).subscribe(position => {
       const updatedConfig: TableConfig = {
         ...this.config,
         headerConfig: {
@@ -124,6 +128,21 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
       };
       this.config$$.next(updatedConfig);
     });
+  }
+
+  private subscribeToStripedRowsChange() {
+    this.rowStripedSelect.valueChanges.pipe(
+      takeUntil(this.destroy$$)
+    ).subscribe(isStriped => {
+      const updatedConfig: TableConfig = {
+        ...this.config,
+        rowConfig: {
+          ...this.config.rowConfig,
+          striped: isStriped
+        }
+      };
+      this.config$$.next(updatedConfig);
+    })
   }
 
 }
