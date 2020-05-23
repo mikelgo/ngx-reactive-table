@@ -15,20 +15,20 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   private destroy$$ = new Subject();
   private config: TableConfig = {
     rowConfig: {
-      style: 'wide',
+      style: 'wide'
     }
   }
   private config$$ = new BehaviorSubject<TableConfig>(this.config);
   public config$ = this.config$$.asObservable();
 
-  public rowStyleSelect = new FormControl('wide');
+  public tableWidthInput = new FormControl(100);
+  public tableWidthUnitSelect = new FormControl('%');
+  public tableBodyHeight = new FormControl(300);
 
   public TITLE_POSITIONS = TitlePositions;
   public headerPositionSelect = new FormControl(this.TITLE_POSITIONS.CENTER_CENTER);
 
-  public tableWidthInput = new FormControl(100);
-  public tableWidthUnitSelect = new FormControl('%');
-
+  public rowStyleSelect = new FormControl('wide');
 
 
 
@@ -67,6 +67,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
    this.subscribeToRowStyleSelect();
    this.subscribeToTableWidthChange();
    this.subscribeToTitlePositionChange();
+   this.subscribeToBodyHeightChange();
   }
 
   private subscribeToRowStyleSelect() {
@@ -97,6 +98,19 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
       };
       this.config$$.next(updatedConfig);
     });
+  }
+
+  private subscribeToBodyHeightChange() {
+    this.tableBodyHeight.valueChanges.pipe(
+      takeUntil(this.destroy$$)
+    ).subscribe(height => {
+      const newHeight = new String(height).concat('px');
+      const updatedConfig: TableConfig = {
+        ...this.config,
+        maxBodyHeight: newHeight
+      };
+      this.config$$.next(updatedConfig);
+    })
   }
 
   private subscribeToTitlePositionChange() {
