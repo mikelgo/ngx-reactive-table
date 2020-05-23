@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { Person, getTestdata } from '../../../_example/example.model';
 import { TitleColumn, DataColumn, Datasource, TableDatasource, TableConfig, TitlePositions } from '@ngx-table/ngx-reactive-table';
 import { FormControl } from '@angular/forms';
@@ -11,7 +11,7 @@ import { takeUntil, startWith } from 'rxjs/operators';
   styleUrls: ['./example-configuration.component.scss']
 })
 export class ExampleConfigurationComponent implements OnInit, OnDestroy {
-
+  @ViewChild('customTemplate', { static: true }) customTemplate: TemplateRef<any>;
   private destroy$$ = new Subject();
   private config: TableConfig = {
     rowConfig: {
@@ -50,11 +50,19 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
     { displayProperty: 'random' }
   ];
   public staticDatasource: Datasource<Person> = new TableDatasource<Person>();
+
+  public dataColumnWithTemplateDefinition: DataColumn[] = [];
   constructor() { }
 
   ngOnInit() {
     this.staticDatasource.connect(this.testdata);
-
+    this.dataColumnWithTemplateDefinition = [
+      { displayProperty: 'id', template: this.customTemplate },
+      { displayProperty: 'firstName' },
+      { displayProperty: 'lastName' },
+      { displayProperty: 'jobDesc' },
+      { displayProperty: 'random' }
+    ];
     this.subscribe();
 
   }

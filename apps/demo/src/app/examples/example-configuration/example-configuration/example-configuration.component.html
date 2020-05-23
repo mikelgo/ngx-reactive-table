@@ -47,3 +47,20 @@
   [tableConfig]="config$ | async"
 >
 </ngx-table>
+
+
+<h3>Use custom cell template</h3>
+In below table a custom template is used to render the ID-column.
+<ngx-table
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnWithTemplateDefinition"
+  [datasource]="staticDatasource"
+>
+</ngx-table>
+
+
+<ng-template #customTemplate let-element="element" class="custom">
+  <div class="custom">
+    {{ element }}
+  </div>
+</ng-template>
