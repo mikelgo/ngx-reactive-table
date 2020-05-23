@@ -21,7 +21,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   private config$$ = new BehaviorSubject<TableConfig>(this.config);
   public config$ = this.config$$.asObservable();
 
-  public tableWidthInput = new FormControl(100);
+  public tableWidthInput = new FormControl(80);
   public tableWidthUnitSelect = new FormControl('%');
   public tableBodyHeight = new FormControl(300);
 
@@ -88,7 +88,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToTableWidthChange() {
-    const width$ = this.tableWidthInput.valueChanges.pipe(startWith(100));
+    const width$ = this.tableWidthInput.valueChanges.pipe(startWith(80));
     const unit$ = this.tableWidthUnitSelect.valueChanges.pipe(startWith('%'));
     combineLatest([width$, unit$]).pipe(
       takeUntil(this.destroy$$)
