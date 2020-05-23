@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, SecurityContext } from '@angular/core';
-
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { NgxReactiveTableModule } from '@ngx-table/ngx-reactive-table';
@@ -9,6 +9,7 @@ import { NgxReactiveTableModule } from '@ngx-table/ngx-reactive-table';
 import { Example1Component } from './examples/example-1/example-1.component';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MarkdownModule, MarkedOptions, MarkedRenderer  } from 'ngx-markdown';
+import { ExampleConfigurationComponent } from './examples/example-configuration/example-configuration/example-configuration.component';
 
 // function that returns `MarkedOptions` with renderer override
 export function markedOptionsFactory(): MarkedOptions {
@@ -29,9 +30,11 @@ export function markedOptionsFactory(): MarkedOptions {
 }
 
 @NgModule({
-  declarations: [AppComponent, Example1Component],
+  declarations: [AppComponent, Example1Component, ExampleConfigurationComponent],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot([], { initialNavigation: 'enabled' }),
     NgxReactiveTableModule,
