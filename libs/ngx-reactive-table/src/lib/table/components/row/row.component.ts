@@ -166,7 +166,7 @@ export class RowComponent
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.backgroundColor;
     }
-    if (isOdd) {
+    if (isOdd && config.striped && !config.stripedStyleConfig) {
       return '#eee';
     }
 
