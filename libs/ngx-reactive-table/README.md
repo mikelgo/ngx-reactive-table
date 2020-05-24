@@ -148,3 +148,5 @@ export class TableHostComponent implements OnInit {}
 Please have a look at the [issues](https://github.com/mikelgo/ngx-reactive-table/issues).
 
 # Contribution
+
+If you want to contribute, please have a look at the [guidelines](./CONTRIBUTING.md).
