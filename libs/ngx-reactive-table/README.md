@@ -12,7 +12,7 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Why this library?
 
-This library has the goal to provide a lightweight, reactive and customizable table-component for Angular, leveraging the power of RxJs. The table is responsive by leveraging CSS-Grid.
+This library has the goal to provide a lightweight, reactive and customizable table-component for Angular, leveraging the power of RxJs. The table is responsive by leveraging CSS-Grid. It should allow to use a powerful table-component with minimal configuration effort.
 
 One of the reasons to publish this library is the possibility to provide easy customization in comparison to other table-components like Angular material
 or Ag Grid.
