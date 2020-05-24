@@ -23,7 +23,7 @@ import { takeUntil, tap, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
 import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
 import { parseUnit } from '../shared/util/parse-unit';
-import { WithFooterDirective } from './directives/with-footer.directive';
+import { ShowFooterDirective } from './directives/show-footer.directive';
 
 @Component({
   selector: 'ngx-table',
@@ -93,7 +93,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   private displayColumnWidths$$ = new Subject();
   public displayColumnWidths$: Observable<string>;
 
-  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooterDirective: WithFooterDirective) {}
+  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooterDirective: ShowFooterDirective) {}
 
   ngOnInit() {
     this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(

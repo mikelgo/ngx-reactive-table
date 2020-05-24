@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { WithFooterDirective } from './with-footer.directive';
+import { WithFooterDirective } from './show-footer.directive';
 
 describe('Directive: WithFooter', () => {
   it('should create an instance', () => {
