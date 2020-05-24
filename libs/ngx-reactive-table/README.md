@@ -149,4 +149,4 @@ Please have a look at the [issues](https://github.com/mikelgo/ngx-reactive-table
 
 # Contribution
 
-If you want to contribute, please have a look at the [guidelines](./CONTRIBUTING.md).
+If you want to contribute, please have a look at the [guidelines](../../CONTRIBUTION.md).
