@@ -1,6 +1,15 @@
 <h4>Usage of ngx-table-top-infobar-component</h4>
+<markdown
+  >To use the build-in infobar-component you just need to set the
+  `[withInfobar]`-input to `true`.</markdown
+>
 
-tbd
+<ngx-table
+  [datasource]="staticDatasource"
+  [headerDefinition]="headerDefinition"
+  [dataColumnDefinition]="dataColumnDefinition"
+  [withInfobar]="true"
+></ngx-table>
 
 <h4>Custom component to show hidden columns</h4>
 
