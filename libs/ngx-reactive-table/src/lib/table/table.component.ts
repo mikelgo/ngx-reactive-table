@@ -12,14 +12,14 @@ import {
 } from '@angular/core';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
-import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { TableBehavior } from './table-behavior';
 import { TableStateService } from './services/table-state.service';
 import { Datasource } from '../datasource/datasource';
 import { DataRow } from './models/data-row.model';
 import { TitleColumn } from './models/title-column.model';
 import { DataColumn } from './models/data-column.model';
-import { takeUntil, tap, map } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
 import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
 import { parseUnit } from '../shared/util/parse-unit';
@@ -65,6 +65,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   }
 
   @Input() withFooter: boolean = false;
+  @Input() withInfobar: boolean = false;
 
   @Output() hiddenColumns = new EventEmitter<HiddenColumns>();
 
@@ -93,7 +94,10 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   private displayColumnWidths$$ = new Subject();
   public displayColumnWidths$: Observable<string>;
 
-  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooterDirective: ShowFooterDirective) {}
+  constructor(
+    public stateService: TableStateService<T>,
+    @Optional() @Host() public withFooterDirective: ShowFooterDirective
+  ) {}
 
   ngOnInit() {
     this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(
