@@ -4,25 +4,28 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { TableComponent } from './table.component';
+import { TableStateService } from './services/table-state.service';
+
+class MockTableStateService<Person> extends TableStateService<Person> {
+  constructor() {
+    super();
+  }
+}
 
 describe('TableComponent', () => {
-  let component: TableComponent;
-  let fixture: ComponentFixture<TableComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ TableComponent ]
-    })
-    .compileComponents();
-  }));
+  let component: TableComponent<Person>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TableComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new TableComponent<Person>(new MockTableStateService<Person>());
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
+
+interface Person {
+  id: string;
+  firstName: string;
+  lastName: string;
+}
