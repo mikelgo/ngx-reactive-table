@@ -10,7 +10,11 @@ export const DEFAULT_HEADER_CONFIG: HeaderConfig = {
 
 export const DEFAULT_ROW_CONFIG: RowConfig = {
   style: 'wide',
-  striped: false
+  striped: false,
+  height: '35px',
+  backgroundColor: 'white',
+  borderBottomStyle: '1px solid #ccc',
+  borderTopStyle: '1px solid transparent'
 };
 
 export const DEFAULT_TABLE_CONFIG: TableConfig = {

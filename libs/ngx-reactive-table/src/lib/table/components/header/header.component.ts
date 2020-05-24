@@ -20,15 +20,11 @@ import { TitlePositionMaps } from '../../config/title-position-maps';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
-  private _config: HeaderConfig;
+  private _config: HeaderConfig = null;
   private _displayColumns: TitleColumn[] = [];
-  private _columnWidhts: string;
-  private _horizontalElementAlignment: string = this.initHorizontalElementAlignment(
-    this._config
-  );
-  private _verticalElementAlignment: string = this.initVerticalElementAlignment(
-    this._config
-  );
+  private _columnWidhts: string = null;
+  private _horizontalElementAlignment: string = this.initHorizontalElementAlignment(this._config);
+  private _verticalElementAlignment: string = this.initVerticalElementAlignment(this._config);
 
   @Input() set config(config: HeaderConfig) {
     if (config) {
@@ -41,7 +37,7 @@ export class HeaderComponent implements OnInit {
     this._displayColumns = displayColumns;
   }
   @Input() columnCount: number = 0;
-  @Input() set columnWidths(arg) {
+  @Input() set columnWidths(arg: string) {
     if (arg) {
       this._columnWidhts = arg;
     }
@@ -49,8 +45,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() hideColumn = new EventEmitter<TitleColumn>();
 
-  @HostBinding('style.height') headerHeight: string =
-    DEFAULT_HEADER_CONFIG.titleRowHeight;
+  @HostBinding('style.height') headerHeight: string = DEFAULT_HEADER_CONFIG.titleRowHeight;
 
   gap = 0;
 
@@ -70,7 +65,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {}
 
-  onColumnHide(column: TitleColumn) {
+  public onColumnHide(column: TitleColumn) {
     let col = { ...column, hide: true };
     this.hideColumn.emit(col);
   }
@@ -78,9 +73,7 @@ export class HeaderComponent implements OnInit {
   private initalizeStyles(config: HeaderConfig) {
     this.headerHeight = this.getHeaderHeight(config);
     this._verticalElementAlignment = this.initVerticalElementAlignment(config);
-    this._horizontalElementAlignment = this.initHorizontalElementAlignment(
-      config
-    );
+    this._horizontalElementAlignment = this.initHorizontalElementAlignment(config);
   }
 
   private getHeaderHeight(config: HeaderConfig) {
@@ -91,34 +84,29 @@ export class HeaderComponent implements OnInit {
     }
   }
   private initHorizontalElementAlignment(config: HeaderConfig): string {
+    // TODO think about how to do this in an easier/cleaner way
     if (config && config.titlePositioning) {
-      const positionMap: Map<
-        TitlePositions,
-        string[]
-      > = TitlePositionMaps.getPositionMap(config.titlePositioning);
+      const positionMap: Map<TitlePositions, string[]> = TitlePositionMaps.getPositionMap(
+        config.titlePositioning
+      );
 
       const position: string[] = positionMap.get(config.titlePositioning);
       return position[0];
     } else {
-      const pos: string[] = TitlePositionMaps.CENTER_CENTER.get(
-        TitlePositions.CENTER_CENTER
-      );
+      const pos: string[] = TitlePositionMaps.CENTER_CENTER.get(TitlePositions.CENTER_CENTER);
       return pos[0];
     }
   }
   private initVerticalElementAlignment(config: HeaderConfig): string {
     if (config && config.titlePositioning) {
-      const positionMap: Map<
-        TitlePositions,
-        string[]
-      > = TitlePositionMaps.getPositionMap(config.titlePositioning);
+      const positionMap: Map<TitlePositions, string[]> = TitlePositionMaps.getPositionMap(
+        config.titlePositioning
+      );
 
       const position: string[] = positionMap.get(config.titlePositioning);
       return position[1];
     } else {
-      const pos: string[] = TitlePositionMaps.CENTER_CENTER.get(
-        TitlePositions.CENTER_CENTER
-      );
+      const pos: string[] = TitlePositionMaps.CENTER_CENTER.get(TitlePositions.CENTER_CENTER);
       return pos[1];
     }
   }

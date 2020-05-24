@@ -13,14 +13,13 @@
   [columnWidths]="displayColumnWidths$ | async"
   (hideColumn)="onColumnHide($event)"
 ></ngx-table-header>
-<ngx-table-body [maxBodyHeight]="tableConfig">
+<ngx-table-body [config]="tableConfig">
   <ng-container *ngIf="!(renderRowsLoading$ | async)">
     <ngx-table-row
       *ngFor="let row of renderRows$ | async; let index = i; let odd = odd"
       [row]="row"
       [odd]="odd"
       [config]="tableConfig?.rowConfig"
-      [renderColumnCount]="renderColumnCount$ | async"
       [columnWidths]="displayColumnWidths$ | async"
       (click)="onRowSelect(row, row.index)"
     ></ngx-table-row>

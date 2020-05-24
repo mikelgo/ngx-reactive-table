@@ -10,7 +10,6 @@ import {
 
 import { Selectable } from './selectable';
 import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
 import { DataRow } from '../../models/data-row.model';
 import { RowConfig } from '../../models/row-config';
 import { getRowStyle } from '../../config/row-style-maps';
@@ -22,24 +21,16 @@ import { DEFAULT_ROW_CONFIG } from '../../config/table-config';
   styleUrls: ['./row.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RowComponent
-  implements OnInit, OnDestroy, Selectable<RowComponent> {
+export class RowComponent implements OnInit, OnDestroy, Selectable {
   private _config: RowConfig = DEFAULT_ROW_CONFIG;
-  private _columnWidhts: string;
   private _isOdd: boolean = false;
   private isSelected: boolean = false;
   private _row: DataRow = null;
-  private _renderColumnCount = new BehaviorSubject<number>(0);
 
   private destroy$ = new Subject();
   @Input() set row(row: DataRow) {
     if (row) {
       this._row = row;
-    }
-  }
-  @Input() set renderColumnCount(count: number) {
-    if (count) {
-      this._renderColumnCount.next(count);
     }
   }
 
@@ -66,19 +57,17 @@ export class RowComponent
   @HostBinding('style.grid-gap.px') gap = 4;
   @HostBinding('style.grid-template-columns')
   columns = '';
-  @HostBinding('style.min-height') height: string = this.initRowHeight(
-    this._config
-  );
+  @HostBinding('style.min-height') height: string = this.initRowHeight(this._config);
 
   @HostListener('mouseenter')
-  onHover(selectable: RowComponent) {
+  onHoverEnter() {
     if (!this.isSelected) {
       this.borderTop = '1px solid black';
       this.borderBottom = '1px solid black';
     }
   }
 
-  @HostListener('mouseleave') mouseLeave() {
+  @HostListener('mouseleave') onHoverLeave() {
     if (!this.isSelected && !this._isOdd) {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
@@ -90,13 +79,21 @@ export class RowComponent
     }
   }
 
-  @HostListener('click') onSelect(selectable: RowComponent) {
+  @HostListener('click') onSelect() {
     this.isSelected = !this.isSelected;
     this.setClickStyle(this.isSelected);
   }
 
   get row(): DataRow {
     return this._row;
+  }
+
+  get odd(): boolean {
+    return this._isOdd;
+  }
+
+  get config(): RowConfig {
+    return this._config;
   }
 
   constructor() {}
@@ -113,9 +110,9 @@ export class RowComponent
       this.borderBottom = '1px solid #4a5568';
       this.backgroundColor = '#e2e8f0';
     } else {
-      this.borderTop = '1px solid transparent';
-      this.borderBottom = '1px solid #ccc';
-      this.backgroundColor = 'white';
+      this.borderTop = DEFAULT_ROW_CONFIG.borderTopStyle;
+      this.borderBottom = DEFAULT_ROW_CONFIG.borderBottomStyle;
+      this.backgroundColor = DEFAULT_ROW_CONFIG.backgroundColor;
     }
   }
 
@@ -142,14 +139,14 @@ export class RowComponent
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.topBorderStyle;
     }
-    return '1px solid transparent';
+    return DEFAULT_ROW_CONFIG.borderTopStyle;
   }
 
   private initBorderBottomStyle(config: RowConfig, isOdd: boolean): string {
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.bottomBorderStyle;
     }
-    return '1px solid #ccc';
+    return DEFAULT_ROW_CONFIG.borderBottomStyle;
   }
 
   private initBackgroundStyle(config: RowConfig, isOdd: boolean): string {
@@ -160,6 +157,6 @@ export class RowComponent
       return '#eee';
     }
 
-    return 'white';
+    return DEFAULT_ROW_CONFIG.backgroundColor;
   }
 }

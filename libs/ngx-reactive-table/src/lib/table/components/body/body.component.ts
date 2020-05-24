@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  HostBinding,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, Input, HostBinding, ChangeDetectionStrategy } from '@angular/core';
 import { TableConfig } from '../../models/table-config';
 import { DEFAULT_TABLE_CONFIG } from '../../config/table-config';
 
@@ -15,20 +9,26 @@ import { DEFAULT_TABLE_CONFIG } from '../../config/table-config';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class BodyComponent implements OnInit {
-  @Input() set maxBodyHeight(arg: TableConfig) {
-    this.initalizeStyles(arg);
+  @Input() set config(arg: TableConfig) {
+    if (arg) {
+      this.initalizeStyles(arg);
+    }
   }
 
   @HostBinding('style.max-height')
-  _maxBodyheight: string = DEFAULT_TABLE_CONFIG.maxBodyHeight;
+  private _maxBodyheight: string = DEFAULT_TABLE_CONFIG.maxBodyHeight;
   constructor() {}
 
   ngOnInit() {}
   private initalizeStyles(config: TableConfig) {
-    this._maxBodyheight = this.getMaxBodyHeight(config);
+    this._maxBodyheight = this.setMaxBodyHeight(config);
   }
 
-  public getMaxBodyHeight(config: TableConfig): string {
+  public get maxBodyHeight() {
+    return this._maxBodyheight;
+  }
+
+  private setMaxBodyHeight(config: TableConfig): string {
     if (config && config.maxBodyHeight) {
       return config.maxBodyHeight;
     } else {
