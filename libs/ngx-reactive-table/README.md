@@ -19,12 +19,7 @@ or Ag Grid.
 
 E.g. it is not possible out of the box to create a **reusable** Angular material table which has the ability to use different column templates/content for certain columns in some components using the table. To have this feature the developer needs e.g. to leverage content-projection techniques. From my experience this is a common use case and should be possible out of the box.
 
-Also it is not possible without additional effort to change e.g. the look and feel of an Angular material table during runtime. `Ngx-reactive-table` solves this issue
-as it is implemented in a reactive way.
-
 In comparison to Ag Grid `ngx-reactive-table` can convice with a small bundle size. The Ag Grid packages shipd usually with > 20MB. Of course Ag Grid provides much more functionalities and is in general very powerful.
-
-I do really appreciate the work of the Angular material team and all people contributing to material. I love to use the lib and I do not want to bash the provided table component. I just think some things could be better.
 
 ## Quick start
 
@@ -133,7 +128,7 @@ To do so it is necessary to provide a template
 </ng-template>
 ```
 
-and assign it the according column:
+and assign it to the according column:
 
 ```typescript
 @Component({...})
@@ -148,7 +143,7 @@ export class TableHostComponent implements OnInit {}
   }
 ```
 
-# Open requirements
+# Open issues
 
 Please have a look at the [issues](https://github.com/mikelgo/ngx-reactive-table/issues).
 
