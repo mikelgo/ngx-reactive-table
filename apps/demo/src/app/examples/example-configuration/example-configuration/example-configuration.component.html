@@ -38,6 +38,14 @@
       <option value="true">true</option>
     </select>
   </div>
+
+  <div class="control-element">
+    <label for="">With footer</label>
+    <select name="" id="" [formControl]="withFooterSelect">
+      <option value="false">false</option>
+      <option value="true">true</option>
+    </select>
+  </div>
 </div>
 
 <ngx-table
@@ -45,6 +53,7 @@
   [dataColumnDefinition]="dataColumnDefinition"
   [datasource]="staticDatasource"
   [tableConfig]="config$ | async"
+  [withFooter]="withFooter$ | async"
 >
 </ngx-table>
 

@@ -31,6 +31,9 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   public rowStyleSelect = new FormControl('wide');
   public rowStripedSelect = new FormControl(false);
 
+  public withFooterSelect = new FormControl(false);
+  public withFooter$ = this.withFooterSelect.valueChanges;
+
 
 
   public testdata: Person[] = getTestdata();
@@ -55,6 +58,7 @@ export class ExampleConfigurationComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+
     this.staticDatasource.connect(this.testdata);
     this.dataColumnWithTemplateDefinition = [
       { displayProperty: 'id', template: this.customTemplate },
