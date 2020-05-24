@@ -6,7 +6,9 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Optional,
+  Host
 } from '@angular/core';
 import { TableConfig } from './models/table-config';
 import { DEFAULT_TABLE_CONFIG } from './config/table-config';
@@ -21,6 +23,7 @@ import { takeUntil, tap, map } from 'rxjs/operators';
 import { HiddenColumns } from './models/hidden-column.model';
 import { calcAdjustedWidths } from '../shared/util/calculate-normalized-widths';
 import { parseUnit } from '../shared/util/parse-unit';
+import { WithFooterDirective } from './directives/with-footer.directive';
 
 @Component({
   selector: 'ngx-table',
@@ -61,6 +64,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     }
   }
 
+  @Input() withFooter: boolean = false;
+
   @Output() hiddenColumns = new EventEmitter<HiddenColumns>();
 
   @HostBinding('style.width')
@@ -81,7 +86,6 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
 
   public hiddenColumns$: Observable<TitleColumn[]>;
   public hiddenColumnsCount$: Observable<number>;
-
   public hiddenColumnsInfo$: Observable<HiddenColumns>;
 
   public columnWidth: string;
@@ -89,7 +93,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   private displayColumnWidths$$ = new Subject();
   public displayColumnWidths$: Observable<string>;
 
-  constructor(public stateService: TableStateService<T>) {}
+  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooterDirective: WithFooterDirective) {}
 
   ngOnInit() {
     this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(
@@ -126,6 +130,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     //     this.displayColumnWidths$$.next(this.getColumnWidths(header))
     //   );
   }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

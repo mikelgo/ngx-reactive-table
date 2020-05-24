@@ -12,6 +12,7 @@ import { TopInfobarComponent } from './components/infobar/top-infobar/top-infoba
 import { SharedModule } from '../shared/shared.module';
 import { GhostBodyComponent } from './components/loading-elements/ghost-body/ghost-body.component';
 import { GhostRowComponent } from './components/loading-elements/ghost-row/ghost-row.component';
+import { WithFooterDirective } from './directives/with-footer.directive';
 
 const COMPONENTS = [
   TableComponent,
@@ -24,14 +25,15 @@ const COMPONENTS = [
   HeaderElementComponent,
   TopInfobarComponent,
   GhostBodyComponent,
-  GhostRowComponent
+  GhostRowComponent,
+  WithFooterDirective
 ];
 const MODULES = [CommonModule, SharedModule];
 
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [...MODULES],
-  exports: [TableComponent, TopInfobarComponent],
+  exports: [TableComponent, TopInfobarComponent, WithFooterDirective],
   providers: []
 })
 export class TableModule {}
