@@ -21,7 +21,7 @@
     <ngx-table-ghost-body [config]="tableConfig"></ngx-table-ghost-body>
   </ng-container>
 </ngx-table-body>
-<ng-container *ngIf="withFooter">
+<ng-container *ngIf="withFooterDirective || withFooter">
   <ngx-table-footer
   [rowCount]="renderRowsCount$ | async"
   [selectedRowsCount]="selectedRowsCount$ | async"

@@ -64,6 +64,8 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
     }
   }
 
+  @Input() withFooter: boolean = false;
+
   @Output() hiddenColumns = new EventEmitter<HiddenColumns>();
 
   @HostBinding('style.width')
@@ -91,7 +93,7 @@ export class TableComponent<T> implements OnInit, TableBehavior, OnDestroy {
   private displayColumnWidths$$ = new Subject();
   public displayColumnWidths$: Observable<string>;
 
-  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooter: WithFooterDirective) {}
+  constructor(public stateService: TableStateService<T>, @Optional() @Host() public withFooterDirective: WithFooterDirective) {}
 
   ngOnInit() {
     this.displayColumnWidths$ = this.stateService.renderHeaders$.pipe(
