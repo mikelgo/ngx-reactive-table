@@ -22,6 +22,7 @@ E.g. it is not possible out of the box to create a **reusable** Angular material
 In comparison to Ag Grid `ngx-reactive-table` can convice with a small bundle size. The Ag Grid packages shipd usually with > 20MB. Of course Ag Grid provides much more functionalities and is in general very powerful.
 
 ## Quick start
+TBD: add section to install the package. 
 
 First import `NgxReactiveTableModule` into your app.
 
