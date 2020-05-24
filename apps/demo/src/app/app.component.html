@@ -1,32 +1,40 @@
 <div class="container">
-  <!-- TODO add -->
-  <!-- <ngx-table-top-infobar
-    [hiddenColumns]="hiddenColumns$ | async"
-    [hiddenColumnsCount]="hiddenColumnsCount$ | async"
-    (showHiddenColumn)="onColumnShow($event)"
-  ></ngx-table-top-infobar> -->
-  <ngx-table
-    [title]="'Table title'"
-    [headerDefinition]="headerDefinition"
-    [dataColumnDefinition]="dataColumnDefinition"
-    [datasource]="datasource"
-    [tableConfig]="config$ | async"
-  >
-  </ngx-table>
-</div>
-
-<div class="container-2">
-  <ngx-table
-    [title]="'Table title'"
-    [headerDefinition]="headerDefinition"
-    [dataColumnDefinition]="dataColumnDefinition2"
-    [datasource]="datasource"
-  >
-  </ngx-table>
-</div>
-
-<ng-template #templateTest let-element="element">
-  <div class="test">
-    {{ element }}
+  <div class="menu-container">
+    <h2>ngx-reactive-table demo</h2>
+    <hr />
+    <br />
+    <h4>TOC</h4>
+    <!-- Menu -->
+    <ul class="menu-content">
+      <li class="menu-item"><a href="#basic-usage"> Basic usage</a></li>
+      <li class="menu-item sub">Display static data</li>
+      <li class="menu-item sub">Display dynamic data</li>
+      <li class="menu-item"><a href="#configuration">Configuration</a></li>
+      <li class="menu-item sub">Custom cell template</li>
+      <li class="menu-item">
+        <a href="#hide-show-columns">Hide/Show columns</a>
+      </li>
+      <li class="menu-item sub">
+        Usage of build-in component to show hidden columns
+      </li>
+      <li class="menu-item sub">Custom component to show hidden columns</li>
+      <li class="menu-item">
+        <a href="#loading-indication">Loading Indication</a>
+      </li>
+    </ul>
   </div>
-</ng-template>
+  <!-- Content of demo -->
+  <div class="content-container">
+    <h2 id="basic-usage">Basic usage</h2>
+    <ngx-table-example-1></ngx-table-example-1>
+
+    <h2 id="configuration">Configuration</h2>
+    <ngx-table-example-configuration></ngx-table-example-configuration>
+
+    <h2 id="hide-show-columns">Hide/Show columns</h2>
+    <ngx-table-example-hide-show-columns></ngx-table-example-hide-show-columns>
+
+    <h2 id="loading-indication">Loading Indication</h2>
+    <ngx-table-example-loading-indication></ngx-table-example-loading-indication>
+  </div>
+</div>

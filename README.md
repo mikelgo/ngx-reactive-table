@@ -15,6 +15,4 @@ This repository is providing:
 
 coming soon.
 
-### Stackblitz
 
-coming soon.

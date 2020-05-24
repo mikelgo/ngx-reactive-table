@@ -1,3 +1,11 @@
+<ng-container *ngIf="withInfobar">
+  <ngx-table-top-infobar
+    [hiddenColumns]="hiddenColumns$ | async"
+    (showHiddenColumn)="onColumnShow($event)"
+  >
+  </ngx-table-top-infobar>
+</ng-container>
+
 <ngx-table-header
   [displayColumns]="renderHeaders$ | async"
   [columnCount]="renderColumnCount$ | async"
@@ -20,7 +28,9 @@
     <ngx-table-ghost-body [config]="tableConfig"></ngx-table-ghost-body>
   </ng-container>
 </ngx-table-body>
-<ngx-table-footer
-  [rowCount]="renderRowsCount$ | async"
-  [selectedRowsCount]="selectedRowsCount$ | async"
-></ngx-table-footer>
+<ng-container *ngIf="withFooterDirective || withFooter">
+  <ngx-table-footer
+    [rowCount]="renderRowsCount$ | async"
+    [selectedRowsCount]="selectedRowsCount$ | async"
+  ></ngx-table-footer>
+</ng-container>

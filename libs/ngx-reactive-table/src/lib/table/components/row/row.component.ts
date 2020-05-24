@@ -77,11 +77,6 @@ export class RowComponent implements OnInit, OnDestroy, Selectable {
       this.borderTop = '1px solid transparent';
       this.borderBottom = '1px solid #ccc';
     }
-    if (!this.isSelected && this._isOdd && this._config && this._config.striped) {
-      this.borderTop = this._config.stripedStyleConfig.topBorderStyle;
-      this.borderBottom = this._config.stripedStyleConfig.bottomBorderStyle;
-      this.backgroundColor = this._config.stripedStyleConfig.backgroundColor;
-    }
   }
 
   @HostListener('click') onSelect() {
@@ -158,7 +153,7 @@ export class RowComponent implements OnInit, OnDestroy, Selectable {
     if (isOdd && config.striped && config.stripedStyleConfig) {
       return config.stripedStyleConfig.backgroundColor;
     }
-    if (isOdd) {
+    if (isOdd && config.striped && !config.stripedStyleConfig) {
       return '#eee';
     }
 
