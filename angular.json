@@ -14,6 +14,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/apps/ngx-table",
             "index": "apps/ngx-table/src/index.html",
@@ -170,7 +171,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/apps/demo",
+            "outputPath": "docs",
             "index": "apps/demo/src/index.html",
             "main": "apps/demo/src/main.ts",
             "polyfills": "apps/demo/src/polyfills.ts",
