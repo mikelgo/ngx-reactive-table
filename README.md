@@ -13,6 +13,6 @@ This repository is providing:
 
 ### View live
 
-coming soon.
+Visit https://mikelgo.github.io/ngx-reactive-table/docs/ to view the component in action.
 
 
