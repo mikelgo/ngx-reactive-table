@@ -1,4 +1,5 @@
 {
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "@mikelgo/ngx-reactive-table",
   "description": "A lightweight, responsive, reactive data-table component for Angular",
   "homepage": "https://github.com/mikelgo/ngx-reactive-table",
@@ -15,6 +16,12 @@
   },
   "scripts": {
 
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "src/index.ts"
+    },
+    "dest": "@mikelgo/ngx-reactive-table"
   },
   "private": false,
   "peerDependencies": {
