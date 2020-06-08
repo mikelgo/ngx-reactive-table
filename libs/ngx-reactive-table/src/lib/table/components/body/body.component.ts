@@ -16,7 +16,7 @@ export class BodyComponent implements OnInit {
   }
 
   @HostBinding('style.max-height')
-  private _maxBodyheight: string = DEFAULT_TABLE_CONFIG.maxBodyHeight;
+  public _maxBodyheight: string = DEFAULT_TABLE_CONFIG.maxBodyHeight;
   constructor() {}
 
   ngOnInit() {}

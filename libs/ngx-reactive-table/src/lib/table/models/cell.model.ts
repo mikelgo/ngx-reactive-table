@@ -6,6 +6,6 @@ export interface Cell {
   hide?: boolean;
   cssClass?: string;
   template?: TemplateRef<any>;
-
+  label?: string;
   cellRenderer?: CellRenderer;
 }
