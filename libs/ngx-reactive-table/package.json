@@ -1,0 +1,24 @@
+{
+  "name": "@mikelgo/ngx-reactive-table",
+  "description": "A lightweight, responsive, reactive data-table component for Angular",
+  "homepage": "https://github.com/mikelgo/ngx-reactive-table",
+  "version": "0.0.1-beta-1",
+  "author": "Mikelgo",
+  "license": "MIT",
+  "keywords": ["ng","angular","table","data-table","reactive-table","responsive","responsive-table","table-component","table-library"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikelgo/ngx-reactive-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mikelgo/ngx-reactive-table/issues"
+  },
+  "scripts": {
+
+  },
+  "private": false,
+  "peerDependencies": {
+    "@angular/common": "^9.1.0",
+    "@angular/core": "^9.1.0"
+  }
+}
