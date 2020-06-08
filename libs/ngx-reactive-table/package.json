@@ -21,7 +21,7 @@
     "lib": {
       "entryFile": "src/index.ts"
     },
-    "dest": "@mikelgo/ngx-reactive-table"
+    "dest": "../../dist/libs/ngx-reactive-table"
   },
   "private": false,
   "peerDependencies": {
